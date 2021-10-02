@@ -1,17 +1,23 @@
 import {
-  AddCall,
+  Add,
+  Set,
   Deposit,
-  DevCall,
+  SetDevAddress,
+  SetTreasuryAddress,
+  SetTreasuryPercent,
   EmergencyWithdraw,
-  MassUpdatePoolsCall,
   RubyMasterChef as RubyMasterChefContract,
-  MigrateCall,
   OwnershipTransferred,
-  SetCall,
-  SetMigratorCall,
-  UpdatePoolCall,
   Withdraw,
+  UpdateEmissionRate,
 } from '../generated/RubyMasterChef/RubyMasterChef'
+
+import { ERC20 as ERC20Contract } from '../generated/RubyMasterChef/ERC20'
+import { Pair as PairContract } from '../generated/RubyMasterChef/Pair'
+import {
+  Rewarder as RewarderContract
+} from '../generated/RubyMasterChef/Rewarder'
+
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
 import {
   BIG_DECIMAL_1E12,
@@ -23,36 +29,35 @@ import {
   RUBY_MASTER_CHEF_ADDRESS,
   RUBY_MASTER_CHEF_START_BLOCK,
 } from 'const'
-import { History, RubyMasterChef, Pool, PoolHistory, User } from '../generated/schema'
+
+import { History, RubyMasterChef, Pool, PoolHistory, User, Rewarder } from '../generated/schema'
 import { getRubyPrice, getUSDRate } from 'pricing'
 
-import { ERC20 as ERC20Contract } from '../generated/RubyMasterChef/ERC20'
-import { Pair as PairContract } from '../generated/RubyMasterChef/Pair'
 
-function getMasterChef(block: ethereum.Block): RubyMasterChef {
+
+function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
   let masterChef = RubyMasterChef.load(RUBY_MASTER_CHEF_ADDRESS.toHex())
 
   if (masterChef === null) {
     const contract = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
     masterChef = new RubyMasterChef(RUBY_MASTER_CHEF_ADDRESS.toHex())
-    masterChef.bonusMultiplier = contract.BONUS_MULTIPLIER()
-    masterChef.bonusEndBlock = contract.bonusEndBlock()
-    masterChef.devaddr = contract.devaddr()
-    masterChef.migrator = contract.migrator()
+    masterChef.rubyPerSec = contract.rubyPerSec()
+    masterChef.devAddr = contract.devAddr()
+    masterChef.treasuryAddr = contract.treasuryAddr()
     masterChef.owner = contract.owner()
     // poolInfo ...
-    masterChef.startBlock = contract.startBlock()
+    masterChef.startTimestamp = contract.startTimestamp()
     masterChef.ruby = contract.ruby()
-    masterChef.rubyPerBlock = contract.rubyPerBlock()
+    masterChef.rubyPerSec = contract.rubyPerSec()
     masterChef.totalAllocPoint = contract.totalAllocPoint()
     // userInfo ...
     masterChef.poolCount = BIG_INT_ZERO
 
-    masterChef.slpBalance = BIG_DECIMAL_ZERO
-    masterChef.slpAge = BIG_DECIMAL_ZERO
-    masterChef.slpAgeRemoved = BIG_DECIMAL_ZERO
-    masterChef.slpDeposited = BIG_DECIMAL_ZERO
-    masterChef.slpWithdrawn = BIG_DECIMAL_ZERO
+    masterChef.rlpBalance = BIG_DECIMAL_ZERO
+    masterChef.rlpAge = BIG_DECIMAL_ZERO
+    masterChef.rlpAgeRemoved = BIG_DECIMAL_ZERO
+    masterChef.rlpDeposited = BIG_DECIMAL_ZERO
+    masterChef.rlpWithdrawn = BIG_DECIMAL_ZERO
 
     masterChef.updatedAt = block.timestamp
 
@@ -62,11 +67,50 @@ function getMasterChef(block: ethereum.Block): RubyMasterChef {
   return masterChef as RubyMasterChef
 }
 
-export function getPool(id: BigInt, block: ethereum.Block): Pool {
+
+export function getOrInsertRewarder(rewarderAddress: Address, block: ethereum.Block ): Rewarder {
+
+  if(rewarderAddress === null) {
+    return null
+  }
+
+  let idHex = rewarderAddress.toHex()
+  let rewarder = Rewarder.load(idHex)
+
+  const rewarderContract = RewarderContract.bind(rewarderAddress)
+  const rewardTokenAddress = rewarderContract.rewardToken();
+  const rewardTokenContract =  ERC20Contract.bind(rewardTokenAddress)
+  
+
+  if(rewarder === null) {
+    rewarder = new Rewarder(idHex)
+    rewarder.rewardToken = rewardTokenAddress
+    rewarder.name = rewardTokenContract.name()
+    rewarder.symbol = rewardTokenContract.symbol()
+    rewarder.decimals = rewardTokenContract.decimals()
+  }
+
+  // update rewarder endTimestamp and tokenPerSec on each obtaining
+  rewarder.tokenPerSec = rewarderContract.tokenPerSec()
+  const rewarderBalance = rewardTokenContract.balanceOf(rewarderAddress);
+  const currentTimestamp = block.timestamp;
+
+  const numSeconds = rewarderBalance.div(rewarder.tokenPerSec);
+
+  rewarder.endTimestamp = currentTimestamp.plus(numSeconds);
+
+  rewarder.updatedAt = block.timestamp
+  rewarder.save()
+
+  return rewarder as Rewarder
+}
+
+
+export function getOrInsertPool(id: BigInt, block: ethereum.Block): Pool {
   let pool = Pool.load(id.toString())
 
   if (pool === null) {
-    const masterChef = getMasterChef(block)
+    const masterChef = getOrInsertMasterChef(block)
 
     const masterChefContract = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
     const poolLength = masterChefContract.poolLength()
@@ -85,18 +129,19 @@ export function getPool(id: BigInt, block: ethereum.Block): Pool {
 
     pool.pair = poolInfo.value0
     pool.allocPoint = poolInfo.value1
-    pool.lastRewardBlock = poolInfo.value2
+    pool.lastRewardTimestamp = poolInfo.value2
     pool.accRubyPerShare = poolInfo.value3
+    pool.rewarder = getOrInsertRewarder(poolInfo.value4, block)
 
     // Total supply of LP tokens
     pool.balance = BIG_INT_ZERO
     pool.userCount = BIG_INT_ZERO
 
-    pool.slpBalance = BIG_DECIMAL_ZERO
-    pool.slpAge = BIG_DECIMAL_ZERO
-    pool.slpAgeRemoved = BIG_DECIMAL_ZERO
-    pool.slpDeposited = BIG_DECIMAL_ZERO
-    pool.slpWithdrawn = BIG_DECIMAL_ZERO
+    pool.rlpBalance = BIG_DECIMAL_ZERO
+    pool.rlpAge = BIG_DECIMAL_ZERO
+    pool.rlpAgeRemoved = BIG_DECIMAL_ZERO
+    pool.rlpDeposited = BIG_DECIMAL_ZERO
+    pool.rlpWithdrawn = BIG_DECIMAL_ZERO
 
     pool.timestamp = block.timestamp
     pool.block = block.number
@@ -112,7 +157,7 @@ export function getPool(id: BigInt, block: ethereum.Block): Pool {
   return pool as Pool
 }
 
-function getHistory(owner: string, block: ethereum.Block): History {
+function getOrInsertHistory(owner: string, block: ethereum.Block): History {
   const day = block.timestamp.div(BIG_INT_ONE_DAY_SECONDS)
 
   const id = owner.concat(day.toString())
@@ -122,11 +167,11 @@ function getHistory(owner: string, block: ethereum.Block): History {
   if (history === null) {
     history = new History(id)
     history.owner = owner
-    history.slpBalance = BIG_DECIMAL_ZERO
-    history.slpAge = BIG_DECIMAL_ZERO
-    history.slpAgeRemoved = BIG_DECIMAL_ZERO
-    history.slpDeposited = BIG_DECIMAL_ZERO
-    history.slpWithdrawn = BIG_DECIMAL_ZERO
+    history.rlpBalance = BIG_DECIMAL_ZERO
+    history.rlpAge = BIG_DECIMAL_ZERO
+    history.rlpAgeRemoved = BIG_DECIMAL_ZERO
+    history.rlpDeposited = BIG_DECIMAL_ZERO
+    history.rlpWithdrawn = BIG_DECIMAL_ZERO
     history.timestamp = block.timestamp
     history.block = block.number
   }
@@ -134,7 +179,7 @@ function getHistory(owner: string, block: ethereum.Block): History {
   return history as History
 }
 
-function getPoolHistory(pool: Pool, block: ethereum.Block): PoolHistory {
+function getOrInsertPoolHistory(pool: Pool, block: ethereum.Block): PoolHistory {
   const day = block.timestamp.div(BIG_INT_ONE_DAY_SECONDS)
 
   const id = pool.id.concat(day.toString())
@@ -144,11 +189,12 @@ function getPoolHistory(pool: Pool, block: ethereum.Block): PoolHistory {
   if (history === null) {
     history = new PoolHistory(id)
     history.pool = pool.id
-    history.slpBalance = BIG_DECIMAL_ZERO
-    history.slpAge = BIG_DECIMAL_ZERO
-    history.slpAgeRemoved = BIG_DECIMAL_ZERO
-    history.slpDeposited = BIG_DECIMAL_ZERO
-    history.slpWithdrawn = BIG_DECIMAL_ZERO
+    history.rlpBalance = BIG_DECIMAL_ZERO
+    history.rlpAge = BIG_DECIMAL_ZERO
+    history.rlpAgeRemoved = BIG_DECIMAL_ZERO
+    history.rlpDeposited = BIG_DECIMAL_ZERO
+    history.rlpWithdrawn = BIG_DECIMAL_ZERO
+    history.userCount = BIG_DECIMAL_ZERO
     history.timestamp = block.timestamp
     history.block = block.number
     history.entryUSD = BIG_DECIMAL_ZERO
@@ -160,7 +206,7 @@ function getPoolHistory(pool: Pool, block: ethereum.Block): PoolHistory {
   return history as PoolHistory
 }
 
-export function getUser(pid: BigInt, address: Address, block: ethereum.Block): User {
+export function getOrInsertUser(pid: BigInt, address: Address, block: ethereum.Block): User {
   const uid = address.toHex()
   const id = pid.toString().concat('-').concat(uid)
 
@@ -184,97 +230,92 @@ export function getUser(pid: BigInt, address: Address, block: ethereum.Block): U
   return user as User
 }
 
-export function add(event: AddCall): void {
-  const masterChef = getMasterChef(event.block)
 
-  log.info('Add pool #{}', [masterChef.poolCount.toString()])
-
-  const pool = getPool(masterChef.poolCount, event.block)
-
-  if (pool === null) {
-    log.error('Pool added with id greater than poolLength, pool #{}', [masterChef.poolCount.toString()])
-    return
-  }
-
-  // Update RubyMasterChef.
-  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(pool.allocPoint)
+export function add(event: Add): void {
+  log.info('Pool added: pid {}, allocPoint: {}, lpToken: {}, rewarder: {}', [
+    event.params.pid.toString(),
+    event.params.allocPoint.toString(),
+    event.params.lpToken.toHex(),
+    event.params.rewarder.toHex()
+  ])
+  massUpdatePools(event.block);
+  const masterChef = getOrInsertMasterChef(event.block)
+  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(event.params.allocPoint);
   masterChef.poolCount = masterChef.poolCount.plus(BIG_INT_ONE)
   masterChef.save()
 }
 
-// Calls
-export function set(call: SetCall): void {
-  log.info('Set pool id: {} allocPoint: {} withUpdate: {}', [
-    call.inputs._pid.toString(),
-    call.inputs._allocPoint.toString(),
-    call.inputs._withUpdate ? 'true' : 'false',
+export function set(event: Set): void {
+  log.info('Pool set: pid {}, allocPoint: {}, rewarder: {}, overwrite: {}', [
+    event.params.pid.toString(),
+    event.params.allocPoint.toString(),
+    event.params.rewarder.toHex(),
+    event.params.overwrite
   ])
 
-  const pool = getPool(call.inputs._pid, call.block)
+  const pool = getOrInsertPool(event.params.pid, event.block)
+  const oldAllocPoint = pool.allocPoint
+  
+  massUpdatePools(event.block);
 
-  const masterChef = getMasterChef(call.block)
-
-  // Update masterchef
-  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(call.inputs._allocPoint.minus(pool.allocPoint))
+  const masterChef = getOrInsertMasterChef(event.block)
+  masterChef.totalAllocPoint = masterChef.totalAllocPoint.minus(oldAllocPoint).plus(event.params.allocPoint)
   masterChef.save()
 
-  // Update pool
-  pool.allocPoint = call.inputs._allocPoint
-  pool.save()
 }
 
-export function setMigrator(call: SetMigratorCall): void {
-  log.info('Set migrator to {}', [call.inputs._migrator.toHex()])
 
-  const masterChef = getMasterChef(call.block)
-  masterChef.migrator = call.inputs._migrator
-  masterChef.save()
-}
-
-export function migrate(call: MigrateCall): void {
-  const masterChefContract = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
-
-  const pool = getPool(call.inputs._pid, call.block)
-
-  const poolInfo = masterChefContract.poolInfo(call.inputs._pid)
-
-  const pair = poolInfo.value0
-
-  const pairContract = PairContract.bind(pair as Address)
-
-  pool.pair = pair
-
-  const balance = pairContract.balanceOf(RUBY_MASTER_CHEF_ADDRESS)
-
-  pool.balance = balance
-
-  pool.save()
-}
-
-export function massUpdatePools(call: MassUpdatePoolsCall): void {
+export function massUpdatePools(block: ethereum.Block): void {
   log.info('Mass update pools', [])
+  const masterChef = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
+  const numPools = (masterChef.poolLength()).toI32()
+
+
+  for(let i = 0; i < numPools; i++) {
+    updatePool(BigInt.fromI32(i), masterChef, block)
+  }
 }
 
-export function updatePool(call: UpdatePoolCall): void {
-  log.info('Update pool id {}', [call.inputs._pid.toString()])
-
-  const masterChef = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
-  const poolInfo = masterChef.poolInfo(call.inputs._pid)
-  const pool = getPool(call.inputs._pid, call.block)
-  pool.lastRewardBlock = poolInfo.value2
+export function updatePool(pid: BigInt, masterChef: RubyMasterChefContract, block: ethereum.Block): void {
+  const poolInfo = masterChef.poolInfo(pid)
+  const pool = getOrInsertPool(pid, block)
+  pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
+  pool.rewarder = getOrInsertRewarder(poolInfo.value4, block)
   pool.save()
 }
 
-export function dev(call: DevCall): void {
-  log.info('Dev changed to {}', [call.inputs._devaddr.toHex()])
 
-  const masterChef = getMasterChef(call.block)
+export function setDevAddress(event: SetDevAddress): void {
+  log.info('Dev address changed from {} to {}', [event.params.oldAddress.toHex(), event.params.newAddress.toHex()])
 
-  masterChef.devaddr = call.inputs._devaddr
+  const masterChef = getOrInsertMasterChef(event.block)
+
+  masterChef.devAddr = event.params.newAddress
+  masterChef.save()
+}
+
+export function setTreasuryAddress(event: SetTreasuryAddress): void {
+  log.info('Treasury address changed from {} to {}', [event.params.oldAddress.toHex(), event.params.newAddress.toHex()])
+
+  const masterChef = getOrInsertMasterChef(event.block)
+
+  masterChef.treasuryAddr = event.params.newAddress
+  masterChef.save()
+}
+
+export function setTreasuryPercent(event: SetTreasuryPercent): void {
+  log.info('Treasury percent changed to {}', [event.params.newPercent.toString()])
+
+  const masterChef = getOrInsertMasterChef(event.block)
+
+  masterChef.treasuryPercent = event.params.newPercent
 
   masterChef.save()
 }
+
+
+
 
 // Events
 export function deposit(event: Deposit): void {
@@ -287,45 +328,46 @@ export function deposit(event: Deposit): void {
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  /*log.info('{} has deposited {} slp tokens to pool #{}', [
+  log.info('{} has deposited {} rlp tokens to pool #{}', [
     event.params.user.toHex(),
     event.params.amount.toString(),
     event.params.pid.toString(),
-  ])*/
+  ])
 
   const masterChefContract = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
 
   const poolInfo = masterChefContract.poolInfo(event.params.pid)
 
-  const pool = getPool(event.params.pid, event.block)
+  const pool = getOrInsertPool(event.params.pid, event.block)
 
-  const poolHistory = getPoolHistory(pool, event.block)
+  const poolHistory = getOrInsertPoolHistory(pool, event.block)
 
   const pairContract = PairContract.bind(poolInfo.value0)
   pool.balance = pairContract.balanceOf(RUBY_MASTER_CHEF_ADDRESS)
 
-  pool.lastRewardBlock = poolInfo.value2
+  pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
+  pool.rewarder = poolInfo.value4
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  pool.slpAge = pool.slpAge.plus(poolDays.times(pool.slpBalance))
+  pool.rlpAge = pool.rlpAge.plus(poolDays.times(pool.rlpBalance))
 
-  pool.slpDeposited = pool.slpDeposited.plus(amount)
-  pool.slpBalance = pool.slpBalance.plus(amount)
+  pool.rlpDeposited = pool.rlpDeposited.plus(amount)
+  pool.rlpBalance = pool.rlpBalance.plus(amount)
 
   pool.updatedAt = event.block.timestamp
 
   const userInfo = masterChefContract.userInfo(event.params.pid, event.params.user)
 
-  const user = getUser(event.params.pid, event.params.user, event.block)
+  const user = getOrInsertUser(event.params.pid, event.params.user, event.block)
 
-  // If not currently in pool and depositing SLP
+  // If not currently in pool and depositing RLP
   if (!user.pool && event.params.amount.gt(BIG_INT_ZERO)) {
     user.pool = pool.id
     pool.userCount = pool.userCount.plus(BIG_INT_ONE)
   }
 
-  // Calculate SUSHI being paid out
+  // Calculate RUBY being paid out
   if (event.block.number.gt(RUBY_MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
@@ -333,9 +375,9 @@ export function deposit(event: Deposit): void {
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Deposit: User amount is more than zero, we should harvest {} ruby', [pending.toString()])
+    log.info('Deposit: User amount is more than zero, we should harvest {} ruby', [pending.toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SUSHI', [pending.toString()])
+      log.info('Harvesting {} RUBY', [pending.toString()])
       const rubyHarvestedUSD = pending.times(getRubyPrice(event.block))
       user.rubyHarvested = user.rubyHarvested.plus(pending)
       user.rubyHarvestedUSD = user.rubyHarvestedUSD.plus(rubyHarvestedUSD)
@@ -373,11 +415,9 @@ export function deposit(event: Deposit): void {
       // log.info(
       //   'Token {} priceUSD: {} reserve: {} amount: {} / Token {} priceUSD: {} reserve: {} amount: {} - slp amount: {} total supply: {} share: {}',
       //   [
-      //     token0.symbol(),
       //     token0PriceUSD.toString(),
       //     reservesResult.value.value0.toString(),
       //     token0Amount.toString(),
-      //     token1.symbol(),
       //     token1PriceUSD.toString(),
       //     reservesResult.value.value1.toString(),
       //     token1Amount.toString(),
@@ -391,10 +431,8 @@ export function deposit(event: Deposit): void {
       //   user.address.toHex(),
       //   amount.toString(),
       //   token0Amount.toString(),
-      //   token0.symbol(),
       //   token0USD.toString(),
       //   token1Amount.toString(),
-      //   token1.symbol(),
       //   token1USD.toString(),
       //   entryUSD.toString(),
       // ])
@@ -410,26 +448,26 @@ export function deposit(event: Deposit): void {
   user.save()
   pool.save()
 
-  const masterChef = getMasterChef(event.block)
+  const masterChef = getOrInsertMasterChef(event.block)
 
   const masterChefDays = event.block.timestamp.minus(masterChef.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  masterChef.slpAge = masterChef.slpAge.plus(masterChefDays.times(masterChef.slpBalance))
+  masterChef.rlpAge = masterChef.rlpAge.plus(masterChefDays.times(masterChef.rlpBalance))
 
-  masterChef.slpDeposited = masterChef.slpDeposited.plus(amount)
-  masterChef.slpBalance = masterChef.slpBalance.plus(amount)
+  masterChef.rlpDeposited = masterChef.rlpDeposited.plus(amount)
+  masterChef.rlpBalance = masterChef.rlpBalance.plus(amount)
 
   masterChef.updatedAt = event.block.timestamp
   masterChef.save()
 
-  const history = getHistory(RUBY_MASTER_CHEF_ADDRESS.toHex(), event.block)
-  history.slpAge = masterChef.slpAge
-  history.slpBalance = masterChef.slpBalance
-  history.slpDeposited = history.slpDeposited.plus(amount)
+  const history = getOrInsertHistory(RUBY_MASTER_CHEF_ADDRESS.toHex(), event.block)
+  history.rlpAge = masterChef.rlpAge
+  history.rlpBalance = masterChef.rlpBalance
+  history.rlpDeposited = history.rlpDeposited.plus(amount)
   history.save()
 
-  poolHistory.slpAge = pool.slpAge
-  poolHistory.slpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
-  poolHistory.slpDeposited = poolHistory.slpDeposited.plus(amount)
+  poolHistory.rlpAge = pool.rlpAge
+  poolHistory.rlpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
+  poolHistory.rlpDeposited = poolHistory.rlpDeposited.plus(amount)
   poolHistory.userCount = pool.userCount
   poolHistory.save()
 }
@@ -444,35 +482,36 @@ export function withdraw(event: Withdraw): void {
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  // log.info('{} has withdrawn {} slp tokens from pool #{}', [
-  //   event.params.user.toHex(),
-  //   amount.toString(),
-  //   event.params.pid.toString(),
-  // ])
+  log.info('{} has withdrawn {} rlp tokens from pool #{}', [
+    event.params.user.toHex(),
+    amount.toString(),
+    event.params.pid.toString(),
+  ])
 
   const masterChefContract = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
 
   const poolInfo = masterChefContract.poolInfo(event.params.pid)
 
-  const pool = getPool(event.params.pid, event.block)
+  const pool = getOrInsertPool(event.params.pid, event.block)
 
-  const poolHistory = getPoolHistory(pool, event.block)
+  const poolHistory = getOrInsertPoolHistory(pool, event.block)
 
   const pairContract = PairContract.bind(poolInfo.value0)
   pool.balance = pairContract.balanceOf(RUBY_MASTER_CHEF_ADDRESS)
-  pool.lastRewardBlock = poolInfo.value2
+  pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
+  pool.rewarder = poolInfo.value4
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  const poolAge = pool.slpAge.plus(poolDays.times(pool.slpBalance))
-  const poolAgeRemoved = poolAge.div(pool.slpBalance).times(amount)
-  pool.slpAge = poolAge.minus(poolAgeRemoved)
-  pool.slpAgeRemoved = pool.slpAgeRemoved.plus(poolAgeRemoved)
-  pool.slpWithdrawn = pool.slpWithdrawn.plus(amount)
-  pool.slpBalance = pool.slpBalance.minus(amount)
+  const poolAge = pool.rlpAge.plus(poolDays.times(pool.rlpBalance))
+  const poolAgeRemoved = poolAge.div(pool.rlpBalance).times(amount)
+  pool.rlpAge = poolAge.minus(poolAgeRemoved)
+  pool.rlpAgeRemoved = pool.rlpAgeRemoved.plus(poolAgeRemoved)
+  pool.rlpWithdrawn = pool.rlpWithdrawn.plus(amount)
+  pool.rlpBalance = pool.rlpBalance.minus(amount)
   pool.updatedAt = event.block.timestamp
 
-  const user = getUser(event.params.pid, event.params.user, event.block)
+  const user = getOrInsertUser(event.params.pid, event.params.user, event.block)
 
   if (event.block.number.gt(RUBY_MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
@@ -481,16 +520,16 @@ export function withdraw(event: Withdraw): void {
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Withdraw: User amount is more than zero, we should harvest {} ruby - block: {}', [
-    //   pending.toString(),
-    //   event.block.number.toString(),
-    // ])
-    // log.info('SUSHI PRICE {}', [getRubyPrice(event.block).toString()])
+    log.info('Withdraw: User amount is more than zero, we should harvest {} ruby - block: {}', [
+      pending.toString(),
+      event.block.number.toString(),
+    ])
+    log.info('RUBY PRICE {}', [getRubyPrice(event.block).toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SUSHI (CURRENT SUSHI PRICE {})', [
-      //   pending.toString(),
-      //   getRubyPrice(event.block).toString(),
-      // ])
+      log.info('Harvesting {} RUBY (CURRENT RUBY PRICE {})', [
+        pending.toString(),
+        getRubyPrice(event.block).toString(),
+      ])
       const rubyHarvestedUSD = pending.times(getRubyPrice(event.block))
       user.rubyHarvested = user.rubyHarvested.plus(pending)
       user.rubyHarvestedUSD = user.rubyHarvestedUSD.plus(rubyHarvestedUSD)
@@ -550,7 +589,7 @@ export function withdraw(event: Withdraw): void {
     }
   }
 
-  // If SLP amount equals zero, remove from pool and reduce userCount
+  // If RLP amount equals zero, remove from pool and reduce userCount
   if (user.amount.equals(BIG_INT_ZERO)) {
     user.pool = null
     pool.userCount = pool.userCount.minus(BIG_INT_ONE)
@@ -559,30 +598,30 @@ export function withdraw(event: Withdraw): void {
   user.save()
   pool.save()
 
-  const masterChef = getMasterChef(event.block)
+  const masterChef = getOrInsertMasterChef(event.block)
 
   const days = event.block.timestamp.minus(masterChef.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-  const slpAge = masterChef.slpAge.plus(days.times(masterChef.slpBalance))
-  const slpAgeRemoved = slpAge.div(masterChef.slpBalance).times(amount)
-  masterChef.slpAge = slpAge.minus(slpAgeRemoved)
-  masterChef.slpAgeRemoved = masterChef.slpAgeRemoved.plus(slpAgeRemoved)
+  const rlpAge = masterChef.rlpAge.plus(days.times(masterChef.rlpBalance))
+  const rlpAgeRemoved = rlpAge.div(masterChef.rlpBalance).times(amount)
+  masterChef.rlpAge = rlpAge.minus(rlpAgeRemoved)
+  masterChef.rlpAgeRemoved = masterChef.rlpAgeRemoved.plus(rlpAgeRemoved)
 
-  masterChef.slpWithdrawn = masterChef.slpWithdrawn.plus(amount)
-  masterChef.slpBalance = masterChef.slpBalance.minus(amount)
+  masterChef.rlpWithdrawn = masterChef.rlpWithdrawn.plus(amount)
+  masterChef.rlpBalance = masterChef.rlpBalance.minus(amount)
   masterChef.updatedAt = event.block.timestamp
   masterChef.save()
 
-  const history = getHistory(RUBY_MASTER_CHEF_ADDRESS.toHex(), event.block)
-  history.slpAge = masterChef.slpAge
-  history.slpAgeRemoved = history.slpAgeRemoved.plus(slpAgeRemoved)
-  history.slpBalance = masterChef.slpBalance
-  history.slpWithdrawn = history.slpWithdrawn.plus(amount)
+  const history = getOrInsertHistory(RUBY_MASTER_CHEF_ADDRESS.toHex(), event.block)
+  history.rlpAge = masterChef.rlpAge
+  history.rlpAgeRemoved = history.rlpAgeRemoved.plus(rlpAgeRemoved)
+  history.rlpBalance = masterChef.rlpBalance
+  history.slpWithdrawn = history.rlpWithdrawn.plus(amount)
   history.save()
 
-  poolHistory.slpAge = pool.slpAge
-  poolHistory.slpAgeRemoved = poolHistory.slpAgeRemoved.plus(slpAgeRemoved)
-  poolHistory.slpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
-  poolHistory.slpWithdrawn = poolHistory.slpWithdrawn.plus(amount)
+  poolHistory.rlpAge = pool.slpAge
+  poolHistory.rlpAgeRemoved = poolHistory.rlpAgeRemoved.plus(rlpAgeRemoved)
+  poolHistory.rlpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
+  poolHistory.rlpWithdrawn = poolHistory.rlpWithdrawn.plus(amount)
   poolHistory.userCount = pool.userCount
   poolHistory.save()
 }
@@ -594,18 +633,31 @@ export function emergencyWithdraw(event: EmergencyWithdraw): void {
     event.params.pid.toString(),
   ])
 
-  const pool = getPool(event.params.pid, event.block)
+  const pool = getOrInsertPool(event.params.pid, event.block)
 
   const pairContract = PairContract.bind(pool.pair as Address)
   pool.balance = pairContract.balanceOf(RUBY_MASTER_CHEF_ADDRESS)
   pool.save()
 
   // Update user
-  const user = getUser(event.params.pid, event.params.user, event.block)
+  const user = getOrInsertUser(event.params.pid, event.params.user, event.block)
   user.amount = BIG_INT_ZERO
   user.rewardDebt = BIG_INT_ZERO
 
   user.save()
+}
+
+
+export function updateEmissionRate(event: UpdateEmissionRate): void {
+  log.info('Emission rates updated, new emission rate: {}', [
+    event.params._rubyPerSec.toString()
+  ])
+
+  const masterChef = getOrInsertMasterChef(event.block)
+
+  masterChef.rubyPerSec = event.params._rubyPerSec
+
+  masterChef.save()
 }
 
 export function ownershipTransferred(event: OwnershipTransferred): void {
@@ -613,4 +665,10 @@ export function ownershipTransferred(event: OwnershipTransferred): void {
     event.params.previousOwner.toHex(),
     event.params.newOwner.toHex(),
   ])
+
+  const masterChef = getOrInsertMasterChef(event.block)
+
+  masterChef.owner = event.params.newOwner
+
+  masterChef.save()
 }

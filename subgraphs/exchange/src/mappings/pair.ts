@@ -22,7 +22,7 @@ import {
   updatePairHourData,
   updateTokenDayData,
 } from '../enitites'
-import { findEthPerToken, getEthPrice } from '../pricing'
+import { getEthRate, getEthPrice } from '../pricing'
 
 const BLACKLIST_EXCHANGE_VOLUME: string[] = [
   '0x9ea3b5b4ec044b70375236a281986106457b20ef', // DELTA
@@ -331,8 +331,11 @@ export function onSync(event: SyncEvent): void {
   bundle.ethPrice = getEthPrice(event.block)
   bundle.save()
 
-  token0.derivedETH = findEthPerToken(token0 as Token)
-  token1.derivedETH = findEthPerToken(token1 as Token)
+  const token0Address = Address.fromString(token0.id)
+  const token1Address = Address.fromString(token1.id)
+
+  token0.derivedETH = getEthRate(token0Address)
+  token1.derivedETH = getEthRate(token1Address)
   token0.save()
   token1.save()
 
