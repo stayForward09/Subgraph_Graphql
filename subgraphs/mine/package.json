@@ -1,0 +1,25 @@
+{
+    "name": "bar",
+    "license": "MIT",
+    "version": "1.0.0",
+    "author": "RubyExchange",
+    "scripts": {
+        "codegen": "graph codegen subgraph.yaml",
+        "build": "graph build subgraph.yaml",
+        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sushiswap/mine subgraph.yaml",
+        
+        "deploy-studio": "graph deploy --studio sushi---sushibar",
+        
+        "create-local": "graph create --node http://localhost:8020/ ruby/mine",
+        "remove-local": "graph remove --node http://localhost:8020/ ruby/mine",
+        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ruby/mine",
+        
+        "create-skaleTestnet": "graph create --node http://3.85.172.153:8020/ ruby/mine",
+        "remove-skaleTestnet": "graph remove --node http://3.85.172.153:8020/ ruby/mine",
+        "deploy-skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001 ruby/mine",
+
+
+        "prepare:localhost": "mustache config/localhost.json template.yaml > subgraph.yaml",
+        "prepare:skaleTestnet": "mustache config/skaleTestnet.json template.yaml > subgraph.yaml"    
+    }
+}

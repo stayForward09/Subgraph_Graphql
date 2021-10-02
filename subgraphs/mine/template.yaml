@@ -1,0 +1,31 @@
+specVersion: 0.0.3
+description: Mine
+repository: https://github.com/ruby/ruby-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: RubyMine
+    network: {{ network }}
+    source:
+      address: '{{ address }}'
+      abi: Mine
+      startBlock: {{ startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Mine
+        - User
+      abis:
+        - name: Mine
+          file: ../../packages/abis/RubyMine.json
+        - name: RubyToken
+          file: ../../packages/abis/RubyToken.json
+        - name: Pair
+          file: ../../packages/abis/UniswapV2Pair.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: transfer
+      file: ./src/mine.ts

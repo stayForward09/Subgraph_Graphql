@@ -1,0 +1,23 @@
+{
+  "name": "timelock",
+  "license": "MIT",
+  "version": "1.0.0",
+  "author": "RubyExchange",
+  "scripts": {
+    "codegen": "graph codegen subgraph.yaml",
+    "build": "graph build subgraph.yaml",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ruby/timelock subgraph.yaml",
+
+    "create-local": "graph create --node http://localhost:8020/ ruby/timelock",
+    "remove-local": "graph remove --node http://localhost:8020/ ruby/timelock",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ruby/timelock",
+
+    "create-skaleTestnet": "graph create --node http://3.85.172.153:8020/ ruby/timelock",
+    "remove-skaleTestnet": "graph remove --node http://3.85.172.153:8020/ ruby/timelock",
+    "deploy-skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001 ruby/timelock",
+
+
+    "prepare:localhost": "mustache config/localhost.json template.yaml > subgraph.yaml",
+    "prepare:skaleTestnet": "mustache config/skaleTestnet.json template.yaml > subgraph.yaml"    
+  }
+}

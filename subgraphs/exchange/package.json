@@ -1,0 +1,28 @@
+{
+    "name": "exchange",
+    "license": "MIT",
+    "version": "1.2.0",
+    "author": "RubyExchange",
+    "files": [
+        "generated"
+    ],
+    "scripts": {
+        "codegen": "graph codegen subgraph.yaml",
+        "build": "graph build subgraph.yaml",
+        "create-local": "graph create --node http://localhost:8020/ ruby/exchange",
+        "remove-local": "graph remove --node http://localhost:8020/ ruby/exchange",
+        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ruby/exchange",
+        "create-skaleTestnet": "graph create --node http://3.85.172.153:8020/ ruby/exchange",
+        "remove-skaleTestnet": "graph remove --node http://3.85.172.153:8020/ ruby/exchange",
+        "deploy-skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001 ruby/exchange",
+
+        "deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sushiswap/exchange subgraph.yaml",
+        "deploy:arbitrum": "graph deploy --product hosted-service matthewlilley/arbitrum-exchange",
+        "deploy:skaleTestnet": "graph deploy --node http://ruby-dev-alb-graphnode-388088392.us-east-1.elb.amazonaws.com:8020/ --ipfs  http://ruby-dev-alb-graphnode-388088392.us-east-1.elb.amazonaws.com:8020 ruby/exchange subgraph.yaml",
+
+        "prepare:arbitrum": "mustache ../../config/arbitrum.json template.yaml > subgraph.yaml",
+        "prepare:localhost": "mustache ../../config/localhost.json template.yaml > subgraph.yaml",
+        "prepare:mainnet": "mustache ../../config/mainnet.json template.yaml > subgraph.yaml",
+        "prepare:skaleTestnet": "mustache ../../config/skaleTestnet.json template.yaml > subgraph.yaml"    
+    }
+}

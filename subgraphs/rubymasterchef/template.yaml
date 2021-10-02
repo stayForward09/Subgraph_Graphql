@@ -1,0 +1,51 @@
+specVersion: 0.0.3
+description: RubyMasterChef
+repository: https://github.com/ruby/ruby-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: RubyMasterChef
+    network: {{ network }}
+    source:
+      address: '{{ address }}'
+      abi: RubyMasterChef
+      startBlock: {{ startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - RubyMasterChef
+        - History
+        - Pool
+        - PoolHistory
+        - User
+        - Rewarder
+      abis:
+        - name: RubyMasterChef
+          file: ../../packages/abis/MasterChef.json
+        - name: Factory
+          file: ../../packages/abis/UniswapV2Factory.json
+        - name: Pair
+          file: ../../packages/abis/UniswapV2Pair.json
+        - name: ERC20
+          file: ../../packages/abis/ERC20.json
+        - name: Rewarder
+          file: ../../packages/abis/Rewarder.json
+      eventHandlers:
+        - event: 'Deposit(indexed address,indexed uint256,uint256)'
+          handler: deposit
+        - event: 'EmergencyWithdraw(indexed address,indexed uint256,uint256)'
+          handler: emergencyWithdraw
+        - event: 'OwnershipTransferred(indexed address,indexed address)'
+          handler: ownershipTransferred
+        - event: 'Withdraw(indexed address,indexed uint256,uint256)'
+          handler: withdraw
+        - event: 'Add(indexed uint256,uint256,indexed address,indexed address)'
+          handler: add
+        - event: 'Set(indexed uint256,uint256,indexed address,bool)'
+          handler: set
+        - event: 'UpdateEmissionRate(indexed address,uint256)'
+          handler: updateEmissionRate
+      file: ./src/rubymasterchef.ts

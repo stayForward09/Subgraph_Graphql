@@ -1,0 +1,254 @@
+# RubyMasterChef
+type RubyMasterChef @entity {
+  # Contract address
+  id: ID!
+
+  # Dev fund address
+  devAddr: Bytes!
+
+  # Treasury
+  treasuryAddr: Bytes!
+
+  # Owner
+  owner: Bytes!
+
+  # Start timestamp
+  startTimestamp: BigInt!
+
+  # Ruby
+  ruby: Bytes!
+
+  # Ruby per sec
+  rubyPerSec: BigInt!
+
+  # Total allocation point
+  totalAllocPoint: BigInt!
+
+  # Pools
+  pools: [Pool!]! @derivedFrom(field: "owner")
+
+  # Pool count
+  poolCount: BigInt!
+
+  # RLP Balance
+  rlpBalance: BigDecimal!
+
+  # RLP Age
+  rlpAge: BigDecimal!
+
+  # RLP Removed
+  rlpAgeRemoved: BigDecimal!
+
+  # RLP Deposited
+  rlpDeposited: BigDecimal!
+
+  # RLP Withdrawn
+  rlpWithdrawn: BigDecimal!
+
+  # History
+  history: [History!]! @derivedFrom(field: "owner")
+
+  # Upated at
+  updatedAt: BigInt!
+}
+
+type History @entity {
+  # Master chef id concatenated with timestamp
+  id: ID!
+
+  # Owner (RubyMasterChef, Pool, or User).
+  owner: RubyMasterChef!
+
+  # RLP Balance
+  rlpBalance: BigDecimal!
+
+  # RLP Age
+  rlpAge: BigDecimal!
+
+  # RLP Removed
+  rlpAgeRemoved: BigDecimal!
+
+  # RLP Deposited
+  rlpDeposited: BigDecimal!
+
+  # RLP Withdrawn
+  rlpWithdrawn: BigDecimal!
+
+  # Timestamp
+  timestamp: BigInt!
+
+  # Block
+  block: BigInt!
+}
+
+# Pool
+type Pool @entity {
+  # Index of pool in poolInfo on RubyMasterChef contract
+  id: ID!
+
+  # Owner
+  owner: RubyMasterChef!
+
+  # Pair Liquidity Token Address
+  pair: Bytes!
+
+  # Rewarder contract address
+  rewarder: Rewarder
+
+  # Allocation point
+  allocPoint: BigInt!
+
+  # Last reward block
+  lastRewardTimestamp: BigInt!
+
+  # Accumulated ruby per share
+  accRubyPerShare: BigInt!
+
+  # RLP token balance
+  balance: BigInt!
+
+  # Pool users
+  users: [User!]! @derivedFrom(field: "pool")
+
+  # User count
+  userCount: BigInt!
+
+  # RLP Balance
+  rlpBalance: BigDecimal!
+
+  # RLP Age
+  rlpAge: BigDecimal!
+
+  # RLP Removed
+  rlpAgeRemoved: BigDecimal!
+
+  # RLP Deposited
+  rlpDeposited: BigDecimal!
+
+  # RLP Withdrawn
+  rlpWithdrawn: BigDecimal!
+
+  # Timestamp
+  timestamp: BigInt!
+
+  # Block
+  block: BigInt!
+
+  # Upated at
+  updatedAt: BigInt!
+
+  # Entry USD
+  entryUSD: BigDecimal!
+
+  # Exit USD
+  exitUSD: BigDecimal!
+
+  # Ruby harvested
+  rubyHarvested: BigDecimal!
+
+  # Ruby harvested
+  rubyHarvestedUSD: BigDecimal!
+}
+
+type Rewarder @entity {
+  # Contract address
+  id: ID!
+
+  # Reward token address
+  rewardToken: Bytes!
+  name: String!
+  symbol: String!
+  decimals: Int!
+
+  tokenPerSec: BigInt!
+
+  endTimestamp: BigInt!
+}
+
+type PoolHistory @entity {
+  # Pool id concatenated with timestamp
+  id: ID!
+
+  # Pool
+  pool: Pool!
+
+  # RLP Balance
+  rlpBalance: BigDecimal!
+
+  # RLP Age
+  rlpAge: BigDecimal!
+
+  # RLP Removed
+  rlpAgeRemoved: BigDecimal!
+
+  # RLP Deposited
+  rlpDeposited: BigDecimal!
+
+  # RLP Withdrawn
+  rlpWithdrawn: BigDecimal!
+
+  # User Count
+  userCount: BigInt!
+
+  # Timestamp
+  timestamp: BigInt!
+
+  # Block
+  block: BigInt!
+
+  # Entry USD
+  entryUSD: BigDecimal!
+
+  # Exit USD
+  exitUSD: BigDecimal!
+
+  # Ruby harvested
+  rubyHarvested: BigDecimal!
+
+  # Ruby harvested
+  rubyHarvestedUSD: BigDecimal!
+}
+
+type User @entity {
+  # Pool id concatenated with user address
+  id: ID!
+
+  # User address
+  address: Bytes!
+
+  # Related pool
+  pool: Pool
+
+  # We do some fancy math here. Basically, any point in time, the amount of JOEs
+  # entitled to a user but is pending to be distributed is:
+  # pending reward = (user.amount * pool.accRubyPerShare) - user.rewardDebt
+  # Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:
+  # 1. The pool's `accRubyPerShare` (and `lastRewardTimestamp`) gets updated.
+  # 2. User receives the pending reward sent to his/her address.
+  # 3. User's `amount` gets updated.
+  # 4. User's `rewardDebt` gets updated.
+
+  # Amount
+  amount: BigInt!
+
+  # Reward debt
+  rewardDebt: BigInt!
+
+  # Entry USD
+  entryUSD: BigDecimal!
+
+  # Exit USD
+  exitUSD: BigDecimal!
+
+  # Ruby harvested
+  rubyHarvested: BigDecimal!
+
+  # Ruby harvested
+  rubyHarvestedUSD: BigDecimal!
+
+  # Timestamp
+  timestamp: BigInt!
+
+  # Block
+  block: BigInt!
+}

@@ -1,0 +1,15 @@
+{
+  "name": "const",
+  "version": "1.0.0",
+  "description": "Constants",
+  "license": "MIT",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "codegen": "true",
+    "build": "true",
+    "prepare:localhost": "mustache ../../config/localhost.json index.template.ts > index.ts",
+    "prepare:skaleTestnet": "mustache ../../config/skaleTestnet.json index.template.ts > index.ts",
+    "prepare:mainnet": "mustache ../../config/mainnet.json index.template.ts > index.ts"
+  }
+}
