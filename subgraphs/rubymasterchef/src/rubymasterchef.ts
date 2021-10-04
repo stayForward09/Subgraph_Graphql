@@ -44,6 +44,7 @@ function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
     masterChef.rubyPerSec = contract.rubyPerSec()
     masterChef.devAddr = contract.devAddr()
     masterChef.treasuryAddr = contract.treasuryAddr()
+    masterChef.treasuryPercent = contract.treasuryPercent()
     masterChef.owner = contract.owner()
     // poolInfo ...
     masterChef.startTimestamp = contract.startTimestamp()
@@ -99,7 +100,6 @@ export function getOrInsertRewarder(rewarderAddress: Address, block: ethereum.Bl
 
   rewarder.endTimestamp = currentTimestamp.plus(numSeconds);
 
-  rewarder.updatedAt = block.timestamp
   rewarder.save()
 
   return rewarder as Rewarder
@@ -131,7 +131,7 @@ export function getOrInsertPool(id: BigInt, block: ethereum.Block): Pool {
     pool.allocPoint = poolInfo.value1
     pool.lastRewardTimestamp = poolInfo.value2
     pool.accRubyPerShare = poolInfo.value3
-    pool.rewarder = getOrInsertRewarder(poolInfo.value4, block)
+    pool.rewarder = (getOrInsertRewarder(poolInfo.value4, block)).id
 
     // Total supply of LP tokens
     pool.balance = BIG_INT_ZERO
@@ -194,7 +194,7 @@ function getOrInsertPoolHistory(pool: Pool, block: ethereum.Block): PoolHistory 
     history.rlpAgeRemoved = BIG_DECIMAL_ZERO
     history.rlpDeposited = BIG_DECIMAL_ZERO
     history.rlpWithdrawn = BIG_DECIMAL_ZERO
-    history.userCount = BIG_DECIMAL_ZERO
+    history.userCount = BIG_INT_ZERO
     history.timestamp = block.timestamp
     history.block = block.number
     history.entryUSD = BIG_DECIMAL_ZERO
@@ -246,11 +246,10 @@ export function add(event: Add): void {
 }
 
 export function set(event: Set): void {
-  log.info('Pool set: pid {}, allocPoint: {}, rewarder: {}, overwrite: {}', [
+  log.info('Pool set: pid {}, allocPoint: {}, rewarder: {}', [
     event.params.pid.toString(),
     event.params.allocPoint.toString(),
-    event.params.rewarder.toHex(),
-    event.params.overwrite
+    event.params.rewarder.toHex()
   ])
 
   const pool = getOrInsertPool(event.params.pid, event.block)
@@ -281,7 +280,7 @@ export function updatePool(pid: BigInt, masterChef: RubyMasterChefContract, bloc
   const pool = getOrInsertPool(pid, block)
   pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
-  pool.rewarder = getOrInsertRewarder(poolInfo.value4, block)
+  pool.rewarder = (getOrInsertRewarder(poolInfo.value4, block)).id
   pool.save()
 }
 
@@ -347,7 +346,7 @@ export function deposit(event: Deposit): void {
 
   pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
-  pool.rewarder = poolInfo.value4
+  pool.rewarder = poolInfo.value4.toHex()
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
   pool.rlpAge = pool.rlpAge.plus(poolDays.times(pool.rlpBalance))
@@ -413,7 +412,7 @@ export function deposit(event: Deposit): void {
       const entryUSD = token0USD.plus(token1USD)
 
       // log.info(
-      //   'Token {} priceUSD: {} reserve: {} amount: {} / Token {} priceUSD: {} reserve: {} amount: {} - slp amount: {} total supply: {} share: {}',
+      //   'Token {} priceUSD: {} reserve: {} amount: {} / Token {} priceUSD: {} reserve: {} amount: {} - rlp amount: {} total supply: {} share: {}',
       //   [
       //     token0PriceUSD.toString(),
       //     reservesResult.value.value0.toString(),
@@ -500,7 +499,7 @@ export function withdraw(event: Withdraw): void {
   pool.balance = pairContract.balanceOf(RUBY_MASTER_CHEF_ADDRESS)
   pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
-  pool.rewarder = poolInfo.value4
+  pool.rewarder = poolInfo.value4.toHex()
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
   const poolAge = pool.rlpAge.plus(poolDays.times(pool.rlpBalance))
@@ -615,10 +614,10 @@ export function withdraw(event: Withdraw): void {
   history.rlpAge = masterChef.rlpAge
   history.rlpAgeRemoved = history.rlpAgeRemoved.plus(rlpAgeRemoved)
   history.rlpBalance = masterChef.rlpBalance
-  history.slpWithdrawn = history.rlpWithdrawn.plus(amount)
+  history.rlpWithdrawn = history.rlpWithdrawn.plus(amount)
   history.save()
 
-  poolHistory.rlpAge = pool.slpAge
+  poolHistory.rlpAge = pool.rlpAge
   poolHistory.rlpAgeRemoved = poolHistory.rlpAgeRemoved.plus(rlpAgeRemoved)
   poolHistory.rlpBalance = pool.balance.divDecimal(BIG_DECIMAL_1E18)
   poolHistory.rlpWithdrawn = poolHistory.rlpWithdrawn.plus(amount)

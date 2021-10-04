@@ -4,15 +4,28 @@ import { BIG_INT_ONE } from 'const'
 import { PairCreated } from '../../generated/Factory/Factory'
 import { Pair as PairTemplate } from '../../generated/templates'
 
+import { log } from '@graphprotocol/graph-ts'
+
 export function onPairCreated(event: PairCreated): void {
+
+  log.info('Pair params: pair {}, block {}, token0 {}, token1 {}', 
+  [event.params.pair.toHex(), event.block.number.toString(), event.params.token0.toHex(), event.params.token1.toHex() ])
+
   const factory = getFactory()
+
+
+  log.info('Factory obtained {}', [factory.id])
 
   const pair = getPair(event.params.pair, event.block, event.params.token0, event.params.token1)
 
   // We returned null for some reason, we should silently bail without creating this pair
   if (!pair) {
+    log.info('Pair not obtained successfully', [])
     return
   }
+
+  log.info('Pair obtained successfully, id: {}', [pair.id.toString()])
+
 
   // Now it's safe to save
   pair.save()
@@ -23,4 +36,7 @@ export function onPairCreated(event: PairCreated): void {
   // Update pair count once we've sucessesfully created a pair
   factory.pairCount = factory.pairCount.plus(BIG_INT_ONE)
   factory.save()
+
+  log.info('Pair created, factory saved, ID: {}', [factory.id.toString()])
+
 }

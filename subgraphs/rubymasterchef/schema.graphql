@@ -9,6 +9,9 @@ type RubyMasterChef @entity {
   # Treasury
   treasuryAddr: Bytes!
 
+  # Treasury percent
+  treasuryPercent: BigInt!
+
   # Owner
   owner: Bytes!
 

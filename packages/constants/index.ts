@@ -28,80 +28,87 @@ export const LOCKUP_POOL_NUMBER = BigInt.fromI32(29)
 
 export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
-// EXCHANGE 
+
+// EXCHANGE
 export const FACTORY_ADDRESS = Address.fromString(
-  '0xc35dadb65012ec5796536bd9864ed8773abc74c4'
+  '0x5FbDB2315678afecb367f032d93F642f64180aa3'
 )
 
-export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromI32(1)
+export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
+  '1000'
+)
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
-  '0x39cf1bd5f15fb22ec3d9ff86b0727afc203427cc'
+  '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707'
 )
 
 // MASTER CHEF
-export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromI32(1)
-
-export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0x0000000000000000000000000000000000000000'
+export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
+  '1'
 )
 
+export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
+  '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853'
+)
 
 // MINE (BAR)
 export const RUBY_MINE_ADDRESS = Address.fromString(
-  '0x0000000000000000000000000000000000000000'
+  '0x1be211d8da40bc0ae8719c6663307bfc987b1d6c'
 )
 
 // DIGGER (MAKER)
 export const RUBY_DIGGER_ADDRESS = Address.fromString(
-  '0x0000000000000000000000000000000000000000'
+  '0x1b9d177ccdea3c79b6c8f40761fc8dc9d0500eaa'
 )
 
 // PRICING
-export const RUBY_CETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '0x0000000000000000000000000000000000000000'
-)
-export const RUBY_USDT_PAIR_ADDRESS = Address.fromString(
-  '0x0000000000000000000000000000000000000000'
+
+export const RUBY_WETH_USDT_PAIR_ADDRESS = Address.fromString(
+  '0x1Bb0cb8447B7482CDB1682cBb28A0Ceaf71fd865'
 )
 
-export const CETH_ADDRESS = Address.fromString(
-  '0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab'
+
+export const RUBY_USDT_PAIR_ADDRESS = Address.fromString(
+  '0x159345F18cD4C9B6534a3BA4Df462fDc69d1F920'
 )
+
+export const RUBY_USDC_PAIR_ADDRESS = Address.fromString(
+  '0xcD94A26c2173bB5D3fd425550CC75d729B70A06a'
+)
+
+
+export const WETH_ADDRESS = Address.fromString(
+  '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+)
+
 export const USDT_ADDRESS = Address.fromString(
-  '0xc7198437980c041c805a1edcba50c1ce5db95118'
+  '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9'
 )
+
 
 export const USDC_ADDRESS = Address.fromString(
-  '0xc7198437980c041c805a1edcba50c1ce5db95118'
+  '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9'
 )
+
 
 export const WBTC_ADDRESS = Address.fromString(
   '0x0000000000000000000000000000000000000000'
 )
 
-export const CETH_STABLE_PAIRS: string[] = [
-  '0xed8cbd9f0ce3c6986b22002f03c6475ceb7a6256', // CETH-USDT
-  '0x87dee1cc9ffd464b79e058ba20387c1984aed86a',  // CETH-USDC
-]
+export const WETH_STABLE_PAIRS: string[] = '0x1Bb0cb8447B7482CDB1682cBb28A0Ceaf71fd865,0xf2863c6589b79C099D1174406f4b93C157565c39'.split(',')
+export const WHITELIST: string[] = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512,0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9,0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9'.split(',')
 
-export const WHITELIST: string[] = [
-  '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7', // CETH
-  '0x50b7545627a5162f82a992c33b87adc75187b218', // WBTC
-  '0xc7198437980c041c805a1edcba50c1ce5db95118', // USDT
-  '0xd586e7f844cea2f87f50152665bcbc2c279d8d70', // DAI
-  '0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664', // USDC
-]
 
-// MISC
+//MISC
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
 export const MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString(
-  '0'
+  '3000'
 )
 
 // minimum liquidity for price to get tracked
-export const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('5')
+export const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('1000')
 
 
 export const ACC_RUBY_PRECISION = BigInt.fromString('1000000000000')
+

@@ -7,9 +7,9 @@ import {
   BIG_INT_ZERO,
   FACTORY_ADDRESS,
   RUBY_USDT_PAIR_ADDRESS,
-  RUBY_CETH_USDT_PAIR_ADDRESS,
+  RUBY_WETH_USDT_PAIR_ADDRESS,
   USDT_ADDRESS,
-  CETH_ADDRESS,
+  WETH_ADDRESS,
   RUBY_EXCHANGE_START_BLOCK
   
 } from "const";
@@ -36,7 +36,7 @@ export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
     return BIG_DECIMAL_ZERO
   }
 
-  let address = RUBY_CETH_USDT_PAIR_ADDRESS
+  let address = RUBY_WETH_USDT_PAIR_ADDRESS
 
   const tokenPriceETH = getEthRate(token, block)
 
@@ -59,7 +59,7 @@ export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
 }
 
 export function getEthRate(token: Address, block: ethereum.Block): BigDecimal {
-  if (token == CETH_ADDRESS) {
+  if (token == WETH_ADDRESS) {
     return BIG_DECIMAL_ONE
   }
 
@@ -69,7 +69,7 @@ export function getEthRate(token: Address, block: ethereum.Block): BigDecimal {
   }
   const factory = FactoryContract.bind(FACTORY_ADDRESS)
 
-  const address = factory.getPair(token, CETH_ADDRESS)
+  const address = factory.getPair(token, WETH_ADDRESS)
 
   if (address == ADDRESS_ZERO) {
     log.info('Address ZERO...', [])
@@ -91,7 +91,7 @@ export function getEthRate(token: Address, block: ethereum.Block): BigDecimal {
   }
 
   let eth =
-    pair.token0() == CETH_ADDRESS
+    pair.token0() == WETH_ADDRESS
       ? reserves.value0.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value1.toBigDecimal())
       : reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value0.toBigDecimal())
 

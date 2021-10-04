@@ -5,8 +5,8 @@ import {
   FACTORY_ADDRESS,
   WHITELIST,
   RUBY_USDT_PAIR_ADDRESS,
-  CETH_STABLE_PAIRS,
-  CETH_ADDRESS,
+  WETH_STABLE_PAIRS,
+  WETH_ADDRESS,
   USDT_ADDRESS,
   RUBY_TOKEN_ADDRESS,
   RUBY_EXCHANGE_START_BLOCK,
@@ -19,7 +19,7 @@ import { Factory as FactoryContract } from '../generated/Factory/Factory'
 export const factoryContract = FactoryContract.bind(FACTORY_ADDRESS)
 
 /*
- * Base RUBY price using RUBY/CETH * CETH. 
+ * Base RUBY price using RUBY/WETH * WETH. 
  */
 export function getRubyPrice(block: ethereum.Block = null): BigDecimal {
   const eth_rate = getEthRate(RUBY_TOKEN_ADDRESS)
@@ -47,7 +47,7 @@ export function getWavgRubyPrice(block: ethereum.Block = null): BigDecimal {
     : BIG_DECIMAL_ZERO
 
   // get RUBY/ETH
-  const ruby_ceth_address = factoryContract.getPair(RUBY_TOKEN_ADDRESS, CETH_ADDRESS)
+  const ruby_ceth_address = factoryContract.getPair(RUBY_TOKEN_ADDRESS, WETH_ADDRESS)
   const eth_pair = Pair.load(ruby_ceth_address.toString())
   const eth_rate = eth_pair
     ? eth_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
@@ -82,8 +82,8 @@ export function getEthPrice(block: ethereum.Block = null): BigDecimal {
   let total_weight = BIG_DECIMAL_ZERO
   let sum_price = BIG_DECIMAL_ZERO
 
-  for (let i = 0; i < CETH_STABLE_PAIRS.length; ++i) {
-    const pair_address = CETH_STABLE_PAIRS[i]
+  for (let i = 0; i < WETH_STABLE_PAIRS.length; ++i) {
+    const pair_address = WETH_STABLE_PAIRS[i]
     const pair = Pair.load(pair_address)
     const price = _getEthPrice(pair)
     const weight = _getEthReserve(pair)
@@ -103,7 +103,7 @@ function _getEthPrice(pair: Pair | null): BigDecimal {
   if (pair == null) {
     return BIG_DECIMAL_ZERO
   }
-  const eth = pair.token0 == CETH_ADDRESS.toHexString() ? pair.token1Price : pair.token0Price
+  const eth = pair.token0 == WETH_ADDRESS.toHexString() ? pair.token1Price : pair.token0Price
   return eth
 }
 
@@ -112,7 +112,7 @@ function _getEthReserve(pair: Pair | null): BigDecimal {
   if (pair == null) {
     return BIG_DECIMAL_ZERO
   }
-  const eth = pair.token0 == CETH_ADDRESS.toHexString() ? pair.reserve0 : pair.reserve1
+  const eth = pair.token0 == WETH_ADDRESS.toHexString() ? pair.reserve0 : pair.reserve1
   return eth
 }
 
@@ -121,7 +121,7 @@ function _getEthReserve(pair: Pair | null): BigDecimal {
  * Loop through WHITELIST to get Eth/Token rate.
  */
 export function getEthRate(address: Address): BigDecimal {
-  if (address == CETH_ADDRESS) {
+  if (address == WETH_ADDRESS) {
     return BIG_DECIMAL_ONE
   }
   // TODO: This is slow, and this function is called quite often.

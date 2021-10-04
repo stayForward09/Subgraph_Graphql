@@ -2,23 +2,24 @@
     "name": "masterchef",
     "license": "MIT",
     "version": "1.0.0",
-    "author": "SushiSwap",
+    "author": "RubyExchange",
     "scripts": {
         "codegen": "graph codegen subgraph.yaml",
         "build": "graph build subgraph.yaml",
-        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sushiswap/master-chef subgraph.yaml",
-        "deploy-studio": "graph deploy --studio sushi---masterchef",
-        "create-local": "graph create --node http://localhost:8020/ /sushiswap/sushiswap",
-        "remove-local": "graph remove --node http://localhost:8020/ /sushiswap/sushiswap",
-        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /sushiswap/sushiswap",
-        "prepare:bsc": "mustache config/bsc.json template.yaml > subgraph.yaml",
-        "prepare:fantom": "mustache config/fantom.json template.yaml > subgraph.yaml",
-        "prepare:goerli": "mustache config/goerli.json template.yaml > subgraph.yaml",
-        "prepare:kovan": "mustache config/kovan.json template.yaml > subgraph.yaml",
-        "prepare:mainnet": "mustache config/mainnet.json template.yaml > subgraph.yaml",
-        "prepare:matic": "mustache config/matic.json template.yaml > subgraph.yaml",
-        "prepare:rinkeby": "mustache config/rinkeby.json template.yaml > subgraph.yaml",
-        "prepare:ropsten": "mustache config/ropsten.json template.yaml > subgraph.yaml",
-        "prepare:xdai": "mustache config/xdai.json template.yaml > subgraph.yaml"
+        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ruby/masterchef subgraph.yaml",
+        
+        "deploy-studio": "graph deploy --studio sushi---sushibar",
+        
+        "create-local": "graph create --node http://localhost:8020/ ruby/masterchef",
+        "remove-local": "graph remove --node http://localhost:8020/ ruby/masterchef",
+        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ruby/masterchef",
+        
+        "create-skaleTestnet": "graph create --node http://3.85.172.153:8020/ ruby/masterchef",
+        "remove-skaleTestnet": "graph remove --node http://3.85.172.153:8020/ ruby/masterchef",
+        "deploy-skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001 ruby/masterchef",
+
+
+        "prepare:localhost": "mustache config/localhost.json template.yaml > subgraph.yaml",
+        "prepare:skaleTestnet": "mustache config/skaleTestnet.json template.yaml > subgraph.yaml"   
     }
 }

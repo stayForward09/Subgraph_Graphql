@@ -39,7 +39,7 @@ export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
-  '{{ ruby_address }}{{^ruby_address}}0x0000000000000000000000000000000000000000{{/ruby_address}}'
+  '{{ ruby_token_address }}{{^ruby_token_address}}0x0000000000000000000000000000000000000000{{/ruby_token_address}}'
 )
 
 // MASTER CHEF
@@ -63,8 +63,8 @@ export const RUBY_DIGGER_ADDRESS = Address.fromString(
 
 // PRICING
 
-export const RUBY_CETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ ruby_ceth_usdt_pair_address }}{{^ruby_ceth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_ceth_usdt_pair_address}}'
+export const RUBY_WETH_USDT_PAIR_ADDRESS = Address.fromString(
+  '{{ ruby_weth_usdt_pair_address }}{{^ruby_weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_weth_usdt_pair_address}}'
 )
 
 
@@ -72,8 +72,13 @@ export const RUBY_USDT_PAIR_ADDRESS = Address.fromString(
   '{{ ruby_usdt_pair_address }}{{^ruby_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_usdt_pair_address}}'
 )
 
-export const CETH_ADDRESS = Address.fromString(
-  '{{ ceth_address }}{{^weth_address}}0x0000000000000000000000000000000000000000{{/ceth_address}}'
+export const RUBY_USDC_PAIR_ADDRESS = Address.fromString(
+  '{{ ruby_usdc_pair_address }}{{^ruby_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_usdc_pair_address}}'
+)
+
+
+export const WETH_ADDRESS = Address.fromString(
+  '{{ weth_address }}{{^weth_address}}0x0000000000000000000000000000000000000000{{/weth_address}}'
 )
 
 export const USDT_ADDRESS = Address.fromString(
@@ -90,7 +95,7 @@ export const WBTC_ADDRESS = Address.fromString(
   '{{ wbtc_address }}{{^wbtc_address}}0x0000000000000000000000000000000000000000{{/wbtc_address}}'
 )
 
-export const CETH_STABLE_PAIRS: string[] = '{{ ceth_stable_pairs }}'.split(',')
+export const WETH_STABLE_PAIRS: string[] = '{{ weth_stable_pairs }}'.split(',')
 export const WHITELIST: string[] = '{{ whitelist }}'.split(',')
 
 

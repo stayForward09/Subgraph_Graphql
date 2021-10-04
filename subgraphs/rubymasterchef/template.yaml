@@ -24,7 +24,7 @@ dataSources:
         - Rewarder
       abis:
         - name: RubyMasterChef
-          file: ../../packages/abis/MasterChef.json
+          file: ../../packages/abis/RubyMasterChef.json
         - name: Factory
           file: ../../packages/abis/UniswapV2Factory.json
         - name: Pair
