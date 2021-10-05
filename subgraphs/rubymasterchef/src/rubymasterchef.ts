@@ -28,6 +28,7 @@ import {
   BIG_INT_ZERO,
   RUBY_MASTER_CHEF_ADDRESS,
   RUBY_MASTER_CHEF_START_BLOCK,
+  ADDRESS_ZERO
 } from 'const'
 
 import { History, RubyMasterChef, Pool, PoolHistory, User, Rewarder } from '../generated/schema'
@@ -71,7 +72,9 @@ function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
 
 export function getOrInsertRewarder(rewarderAddress: Address, block: ethereum.Block ): Rewarder {
 
-  if(rewarderAddress === null) {
+  log.info("Getting or inserting rewarder, address: {}", [rewarderAddress.toHex()])
+
+  if(rewarderAddress == ADDRESS_ZERO) {
     return null
   }
 
@@ -109,6 +112,8 @@ export function getOrInsertRewarder(rewarderAddress: Address, block: ethereum.Bl
 export function getOrInsertPool(id: BigInt, block: ethereum.Block): Pool {
   let pool = Pool.load(id.toString())
 
+  log.info("Getting or inserting pool, id: {}", [id.toString()])
+
   if (pool === null) {
     const masterChef = getOrInsertMasterChef(block)
 
@@ -131,7 +136,11 @@ export function getOrInsertPool(id: BigInt, block: ethereum.Block): Pool {
     pool.allocPoint = poolInfo.value1
     pool.lastRewardTimestamp = poolInfo.value2
     pool.accRubyPerShare = poolInfo.value3
-    pool.rewarder = (getOrInsertRewarder(poolInfo.value4, block)).id
+    const rewarder = getOrInsertRewarder(poolInfo.value4, block)
+    if(rewarder !== null ) {
+      pool.rewarder = rewarder.id
+    }
+    
 
     // Total supply of LP tokens
     pool.balance = BIG_INT_ZERO
@@ -276,11 +285,23 @@ export function massUpdatePools(block: ethereum.Block): void {
 }
 
 export function updatePool(pid: BigInt, masterChef: RubyMasterChefContract, block: ethereum.Block): void {
+
+  log.info('Updating pool, id {}', [pid.toString()])
+
+
   const poolInfo = masterChef.poolInfo(pid)
+
+  log.info("Updating pool, lastRewardTimestamp: {}, accRubPerShare: {}, rewarder: {}", [poolInfo.value2.toString(), poolInfo.value3.toString(), poolInfo.value4.toHex()])
+
   const pool = getOrInsertPool(pid, block)
   pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
-  pool.rewarder = (getOrInsertRewarder(poolInfo.value4, block)).id
+
+  const rewarder = getOrInsertRewarder(poolInfo.value4, block)
+  if(rewarder !== null ) {
+    pool.rewarder = rewarder.id
+  }
+
   pool.save()
 }
 
@@ -346,7 +367,10 @@ export function deposit(event: Deposit): void {
 
   pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
-  pool.rewarder = poolInfo.value4.toHex()
+  if (poolInfo.value4 != ADDRESS_ZERO) {
+    pool.rewarder = poolInfo.value4.toHex()
+  }
+  
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
   pool.rlpAge = pool.rlpAge.plus(poolDays.times(pool.rlpBalance))
@@ -499,7 +523,12 @@ export function withdraw(event: Withdraw): void {
   pool.balance = pairContract.balanceOf(RUBY_MASTER_CHEF_ADDRESS)
   pool.lastRewardTimestamp = poolInfo.value2
   pool.accRubyPerShare = poolInfo.value3
-  pool.rewarder = poolInfo.value4.toHex()
+  
+  
+  if(poolInfo.value4 != ADDRESS_ZERO) {
+    pool.rewarder = poolInfo.value4.toHex()
+  }
+  
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
   const poolAge = pool.rlpAge.plus(poolDays.times(pool.rlpBalance))

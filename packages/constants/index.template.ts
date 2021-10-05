@@ -35,7 +35,7 @@ export const FACTORY_ADDRESS = Address.fromString(
 )
 
 export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
-  '{{ minimum_liquidity_threshold_eth }}'
+  '{{ ruby_exchange_start_block }}'
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
@@ -95,6 +95,7 @@ export const WBTC_ADDRESS = Address.fromString(
   '{{ wbtc_address }}{{^wbtc_address}}0x0000000000000000000000000000000000000000{{/wbtc_address}}'
 )
 
+// IMPORTANT NOTE: Always make sure this addresses are set to lowercase in the config files. They are compared as strings and not as entities of type Address in the indexing files
 export const WETH_STABLE_PAIRS: string[] = '{{ weth_stable_pairs }}'.split(',')
 export const WHITELIST: string[] = '{{ whitelist }}'.split(',')
 

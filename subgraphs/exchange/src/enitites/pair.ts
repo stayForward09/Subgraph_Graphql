@@ -1,4 +1,4 @@
-import { Address, ethereum } from '@graphprotocol/graph-ts'
+import { Address, ethereum, log } from '@graphprotocol/graph-ts'
 import { BIG_DECIMAL_ZERO, BIG_INT_ZERO, FACTORY_ADDRESS, WHITELIST } from 'const'
 
 import { Pair } from '../../generated/schema'
@@ -12,6 +12,8 @@ export function getPair(
   token1FromParams: Address = null
 ): Pair | null {
   let pair = Pair.load(address.toHex())
+
+
 
   if (pair === null) {
     const pairContract = PairContract.bind(address)
@@ -32,12 +34,16 @@ export function getPair(
 
     pair = new Pair(address.toHex())
 
+    log.info("getPair whitelist tokens: 0 {}, 1 {}, 2 {}", [WHITELIST[0], WHITELIST[1], WHITELIST[2]])
+
     if (WHITELIST.includes(token0.id)) {
+      log.info("WHITELIST INCLUDES TOKEN0",  [token0.id])
       const newPairs = token1.whitelistPairs
       newPairs.push(pair.id)
       token1.whitelistPairs = newPairs
     }
     if (WHITELIST.includes(token1.id)) {
+      log.info("WHITELIST INCLUDES TOKEN1",  [token0.id])
       const newPairs = token0.whitelistPairs
       newPairs.push(pair.id)
       token0.whitelistPairs = newPairs

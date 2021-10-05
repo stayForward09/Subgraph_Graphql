@@ -47,8 +47,8 @@ export function getWavgRubyPrice(block: ethereum.Block = null): BigDecimal {
     : BIG_DECIMAL_ZERO
 
   // get RUBY/ETH
-  const ruby_ceth_address = factoryContract.getPair(RUBY_TOKEN_ADDRESS, WETH_ADDRESS)
-  const eth_pair = Pair.load(ruby_ceth_address.toString())
+  const ruby_weth_address = factoryContract.getPair(RUBY_TOKEN_ADDRESS, WETH_ADDRESS)
+  const eth_pair = Pair.load(ruby_weth_address.toString())
   const eth_rate = eth_pair
     ? eth_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
       ? eth_pair.token1Price
@@ -79,6 +79,10 @@ export function getWavgRubyPrice(block: ethereum.Block = null): BigDecimal {
  *
  */
 export function getEthPrice(block: ethereum.Block = null): BigDecimal {
+
+  log.info("getEthPrice, block: {}", [block.number.toString()])
+  log.info("num weth stable pairs: {}", [`${WETH_STABLE_PAIRS.length}`])
+  
   let total_weight = BIG_DECIMAL_ZERO
   let sum_price = BIG_DECIMAL_ZERO
 
@@ -88,17 +92,22 @@ export function getEthPrice(block: ethereum.Block = null): BigDecimal {
     const price = _getEthPrice(pair)
     const weight = _getEthReserve(pair)
 
+    log.info("WETH STABLE PAIR: index {}, address: {}, price: {}, weight: {}", [i.toString(), pair_address.toString(), price.toString(), weight.toString()])
+
     total_weight = total_weight.plus(weight)
     sum_price = sum_price.plus(price.times(weight))
-    log.debug('getEthPrice, address: {}, price: {}, weight: {}', [pair_address, price.toString(), weight.toString()])
+    log.info('getEthPrice, address: {}, price: {}, weight: {}', [pair_address, price.toString(), weight.toString()])
   }
+
+  log.info("getEthPrice total: weight {}, price {}", [total_weight.toString(), sum_price.toString()])
 
   // div by 0
   const eth_price = total_weight.equals(BIG_DECIMAL_ZERO) ? BIG_DECIMAL_ZERO : sum_price.div(total_weight)
+
   return eth_price
 }
 
-// returns eth price given e.g. eth-usdt or eth-dai pair
+// returns eth price given e.g. eth-usdt or eth-usdc pair
 function _getEthPrice(pair: Pair | null): BigDecimal {
   if (pair == null) {
     return BIG_DECIMAL_ZERO
@@ -107,7 +116,7 @@ function _getEthPrice(pair: Pair | null): BigDecimal {
   return eth
 }
 
-// returns eth reserves given e.g. eth-usdt or eth-dai pair
+// returns eth reserves given e.g. eth-usdt or eth-usdc pair
 function _getEthReserve(pair: Pair | null): BigDecimal {
   if (pair == null) {
     return BIG_DECIMAL_ZERO

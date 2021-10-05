@@ -39,6 +39,7 @@ export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
   let address = RUBY_WETH_USDT_PAIR_ADDRESS
 
   const tokenPriceETH = getEthRate(token, block)
+  log.info("Token price eth, token: {}, tokenPriceETH: {}", [token.toHex(), tokenPriceETH.toString()])
 
   const pair = PairContract.bind(address)
 
@@ -54,6 +55,9 @@ export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
   const reserve1 = reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18)
 
   const ethPriceUSD = reserve1.div(reserve0).div(BIG_DECIMAL_1E6).times(BIG_DECIMAL_1E18)
+
+  log.info("Eth price USD: {}", [ethPriceUSD.toString()])
+
 
   return ethPriceUSD.times(tokenPriceETH)
 }
@@ -115,5 +119,10 @@ export function getRubyPrice(block: ethereum.Block): BigDecimal {
     log.error('[getRubyPrice] USDT reserve 0', [])
     return BIG_DECIMAL_ZERO
   }
-  return reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value0.toBigDecimal()).div(BIG_DECIMAL_1E6)
+  const result = reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value0.toBigDecimal()).div(BIG_DECIMAL_1E6)
+
+
+  log.info("Ruby Price: {}", [result.toString()])
+
+  return result
 }

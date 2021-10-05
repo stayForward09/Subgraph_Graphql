@@ -149,6 +149,8 @@ export function onTransfer(event: TransferEvent): void {
     return
   }
 
+  log.info("onTransfer, params: pair {}, from {}, to {}, value {}", [event.address.toHex(), event.params.from.toHex(), event.params.to.toHex(), event.params.value.toHex()])
+
   const factory = getFactory()
   const transactionHash = event.transaction.hash.toHex()
 
@@ -294,6 +296,10 @@ export function onTransfer(event: TransferEvent): void {
 }
 
 export function onSync(event: SyncEvent): void {
+
+  log.info("onSync, params: pair {}, reserve0 {}, reserve1 {}", [event.address.toHex(), event.params.reserve0.toString(), event.params.reserve1.toString()])
+
+
   const pair = getPair(event.address, event.block)
 
   const token0 = getToken(Address.fromString(pair.token0))
@@ -331,6 +337,9 @@ export function onSync(event: SyncEvent): void {
   bundle.ethPrice = getEthPrice(event.block)
   bundle.save()
 
+  log.info("onSync, bundle ethPrice {}", [bundle.ethPrice.toString()])
+
+
   const token0Address = Address.fromString(token0.id)
   const token1Address = Address.fromString(token1.id)
 
@@ -338,6 +347,9 @@ export function onSync(event: SyncEvent): void {
   token1.derivedETH = getEthRate(token1Address)
   token0.save()
   token1.save()
+
+  log.info("onSync, derived ETH, token0: {}, token1: {}", [token0.derivedETH.toString(), token1.derivedETH.toString()])
+
 
   // get tracked liquidity - will be 0 if neither is in whitelist
   let trackedLiquidityETH: BigDecimal
@@ -356,6 +368,9 @@ export function onSync(event: SyncEvent): void {
     .plus(pair.reserve1.times(token1.derivedETH as BigDecimal))
   pair.reserveUSD = pair.reserveETH.times(bundle.ethPrice)
 
+  log.info("onSync, pair reserves: ETH {}, USD {}", [pair.reserveETH.toString(), pair.reserveUSD.toString()])
+
+
   // use tracked amounts globally
   factory.liquidityETH = factory.liquidityETH.plus(trackedLiquidityETH)
   factory.liquidityUSD = factory.liquidityETH.times(bundle.ethPrice)
@@ -372,6 +387,10 @@ export function onSync(event: SyncEvent): void {
 }
 
 export function onMint(event: MintEvent): void {
+
+  log.info("onMint, params: pair {}, amount0 {}, amount1 {}, sender {}", [event.address.toString(), event.params.amount0.toString(), event.params.amount1.toString(), event.params.sender.toHex()])
+
+
   const transaction = Transaction.load(event.transaction.hash.toHex())
 
   const mints = transaction.mints
