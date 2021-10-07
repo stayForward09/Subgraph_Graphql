@@ -1,16 +1,25 @@
 {
     "network": "skaleTestnet",
-    "factory_address": "0x5dDB659DAb3bd16aE30EfF4C92Ca09Ca733e4e52",
-    "masterchef_address": "0x80c7dd17b01855a6d2347444a0fcc36136a314de",
-    "sushi_bar_address": "0x1be211d8da40bc0ae8719c6663307bfc987b1d6c",
-    "sushi_maker_address": "0x1b9d177ccdea3c79b6c8f40761fc8dc9d0500eaa",
-    "ruby_token": "0x0DE3bf35C1b87A493286BD111627d2877d72c051",
-    "weth_address": "0xa5F7FAA75420ABd989831cd75b18C0828bfbc9f0",
-    "uniswap_factory_address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+    "factory_address": "0x605C0c28e61d027314791Bbdc8F7A0A2FaaA66e4",
+    "ruby_master_chef_address": "0x1b1Bd64d00b7e54e90Eb96D8233B32DD6eF690a1",
+    "ruby_master_chef_start_block": "602693",
+    "ruby_exchange_start_block": "602693",
+    "ruby_mine_address": "0x1be211d8da40bc0ae8719c6663307bfc987b1d6c",
+    "ruby_digger_address": "0x1b9d177ccdea3c79b6c8f40761fc8dc9d0500eaa",
+    "ruby_token_address": "0x24EbCCc52300e19bf99575840CA4aD3f64Cfd219",
+    "weth_address": "0x2f5c0B8DF7f15dbEF9dEbeb20cf2916Cbff022Bf",
+    "timelock": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+    "ruby_weth_usdt_pair_address":"0x485E45ACd41f9764EAf4Df7e2D7DC00f0667B068",
+    "ruby_usdt_pair_address":"0x0D400c840c2F85f91847EF518f9F9a02f16d8DF1",
+    "ruby_usdc_pair_address":"0x96f6C3CBA18c27907071062aA9Cb6438a21Cf83d",
+    "usdt_address":"0xC30cE3E3616e90dA0459Fc2e84636A6e2974aE31",
+    "usdc_address":"0x370eFEEa88927fe4532C6cC16193f41c9917fb20",
+    "weth_stable_pairs": ["0x485e45acd41f9764eaf4df7e2d7dc00f0667b068", "0x6816475f9ddc982d5f84e9aaec725c167617e2fe"],
+    "whitelist": ["0x2f5c0b8df7f15dbef9debeb20cf2916cbff022bf", "0xc30ce3e3616e90da0459fc2e84636a6e2974ae31", "0x370efeea88927fe4532c6cc16193f41c9917fb20"],
     "minimum_usd_threshold_new_pairs": "3000",
     "minimum_liquidity_threshold_eth": "1000",
     "factory": {
-        "address": "0x5dDB659DAb3bd16aE30EfF4C92Ca09Ca733e4e52",
-        "startBlock": "606755"
+        "address": "0x605C0c28e61d027314791Bbdc8F7A0A2FaaA66e4",
+        "startBlock": "602693"
     }
 }

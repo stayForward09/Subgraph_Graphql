@@ -31,24 +31,24 @@ export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
 // EXCHANGE
 export const FACTORY_ADDRESS = Address.fromString(
-  '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+  '0x605C0c28e61d027314791Bbdc8F7A0A2FaaA66e4'
 )
 
 export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
-  '1'
+  '602693'
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
-  '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707'
+  '0x24EbCCc52300e19bf99575840CA4aD3f64Cfd219'
 )
 
 // MASTER CHEF
 export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
-  '1'
+  '602693'
 )
 
 export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE'
+  '0x1b1Bd64d00b7e54e90Eb96D8233B32DD6eF690a1'
 )
 
 // MINE (BAR)
@@ -64,30 +64,30 @@ export const RUBY_DIGGER_ADDRESS = Address.fromString(
 // PRICING
 
 export const RUBY_WETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '0xf2863c6589b79c099d1174406f4b93c157565c39'
+  '0x485E45ACd41f9764EAf4Df7e2D7DC00f0667B068'
 )
 
 
 export const RUBY_USDT_PAIR_ADDRESS = Address.fromString(
-  '0xcD94A26c2173bB5D3fd425550CC75d729B70A06a'
+  '0x0D400c840c2F85f91847EF518f9F9a02f16d8DF1'
 )
 
 export const RUBY_USDC_PAIR_ADDRESS = Address.fromString(
-  '0x159345F18cD4C9B6534a3BA4Df462fDc69d1F920'
+  '0x96f6C3CBA18c27907071062aA9Cb6438a21Cf83d'
 )
 
 
 export const WETH_ADDRESS = Address.fromString(
-  '0xe7f1725e7734ce288f8367e1bb143e90bb3f0512'
+  '0x2f5c0B8DF7f15dbEF9dEbeb20cf2916Cbff022Bf'
 )
 
 export const USDT_ADDRESS = Address.fromString(
-  '0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9'
+  '0xC30cE3E3616e90dA0459Fc2e84636A6e2974aE31'
 )
 
 
 export const USDC_ADDRESS = Address.fromString(
-  '0xdc64a140aa3e981100a9beca4e685f962f0cf6c9'
+  '0x370eFEEa88927fe4532C6cC16193f41c9917fb20'
 )
 
 
@@ -96,8 +96,8 @@ export const WBTC_ADDRESS = Address.fromString(
 )
 
 // IMPORTANT NOTE: Always make sure this addresses are set to lowercase in the config files. They are compared as strings and not as entities of type Address in the indexing files
-export const WETH_STABLE_PAIRS: string[] = '0x1bb0cb8447b7482cdb1682cbb28a0ceaf71fd865,0xf2863c6589b79c099d1174406f4b93c157565c39'.split(',')
-export const WHITELIST: string[] = '0xe7f1725e7734ce288f8367e1bb143e90bb3f0512,0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9,0xdc64a140aa3e981100a9beca4e685f962f0cf6c9'.split(',')
+export const WETH_STABLE_PAIRS: string[] = '0x485e45acd41f9764eaf4df7e2d7dc00f0667b068,0x6816475f9ddc982d5f84e9aaec725c167617e2fe'.split(',')
+export const WHITELIST: string[] = '0x2f5c0b8df7f15dbef9debeb20cf2916cbff022bf,0xc30ce3e3616e90da0459fc2e84636a6e2974ae31,0x370efeea88927fe4532c6cc16193f41c9917fb20'.split(',')
 
 
 //MISC
