@@ -1,5 +1,5 @@
-# Mine
-type Mine @entity {
+# Bar
+type Bar @entity {
   # Contract address
   id: ID!
 
@@ -45,8 +45,8 @@ type Mine @entity {
   # xRuby age destroyed
   xRubyAgeDestroyed: BigDecimal!
 
-  # Users in the mine
-  users: [User!]! @derivedFrom(field: "mine")
+  # Users in the bar
+  users: [User!]! @derivedFrom(field: "bar")
 
   # Updated at
   updatedAt: BigInt!
@@ -57,8 +57,8 @@ type User @entity {
   # ID
   id: ID!
 
-  # Mine
-  mine: Mine
+  # Bar
+  bar: Bar
 
   # xRuby (balance)
   xRuby: BigDecimal!
@@ -96,7 +96,7 @@ type User @entity {
   # Sum of $ at time of harvesting
   rubyHarvestedUSD: BigDecimal!
 
-  # To get mine pending ruby (xRuby * staked / mine.totalSupply)
+  # To get bar pending ruby (xRuby * staked / bar.totalSupply)
 
   # Ruby Out
   rubyOut: BigDecimal!

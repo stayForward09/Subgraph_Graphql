@@ -9,11 +9,11 @@ import {
   RUBY_USDT_PAIR_ADDRESS,
 } from 'const'
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
-import { Mine, History, User } from '../generated/schema'
-import { Mine as MineContract, Transfer as TransferEvent } from '../generated/RubyMine/Mine'
+import { Bar, History, User } from '../generated/schema'
+import { Bar as BarContract, Transfer as TransferEvent } from '../generated/RubyBar/Bar'
 
-import { Pair as PairContract } from '../generated/RubyMine/Pair'
-import { RubyToken as RubyTokenContract } from '../generated/RubyMine/RubyToken'
+import { Pair as PairContract } from '../generated/RubyBar/Pair'
+import { RubyToken as RubyTokenContract } from '../generated/RubyBar/RubyToken'
 
 // TODO: Get averages of multiple ruby stablecoin pairs
 function getRubyPrice(): BigDecimal {
@@ -22,44 +22,44 @@ function getRubyPrice(): BigDecimal {
   return reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value0.toBigDecimal()).div(BIG_DECIMAL_1E6)
 }
 
-function createMine(block: ethereum.Block): Mine {
-  const contract = MineContract.bind(dataSource.address())
-  const mine = new Mine(dataSource.address().toHex())
-  mine.decimals = contract.decimals()
-  mine.name = contract.name()
-  mine.ruby = contract.ruby()
-  mine.symbol = contract.symbol()
-  mine.totalSupply = BIG_DECIMAL_ZERO
-  mine.rubyStaked = BIG_DECIMAL_ZERO
-  mine.rubyStakedUSD = BIG_DECIMAL_ZERO
-  mine.rubyHarvested = BIG_DECIMAL_ZERO
-  mine.rubyHarvestedUSD = BIG_DECIMAL_ZERO
-  mine.xRubyMinted = BIG_DECIMAL_ZERO
-  mine.xRubyBurned = BIG_DECIMAL_ZERO
-  mine.xRubyAge = BIG_DECIMAL_ZERO
-  mine.xRubyAgeDestroyed = BIG_DECIMAL_ZERO
-  mine.ratio = BIG_DECIMAL_ZERO
-  mine.updatedAt = block.timestamp
-  mine.save()
+function createBar(block: ethereum.Block): Bar {
+  const contract = BarContract.bind(dataSource.address())
+  const bar = new Bar(dataSource.address().toHex())
+  bar.decimals = contract.decimals()
+  bar.name = contract.name()
+  bar.ruby = contract.ruby()
+  bar.symbol = contract.symbol()
+  bar.totalSupply = BIG_DECIMAL_ZERO
+  bar.rubyStaked = BIG_DECIMAL_ZERO
+  bar.rubyStakedUSD = BIG_DECIMAL_ZERO
+  bar.rubyHarvested = BIG_DECIMAL_ZERO
+  bar.rubyHarvestedUSD = BIG_DECIMAL_ZERO
+  bar.xRubyMinted = BIG_DECIMAL_ZERO
+  bar.xRubyBurned = BIG_DECIMAL_ZERO
+  bar.xRubyAge = BIG_DECIMAL_ZERO
+  bar.xRubyAgeDestroyed = BIG_DECIMAL_ZERO
+  bar.ratio = BIG_DECIMAL_ZERO
+  bar.updatedAt = block.timestamp
+  bar.save()
 
-  return mine as Mine
+  return bar as Bar
 }
 
-function getMine(block: ethereum.Block): Mine {
-  let mine = Mine.load(dataSource.address().toHex())
+function getBar(block: ethereum.Block): Bar {
+  let bar = Bar.load(dataSource.address().toHex())
 
-  if (mine === null) {
-    mine = createMine(block)
+  if (bar === null) {
+    bar = createBar(block)
   }
 
-  return mine as Mine
+  return bar as Bar
 }
 
 function createUser(address: Address, block: ethereum.Block): User {
   const user = new User(address.toHex())
 
-  // Set relation to mine
-  user.mine = dataSource.address().toHex()
+  // Set relation to bar
+  user.bar = dataSource.address().toHex()
 
   user.xRuby = BIG_DECIMAL_ZERO
   user.xRubyMinted = BIG_DECIMAL_ZERO
@@ -141,18 +141,18 @@ export function transfer(event: TransferEvent): void {
     return
   }
 
-  const mine = getMine(event.block)
-  const mineContract = MineContract.bind(RUBY_MINE_ADDRESS)
+  const bar = getBar(event.block)
+  const barContract = BarContract.bind(RUBY_MINE_ADDRESS)
 
   const rubyPrice = getRubyPrice()
 
-  mine.totalSupply = mineContract.totalSupply().divDecimal(BIG_DECIMAL_1E18)
-  mine.rubyStaked = RubyTokenContract.bind(RUBY_TOKEN_ADDRESS)
+  bar.totalSupply = barContract.totalSupply().divDecimal(BIG_DECIMAL_1E18)
+  bar.rubyStaked = RubyTokenContract.bind(RUBY_TOKEN_ADDRESS)
     .balanceOf(RUBY_MINE_ADDRESS)
     .divDecimal(BIG_DECIMAL_1E18)
-  mine.ratio = mine.rubyStaked.div(mine.totalSupply)
+  bar.ratio = bar.rubyStaked.div(bar.totalSupply)
 
-  const what = value.times(mine.ratio)
+  const what = value.times(bar.ratio)
 
   // Minted xRuby
   if (event.params.from == ADDRESS_ZERO) {
@@ -167,8 +167,8 @@ export function transfer(event: TransferEvent): void {
     ])
 
     if (user.xRuby == BIG_DECIMAL_ZERO) {
-      log.info('{} entered the mine', [user.id])
-      user.mine = mine.id
+      log.info('{} entered the bar', [user.id])
+      user.bar = bar.id
     }
 
     user.xRubyMinted = user.xRubyMinted.plus(value)
@@ -191,21 +191,21 @@ export function transfer(event: TransferEvent): void {
 
     user.save()
 
-    const mineDays = event.block.timestamp.minus(mine.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-    const mineXruby = mine.xRubyMinted.minus(mine.xRubyBurned)
-    mine.xRubyMinted = mine.xRubyMinted.plus(value)
-    mine.xRubyAge = mine.xRubyAge.plus(mineDays.times(mineXruby))
-    mine.rubyStaked = mine.rubyStaked.plus(what)
-    mine.rubyStakedUSD = mine.rubyStakedUSD.plus(rubyStakedUSD)
-    mine.updatedAt = event.block.timestamp
+    const barDays = event.block.timestamp.minus(bar.updatedAt).divDecimal(BigDecimal.fromString('86400'))
+    const barXruby = bar.xRubyMinted.minus(bar.xRubyBurned)
+    bar.xRubyMinted = bar.xRubyMinted.plus(value)
+    bar.xRubyAge = bar.xRubyAge.plus(barDays.times(barXruby))
+    bar.rubyStaked = bar.rubyStaked.plus(what)
+    bar.rubyStakedUSD = bar.rubyStakedUSD.plus(rubyStakedUSD)
+    bar.updatedAt = event.block.timestamp
 
     const history = getHistory(event.block)
-    history.xRubyAge = mine.xRubyAge
+    history.xRubyAge = bar.xRubyAge
     history.xRubyMinted = history.xRubyMinted.plus(value)
-    history.xRubySupply = mine.totalSupply
+    history.xRubySupply = bar.totalSupply
     history.rubyStaked = history.rubyStaked.plus(what)
     history.rubyStakedUSD = history.rubyStakedUSD.plus(rubyStakedUSD)
-    history.ratio = mine.ratio
+    history.ratio = bar.ratio
     history.save()
   }
 
@@ -239,31 +239,31 @@ export function transfer(event: TransferEvent): void {
     user.xRuby = user.xRuby.minus(value)
 
     if (user.xRuby == BIG_DECIMAL_ZERO) {
-      log.info('{} left the mine', [user.id])
-      user.mine = null
+      log.info('{} left the bar', [user.id])
+      user.bar = null
     }
 
     user.updatedAt = event.block.timestamp
 
     user.save()
 
-    const mineDays = event.block.timestamp.minus(mine.updatedAt).divDecimal(BigDecimal.fromString('86400'))
-    const mineXruby = mine.xRubyMinted.minus(mine.xRubyBurned)
-    mine.xRubyBurned = mine.xRubyBurned.plus(value)
-    mine.xRubyAge = mine.xRubyAge.plus(mineDays.times(mineXruby)).minus(xRubyAgeDestroyed)
-    mine.xRubyAgeDestroyed = mine.xRubyAgeDestroyed.plus(xRubyAgeDestroyed)
-    mine.rubyHarvested = mine.rubyHarvested.plus(what)
-    mine.rubyHarvestedUSD = mine.rubyHarvestedUSD.plus(rubyHarvestedUSD)
-    mine.updatedAt = event.block.timestamp
+    const barDays = event.block.timestamp.minus(bar.updatedAt).divDecimal(BigDecimal.fromString('86400'))
+    const barXruby = bar.xRubyMinted.minus(bar.xRubyBurned)
+    bar.xRubyBurned = bar.xRubyBurned.plus(value)
+    bar.xRubyAge = bar.xRubyAge.plus(barDays.times(barXruby)).minus(xRubyAgeDestroyed)
+    bar.xRubyAgeDestroyed = bar.xRubyAgeDestroyed.plus(xRubyAgeDestroyed)
+    bar.rubyHarvested = bar.rubyHarvested.plus(what)
+    bar.rubyHarvestedUSD = bar.rubyHarvestedUSD.plus(rubyHarvestedUSD)
+    bar.updatedAt = event.block.timestamp
 
     const history = getHistory(event.block)
-    history.xRubySupply = mine.totalSupply
+    history.xRubySupply = bar.totalSupply
     history.xRubyBurned = history.xRubyBurned.plus(value)
-    history.xRubyAge = mine.xRubyAge
+    history.xRubyAge = bar.xRubyAge
     history.xRubyAgeDestroyed = history.xRubyAgeDestroyed.plus(xRubyAgeDestroyed)
     history.rubyHarvested = history.rubyHarvested.plus(what)
     history.rubyHarvestedUSD = history.rubyHarvestedUSD.plus(rubyHarvestedUSD)
-    history.ratio = mine.ratio
+    history.ratio = bar.ratio
     history.save()
   }
 
@@ -293,17 +293,17 @@ export function transfer(event: TransferEvent): void {
     fromUser.usdOut = fromUser.usdOut.plus(what.times(rubyPrice))
 
     if (fromUser.xRuby == BIG_DECIMAL_ZERO) {
-      log.info('{} left the mine by transfer OUT', [fromUser.id])
-      fromUser.mine = null
+      log.info('{} left the bar by transfer OUT', [fromUser.id])
+      fromUser.bar = null
     }
 
     fromUser.save()
 
     const toUser = getUser(event.params.to, event.block)
 
-    if (toUser.mine === null) {
-      log.info('{} entered the mine by transfer IN', [fromUser.id])
-      toUser.mine = mine.id
+    if (toUser.bar === null) {
+      log.info('{} entered the bar by transfer IN', [fromUser.id])
+      toUser.bar = bar.id
     }
 
     // Recalculate xRuby age and add incoming xRubyAgeTransfered
@@ -343,5 +343,5 @@ export function transfer(event: TransferEvent): void {
     toUser.save()
   }
 
-  mine.save()
+  bar.save()
 }

@@ -5,22 +5,22 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: RubyMine
+    name: RubyBar
     network: {{ network }}
     source:
       address: '{{ address }}'
-      abi: Mine
+      abi: Bar
       startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Mine
+        - Bar
         - User
       abis:
-        - name: Mine
-          file: ../../packages/abis/RubyMine.json
+        - name: Bar
+          file: ../../packages/abis/RubyBar.json
         - name: RubyToken
           file: ../../packages/abis/RubyToken.json
         - name: Pair
@@ -28,4 +28,4 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: transfer
-      file: ./src/mine.ts
+      file: ./src/bar.ts
