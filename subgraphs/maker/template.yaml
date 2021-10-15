@@ -1,14 +1,14 @@
 specVersion: 0.0.2
-description: SushiMaker
+description: RubyMaker
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: SushiMaker
+    name: RubyMaker
     network: {{ network }}
     source:
       address: '{{ address }}'
-      abi: SushiMaker
+      abi: RubyMaker
       startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
@@ -20,14 +20,16 @@ dataSources:
         - Server
         - Serving
       abis:
-        - name: SushiMaker
-          file: ../../node_modules/@sushiswap/core/build/abi/SushiMaker.json
+        - name: RubyMaker
+          file: ../../packages/abis/RubyMaker.json
         - name: Pair
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+          file: ../../packages/abis/UniswapV2Pair.json
         - name: ERC20
-          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+          file: ../../packages/abis/ERC20.json
         - name: Factory
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+          file: ../../packages/abis/UniswapV2Factory.json
       eventHandlers:
-        - event: LogConvert(indexed address,indexed address,indexed address,uint256,uint256,uint256)
+        - event: LogConvert(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256)
           handler: handleLogConvert
+        - event: BurnPercentChanged(uint256)
+          handler: handleBurnPercentChange

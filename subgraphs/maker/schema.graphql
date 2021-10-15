@@ -3,15 +3,21 @@ type Maker @entity {
 	# Maker address
 	id: ID!
 
-	# Sushi served
-	sushiServed: BigInt!
+	# Ruby served
+	rubyServed: BigInt!
 	totalServings: BigDecimal!
+
+	# Ruby burned
+	rubyBurned: BigInt!
 
 	# Servers
 	servers: [Server!]! @derivedFrom(field: "maker")
 
 	# Servings
 	servings: [Serving!]! @derivedFrom(field: "maker")
+
+    # Ruby burn percent
+	burnPercent: BigInt!
 
 	block: BigInt!
 	timestamp: BigInt!
@@ -24,9 +30,13 @@ type Server @entity {
 	# Relation to maker
 	maker: Maker!
 
-	# Sushi served
-	sushiServed: BigInt!
+	# Ruby served
+	rubyServed: BigInt!
 	totalServings: BigDecimal!
+
+	# Ruby burned
+	rubyBurned: BigInt!
+
 
 	# Servings related to the server
 	servings: [Serving!]! @derivedFrom(field: "server")
@@ -60,8 +70,11 @@ type Serving @entity {
 	# Amount 1
 	amount1: BigInt!
 
-	# Sushi served
-	amountSushi: BigInt!
+	# Ruby served
+	rubyServed: BigInt!
+	
+	# Ruby burned
+	rubyBurned: BigInt!
 
 	# Block
 	block: BigInt!

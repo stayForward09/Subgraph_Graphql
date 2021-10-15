@@ -8,7 +8,9 @@ export function getMaker(block: ethereum.Block): Maker {
 
   if (maker === null) {
     maker = new Maker(dataSource.address().toHex())
-    maker.sushiServed = BIG_INT_ZERO
+    maker.rubyServed = BIG_INT_ZERO
+    maker.rubyBurned = BIG_INT_ZERO
+    maker.burnPercent = BIG_INT_ZERO
     maker.totalServings = BIG_DECIMAL_ZERO
   }
 

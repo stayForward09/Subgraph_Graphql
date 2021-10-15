@@ -2,18 +2,19 @@ import { Address, log } from '@graphprotocol/graph-ts'
 import { FACTORY_ADDRESS, BIG_DECIMAL_ONE } from 'const'
 import { getMaker, getServer } from '../entities'
 import { Serving } from '../../generated/schema'
-import { Factory as FactoryContract } from '../../generated/SushiMaker/Factory'
-import { LogConvert } from '../../generated/SushiMaker/SushiMaker'
+import { Factory as FactoryContract } from '../../generated/RubyMaker/Factory'
+import { LogConvert, BurnPercentChanged } from '../../generated/RubyMaker/RubyMaker'
 
 
 export function handleLogConvert(event: LogConvert): void {
-  log.info('[SushiMaker] Log Convert {} {} {} {} {} {}', [
+  log.info('[RubyMaker] Log Convert {} {} {} {} {} {} {}', [
     event.params.server.toHex(),
     event.params.token0.toHex(),
     event.params.token1.toHex(),
     event.params.amount0.toString(),
     event.params.amount1.toString(),
-    event.params.amountSUSHI.toString()
+    event.params.amountRubyDistributed.toString(),
+    event.params.amountRubyBurned.toString()
   ])
 
   const maker = getMaker(event.block)
@@ -32,16 +33,29 @@ export function handleLogConvert(event: LogConvert): void {
   serving.token1 = event.params.token1
   serving.amount0 = event.params.amount0
   serving.amount1 = event.params.amount1
-  serving.amountSushi = event.params.amountSUSHI
+  serving.rubyServed = event.params.amountRubyDistributed
+  serving.rubyBurned = event.params.amountRubyBurned
   serving.block = event.block.number
   serving.timestamp = event.block.timestamp
   serving.save()
 
-  maker.sushiServed = maker.sushiServed.plus(event.params.amountSUSHI)
+  maker.rubyServed = maker.rubyServed.plus(event.params.amountRubyDistributed)
+  maker.rubyBurned = maker.rubyBurned.plus(event.params.amountRubyBurned)
   maker.totalServings = maker.totalServings.plus(BIG_DECIMAL_ONE)
   maker.save()
 
-  server.sushiServed = server.sushiServed.plus(event.params.amountSUSHI)
+  server.rubyServed = server.rubyServed.plus(event.params.amountRubyDistributed)
+  server.rubyBurned = server.rubyBurned.plus(event.params.amountRubyBurned)
   server.totalServings = server.totalServings.plus(BIG_DECIMAL_ONE)
   server.save()
+}
+
+export function handleBurnPercentChange(event: BurnPercentChanged): void {
+  log.info('[RubyMaker] Burn percent change {}', [
+    event.params.newBurnPercent.toString()
+  ])
+  const maker = getMaker(event.block)
+
+  maker.burnPercent = event.params.newBurnPercent
+  maker.save()
 }
