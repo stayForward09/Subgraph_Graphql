@@ -48,8 +48,6 @@ dataSources:
           handler: set
         - event: 'UpdateEmissionRate(indexed address,uint256)'
           handler: updateEmissionRate
-        - event: 'SetDevAddress(indexed address,indexed address)'
-          handler: setDevAddress
         - event: 'SetTreasuryAddress(indexed address,indexed address)'
           handler: setTreasuryAddress
         - event: 'SetTreasuryPercent(uint256)'

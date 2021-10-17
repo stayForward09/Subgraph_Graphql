@@ -8,11 +8,6 @@
       },
       {
         "internalType": "address",
-        "name": "_devAddr",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_treasuryAddr",
         "type": "address"
       },
@@ -207,25 +202,6 @@
         "type": "address"
       }
     ],
-    "name": "SetDevAddress",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "oldAddress",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newAddress",
-        "type": "address"
-      }
-    ],
     "name": "SetTreasuryAddress",
     "type": "event"
   },
@@ -354,19 +330,6 @@
       }
     ],
     "name": "deposit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_devAddr",
-        "type": "address"
-      }
-    ],
-    "name": "dev",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

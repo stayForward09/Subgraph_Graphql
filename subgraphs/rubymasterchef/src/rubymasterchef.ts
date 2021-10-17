@@ -2,7 +2,6 @@ import {
   Add,
   Set,
   Deposit,
-  SetDevAddress,
   SetTreasuryAddress,
   SetTreasuryPercent,
   EmergencyWithdraw,
@@ -43,7 +42,6 @@ function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
     const contract = RubyMasterChefContract.bind(RUBY_MASTER_CHEF_ADDRESS)
     masterChef = new RubyMasterChef(RUBY_MASTER_CHEF_ADDRESS.toHex())
     masterChef.rubyPerSec = contract.rubyPerSec()
-    masterChef.devAddr = contract.devAddr()
     masterChef.treasuryAddr = contract.treasuryAddr()
     masterChef.treasuryPercent = contract.treasuryPercent()
     masterChef.owner = contract.owner()
@@ -305,15 +303,6 @@ export function updatePool(pid: BigInt, masterChef: RubyMasterChefContract, bloc
   pool.save()
 }
 
-
-export function setDevAddress(event: SetDevAddress): void {
-  log.info('Dev address changed from {} to {}', [event.params.oldAddress.toHex(), event.params.newAddress.toHex()])
-
-  const masterChef = getOrInsertMasterChef(event.block)
-
-  masterChef.devAddr = event.params.newAddress
-  masterChef.save()
-}
 
 export function setTreasuryAddress(event: SetTreasuryAddress): void {
   log.info('Treasury address changed from {} to {}', [event.params.oldAddress.toHex(), event.params.newAddress.toHex()])
