@@ -20,6 +20,6 @@
     "minimum_liquidity_threshold_eth": "1000",
     "factory": {
         "address": "0x616A779E70D4FbD1b53f60eB12c5377a5b451A9a",
-        "startBlock": "602693"
+        "startBlock": "632886"
     }
 }

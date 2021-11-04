@@ -4,6 +4,11 @@
 
 1. `yarn`
 
+## Graph node
+
+First we need to start up the graph node, in a separate terminal:
+
+- `yarn run-graph-node`
 
 ## Deployment
 
