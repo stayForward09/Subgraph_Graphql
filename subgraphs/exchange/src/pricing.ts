@@ -4,7 +4,7 @@ import {
   BIG_DECIMAL_ZERO,
   FACTORY_ADDRESS,
   WHITELIST,
-  RUBY_USDT_PAIR_ADDRESS,
+  RUBY_USDC_PAIR_ADDRESS,
   WETH_STABLE_PAIRS,
   WETH_ADDRESS,
   USDT_ADDRESS,
@@ -34,16 +34,16 @@ export function getRubyPrice(block: ethereum.Block = null): BigDecimal {
  */
 export function getWavgRubyPrice(block: ethereum.Block = null): BigDecimal {
   // get RUBY/USDT
-  const usdt_pair = Pair.load(RUBY_USDT_PAIR_ADDRESS.toString())
-  const usdt_price = usdt_pair
-    ? usdt_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
-      ? usdt_pair.token1Price
-      : usdt_pair.token0Price
+  const usdc_pair = Pair.load(RUBY_USDC_PAIR_ADDRESS.toString())
+  const usdt_price = usdc_pair
+    ? usdc_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
+      ? usdc_pair.token1Price
+      : usdc_pair.token0Price
     : BIG_DECIMAL_ZERO
-  const usdt_weight = usdt_pair
-    ? usdt_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
-      ? usdt_pair.reserve0
-      : usdt_pair.reserve1
+  const usdt_weight = usdc_pair
+    ? usdc_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
+      ? usdc_pair.reserve0
+      : usdc_pair.reserve1
     : BIG_DECIMAL_ZERO
 
   // get RUBY/ETH

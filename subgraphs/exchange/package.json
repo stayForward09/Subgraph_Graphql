@@ -17,10 +17,8 @@
         "deploy-skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001/ ruby/exchange",
 
         "deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ruby/exchange subgraph.yaml",
-        "deploy:arbitrum": "graph deploy --product hosted-service matthewlilley/arbitrum-exchange",
         "deploy:skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001  ruby/exchange subgraph.yaml",
 
-        "prepare:arbitrum": "mustache ../../config/arbitrum.json template.yaml > subgraph.yaml",
         "prepare:localhost": "mustache ../../config/localhost.json template.yaml > subgraph.yaml",
         "prepare:mainnet": "mustache ../../config/mainnet.json template.yaml > subgraph.yaml",
         "prepare:skaleTestnet": "mustache ../../config/skaleTestnet.json template.yaml > subgraph.yaml"    
