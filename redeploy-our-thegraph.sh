@@ -15,10 +15,30 @@ git pull --ff-only
 
 yarn
 
+cd ~/subgraphs
+
 cd subgraphs/dexcandles
 yarn prepare:skaleTestnet
 yarn codegen
 yarn build
+yarn create-local
+yarn deploy-local
 
 cd ~/subgraphs
+
+cd subgraphs/exchange
+yarn prepare:skaleTestnet
+yarn codegen
+yarn build
+yarn create-local
+yarn deploy-local
+
+cd ~/subgraphs
+
+cd subgraphs/rubymasterchef
+yarn prepare:skaleTestnet
+yarn codegen
+yarn build
+yarn create-local
+yarn deploy-local
 
