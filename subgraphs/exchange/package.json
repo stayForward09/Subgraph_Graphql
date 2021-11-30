@@ -12,12 +12,12 @@
         "create-local": "graph create --node http://localhost:8020/ ruby/exchange",
         "remove-local": "graph remove --node http://localhost:8020/ ruby/exchange",
         "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ruby/exchange",
-        "create-skaleTestnet": "graph create --node http://3.85.172.153:8020/ ruby/exchange",
-        "remove-skaleTestnet": "graph remove --node http://3.85.172.153:8020/ ruby/exchange",
-        "deploy-skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001/ ruby/exchange",
+        "create-skaleTestnet": "graph create --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ ruby/exchange",
+        "remove-skaleTestnet": "graph remove --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ ruby/exchange",
+        "deploy-skaleTestnet": "graph deploy --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ --ipfs  http://ec2-3-92-237-62.compute-1.amazonaws.com:5001/ ruby/exchange",
 
         "deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ruby/exchange subgraph.yaml",
-        "deploy:skaleTestnet": "graph deploy --node http://3.85.172.153:8020/ --ipfs  http://3.85.172.153:5001  ruby/exchange subgraph.yaml",
+        "deploy:skaleTestnet": "graph deploy --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ --ipfs  http://ec2-3-92-237-62.compute-1.amazonaws.com:5001  ruby/exchange subgraph.yaml",
 
         "prepare:localhost": "mustache ../../config/localhost.json template.yaml > subgraph.yaml",
         "prepare:mainnet": "mustache ../../config/mainnet.json template.yaml > subgraph.yaml",
