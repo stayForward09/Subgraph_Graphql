@@ -10,8 +10,10 @@ fi
 
 cd ~/subgraphs
 
-git clean -dfx
+#git clean -dfx
 git pull --ff-only
+
+yarn
 
 cd subgraphs/dexcandles
 yarn prepare:skaleTestnet
