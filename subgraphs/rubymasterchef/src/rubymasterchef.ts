@@ -33,8 +33,6 @@ import {
 import { History, RubyMasterChef, Pool, PoolHistory, User, Rewarder } from '../generated/schema'
 import { getRubyPrice, getUSDRate } from 'pricing'
 
-
-
 function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
   let masterChef = RubyMasterChef.load(RUBY_MASTER_CHEF_ADDRESS.toHex())
 
@@ -47,7 +45,7 @@ function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
     masterChef.owner = contract.owner()
     // poolInfo ...
     masterChef.startTimestamp = contract.startTimestamp()
-    masterChef.ruby = contract.ruby()
+    masterChef.ruby = contract.RUBY()
     masterChef.rubyPerSec = contract.rubyPerSec()
     masterChef.totalAllocPoint = contract.totalAllocPoint()
     // userInfo ...
@@ -138,7 +136,6 @@ export function getOrInsertPool(id: BigInt, block: ethereum.Block): Pool {
     if(rewarder !== null ) {
       pool.rewarder = rewarder.id
     }
-    
 
     // Total supply of LP tokens
     pool.balance = BIG_INT_ZERO

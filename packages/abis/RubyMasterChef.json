@@ -2,7 +2,7 @@
   {
     "inputs": [
       {
-        "internalType": "contract RubyToken",
+        "internalType": "contract IERC20",
         "name": "_ruby",
         "type": "address"
       },
@@ -160,6 +160,25 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "RubyEmergencyWithdrawal",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
         "internalType": "uint256",
         "name": "pid",
         "type": "uint256"
@@ -294,6 +313,19 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "RUBY",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -335,19 +367,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "devAddr",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -356,6 +375,24 @@
       }
     ],
     "name": "emergencyWithdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdrawRubyTokens",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -497,19 +534,6 @@
         "internalType": "string",
         "name": "bonusTokenSymbol",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ruby",
-    "outputs": [
-      {
-        "internalType": "contract RubyToken",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
