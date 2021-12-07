@@ -96,8 +96,8 @@ export const WBTC_ADDRESS = Address.fromString(
 )
 
 // IMPORTANT NOTE: Always make sure this addresses are set to lowercase in the config files. They are compared as strings and not as entities of type Address in the indexing files
-export const WETH_STABLE_PAIRS: string[] = '0x13c4398bb59f7ce12fd58a2ae307e8ca08fb51d5,0x82d747306cfbec02989aa608bf5fe7145dcf2e47,0xa443b6204946b929147cebf79482c8a1d6b01117'.split(',')
-export const WHITELIST: string[] = '0xD2Aaa00700000000000000000000000000000000,0x6d90ab0bb745b9a6cf8a7989f9fb38bb7efc464d,0x95bded8476bce6de791224d2663fb9259778c80c,0xda5e2ee40de7b265c28b2028e6e1e568fa4cf66e'.split(',')
+export const WETH_STABLE_PAIRS: string[] = ['0x13c4398bb59f7ce12fd58a2ae307e8ca08fb51d5', '0x82d747306cfbec02989aa608bf5fe7145dcf2e47' ,'0xa443b6204946b929147cebf79482c8a1d6b01117']
+export const WHITELIST: string[] = ['0xD2Aaa00700000000000000000000000000000000','0x6d90ab0bb745b9a6cf8a7989f9fb38bb7efc464d','0x95bded8476bce6de791224d2663fb9259778c80c','0xda5e2ee40de7b265c28b2028e6e1e568fa4cf66e']
 
 
 //MISC
