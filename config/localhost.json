@@ -1,7 +1,7 @@
 {
     "network": "localhost",
     "factory_address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-    "ruby_master_chef_address": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+    "ruby_master_chef_address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
     "ruby_master_chef_start_block": "1",
     "ruby_exchange_start_block": "1",
     "ruby_mine_address": "0x1be211d8da40bc0ae8719c6663307bfc987b1d6c",
