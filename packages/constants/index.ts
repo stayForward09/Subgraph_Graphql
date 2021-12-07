@@ -31,63 +31,63 @@ export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
 // EXCHANGE
 export const FACTORY_ADDRESS = Address.fromString(
-  '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+  '0x622311A7E32f3dD209C86f5Fe522BcEdbbAbFB8c'
 )
 
 export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
-  '1'
+  '882170'
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
-  '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707'
+  '0xF97048222D434e7A1a83e57462a3B0aaB626313d'
 )
 
 // MASTER CHEF
 export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
-  '1'
+  '1074294'
 )
 
 export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+  '0xfedf2A1FA757EdD14642Bf3EB186d35e8B44bf52'
 )
 
 // MINE (BAR)
 export const RUBY_MINE_ADDRESS = Address.fromString(
-  '0x1be211d8da40bc0ae8719c6663307bfc987b1d6c'
+  '0x0000000000000000000000000000000000000000'
 )
 
 // DIGGER (MAKER)
 export const RUBY_DIGGER_ADDRESS = Address.fromString(
-  '0x1b9d177ccdea3c79b6c8f40761fc8dc9d0500eaa'
+  '0x0000000000000000000000000000000000000000'
 )
 
 // PRICING
 
 export const RUBY_WETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '0xf2863c6589b79c099d1174406f4b93c157565c39'
+  '0x2b7cd677ccb6e5d03179f582737b8d0ab743615f'
 )
 
 
 export const RUBY_USDT_PAIR_ADDRESS = Address.fromString(
-  '0xcD94A26c2173bB5D3fd425550CC75d729B70A06a'
+  '0x1a3A8d08E6aB39Fe76B0b24741f619264B8Acb89'
 )
 
 export const RUBY_USDC_PAIR_ADDRESS = Address.fromString(
-  '0x159345F18cD4C9B6534a3BA4Df462fDc69d1F920'
+  '0xdfe344a7650da6007933d472d1639250ece58594'
 )
 
 
 export const WETH_ADDRESS = Address.fromString(
-  '0xe7f1725e7734ce288f8367e1bb143e90bb3f0512'
+  '0xD2Aaa00700000000000000000000000000000000'
 )
 
 export const USDT_ADDRESS = Address.fromString(
-  '0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9'
+  '0x6d90ab0bb745b9a6cf8a7989f9fb38bb7efc464d'
 )
 
 
 export const USDC_ADDRESS = Address.fromString(
-  '0xdc64a140aa3e981100a9beca4e685f962f0cf6c9'
+  '0x95bded8476bce6de791224d2663fb9259778c80c'
 )
 
 
@@ -96,8 +96,8 @@ export const WBTC_ADDRESS = Address.fromString(
 )
 
 // IMPORTANT NOTE: Always make sure this addresses are set to lowercase in the config files. They are compared as strings and not as entities of type Address in the indexing files
-export const WETH_STABLE_PAIRS: string[] = '0x1bb0cb8447b7482cdb1682cbb28a0ceaf71fd865,0xf2863c6589b79c099d1174406f4b93c157565c39'.split(',')
-export const WHITELIST: string[] = '0xe7f1725e7734ce288f8367e1bb143e90bb3f0512,0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9,0xdc64a140aa3e981100a9beca4e685f962f0cf6c9'.split(',')
+export const WETH_STABLE_PAIRS: string[] = '0x13c4398bb59f7ce12fd58a2ae307e8ca08fb51d5,0x82d747306cfbec02989aa608bf5fe7145dcf2e47,0xa443b6204946b929147cebf79482c8a1d6b01117'.split(',')
+export const WHITELIST: string[] = '0xD2Aaa00700000000000000000000000000000000,0x6d90ab0bb745b9a6cf8a7989f9fb38bb7efc464d,0x95bded8476bce6de791224d2663fb9259778c80c,0xda5e2ee40de7b265c28b2028e6e1e568fa4cf66e'.split(',')
 
 
 //MISC
