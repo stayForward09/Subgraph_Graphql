@@ -51,14 +51,10 @@ export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
   '{{ ruby_master_chef_address }}{{^ruby_master_chef_address}}0x0000000000000000000000000000000000000000{{/ruby_master_chef_address}}'
 )
 
-// MINE (BAR)
-export const RUBY_MINE_ADDRESS = Address.fromString(
-  '{{ ruby_mine_address }}{{^ruby_mine_address}}0x0000000000000000000000000000000000000000{{/ruby_mine_address}}'
-)
 
-// DIGGER (MAKER)
-export const RUBY_DIGGER_ADDRESS = Address.fromString(
-  '{{ ruby_digger_address }}{{^ruby_digger_address}}0x0000000000000000000000000000000000000000{{/ruby_digger_address}}'
+// MAKER
+export const RUBY_MAKER_ADDRESS = Address.fromString(
+  '{{ ruby_maker_address }}{{^ruby_maker_address}}0x0000000000000000000000000000000000000000{{/ruby_maker_address}}'
 )
 
 // PRICING
@@ -90,7 +86,13 @@ export const USDC_ADDRESS = Address.fromString(
   '{{ usdc_address }}{{^usdc_address}}0x0000000000000000000000000000000000000000{{/usdc_address}}'
 )
 
+export const USDP_ADDRESS = Address.fromString(
+  '{{ usdp_address }}{{^usdp_address}}0x0000000000000000000000000000000000000000{{/usdp_address}}'
+)
 
+export const DAI_ADDRESS = Address.fromString(
+  '{{ dai_address }}{{^dai_address}}0x0000000000000000000000000000000000000000{{/dai_address}}'
+)
 export const WBTC_ADDRESS = Address.fromString(
   '{{ wbtc_address }}{{^wbtc_address}}0x0000000000000000000000000000000000000000{{/wbtc_address}}'
 )
