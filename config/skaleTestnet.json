@@ -1,8 +1,8 @@
 {
     "network": "skaleTestnet",
     "factory_address": "0xf4AE81169A0b39f3BaF7cb087CDeb5318E24f960",
-    "ruby_master_chef_address": "0x930EFfe96e019D5897Ff4a70187bb80544ac4Ba9",
-    "ruby_master_chef_start_block": "1191054",
+    "ruby_master_chef_address": "0x3A53a4084627286DFE66F5496fbe7C533C750480",
+    "ruby_master_chef_start_block": "1414379",
     "ruby_exchange_start_block": "1190318",
     "ruby_maker_address": "0x04849a382e300ca2fC213E471887f2BC48a72e58",
     "ruby_token_address": "0x58F2b35dde559F49B9870Ec101c3b1B8433C644d",

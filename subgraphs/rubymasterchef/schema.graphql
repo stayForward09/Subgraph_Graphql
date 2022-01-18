@@ -6,6 +6,9 @@ type RubyMasterChef @entity {
   # Treasury
   treasuryAddr: Bytes!
 
+  # Ruby staker address
+  stakerAddr: Bytes!
+
   # Treasury percent
   treasuryPercent: BigInt!
 

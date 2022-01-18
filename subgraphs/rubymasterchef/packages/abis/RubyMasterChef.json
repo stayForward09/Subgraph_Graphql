@@ -63,7 +63,7 @@
         "type": "address"
       }
     ],
-    "name": "Add",
+    "name": "AddPool",
     "type": "event"
   },
   {
@@ -226,7 +226,7 @@
         "type": "bool"
       }
     ],
-    "name": "Set",
+    "name": "SetPool",
     "type": "event"
   },
   {

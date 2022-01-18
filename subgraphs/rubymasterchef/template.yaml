@@ -15,6 +15,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
+      file: ./src/rubymasterchef.ts
       entities:
         - RubyMasterChef
         - History
@@ -34,22 +35,24 @@ dataSources:
         - name: Rewarder
           file: ../../packages/abis/Rewarder.json
       eventHandlers:
-        - event: 'Deposit(indexed address,indexed uint256,uint256)'
+        - event: Deposit(indexed address,indexed uint256,uint256)
           handler: deposit
-        - event: 'EmergencyWithdraw(indexed address,indexed uint256,uint256)'
+        - event: EmergencyWithdraw(indexed address,indexed uint256,uint256)
           handler: emergencyWithdraw
-        - event: 'OwnershipTransferred(indexed address,indexed address)'
+        - event: OwnershipTransferred(indexed address,indexed address)
           handler: ownershipTransferred
-        - event: 'Withdraw(indexed address,indexed uint256,uint256)'
+        - event: Withdraw(indexed address,indexed uint256,uint256)
           handler: withdraw
-        - event: 'Add(indexed uint256,uint256,indexed address,indexed address)'
-          handler: add
-        - event: 'Set(indexed uint256,uint256,indexed address,bool)'
-          handler: set
-        - event: 'UpdateEmissionRate(indexed address,uint256)'
+        - event: AddPool(indexed uint256,uint256,indexed address,indexed address)
+          handler: addPool
+        - event: SetPool(indexed uint256,uint256,indexed address,bool)
+          handler: setPool
+        - event: UpdateEmissionRate(indexed address,uint256)
           handler: updateEmissionRate
-        - event: 'SetTreasuryAddress(indexed address,indexed address)'
+        - event: SetTreasuryAddress(indexed address,indexed address)
           handler: setTreasuryAddress
-        - event: 'SetTreasuryPercent(uint256)'
+        - event: SetTreasuryPercent(uint256)
           handler: setTreasuryPercent
-      file: ./src/rubymasterchef.ts
+        - event: SetRubyStaker(indexed address)
+          handler: setStaker
+

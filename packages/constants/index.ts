@@ -31,7 +31,7 @@ export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
 // EXCHANGE
 export const FACTORY_ADDRESS = Address.fromString(
-  '0xf4ae81169a0b39f3baf7cb087cdeb5318e24f960'
+  '0xf4AE81169A0b39f3BaF7cb087CDeb5318E24f960'
 )
 
 export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
@@ -39,26 +39,25 @@ export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
-  '0x58f2b35dde559f49b9870ec101c3b1b8433c644d'
+  '0x58F2b35dde559F49B9870Ec101c3b1B8433C644d'
 )
 
 // MASTER CHEF
 export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
-  '1191054'
+  '1414379'
 )
 
 export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0x930effe96e019d5897ff4a70187bb80544ac4ba9'
+  '0x3A53a4084627286DFE66F5496fbe7C533C750480'
 )
 
 
 // MAKER
 export const RUBY_MAKER_ADDRESS = Address.fromString(
-  '0x04849a382e300ca2fc213e471887f2bc48a72e58'
+  '0x04849a382e300ca2fC213E471887f2BC48a72e58'
 )
 
 // PRICING
-
 export const RUBY_WETH_USDT_PAIR_ADDRESS = Address.fromString(
   '0x64b6c881f2085c5951eca8d31e80595108d38873'
 )

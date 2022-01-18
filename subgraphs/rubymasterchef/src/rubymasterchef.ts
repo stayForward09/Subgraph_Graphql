@@ -1,6 +1,6 @@
 import {
-  Add,
-  Set,
+  AddPool,
+  SetPool,
   Deposit,
   SetTreasuryAddress,
   SetTreasuryPercent,
@@ -9,6 +9,7 @@ import {
   OwnershipTransferred,
   Withdraw,
   UpdateEmissionRate,
+  SetRubyStaker
 } from '../generated/RubyMasterChef/RubyMasterChef'
 
 import { ERC20 as ERC20Contract } from '../generated/RubyMasterChef/ERC20'
@@ -41,6 +42,7 @@ function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
     masterChef = new RubyMasterChef(RUBY_MASTER_CHEF_ADDRESS.toHex())
     masterChef.rubyPerSec = contract.rubyPerSec()
     masterChef.treasuryAddr = contract.treasuryAddr()
+    masterChef.stakerAddr = contract.rubyStaker()
     masterChef.treasuryPercent = contract.treasuryPercent()
     masterChef.owner = contract.owner()
     // poolInfo ...
@@ -235,7 +237,7 @@ export function getOrInsertUser(pid: BigInt, address: Address, block: ethereum.B
 }
 
 
-export function add(event: Add): void {
+export function addPool(event: AddPool): void {
   log.info('Pool added: pid {}, allocPoint: {}, lpToken: {}, rewarder: {}', [
     event.params.pid.toString(),
     event.params.allocPoint.toString(),
@@ -249,7 +251,7 @@ export function add(event: Add): void {
   masterChef.save()
 }
 
-export function set(event: Set): void {
+export function setPool(event: SetPool): void {
   log.info('Pool set: pid {}, allocPoint: {}, rewarder: {}', [
     event.params.pid.toString(),
     event.params.allocPoint.toString(),
@@ -319,6 +321,17 @@ export function setTreasuryPercent(event: SetTreasuryPercent): void {
 
   masterChef.save()
 }
+
+export function setStaker(event: SetRubyStaker): void {
+  log.info('Ruby staker changed to {}', [event.params.newRubyStaker.toHex()])
+
+  const masterChef = getOrInsertMasterChef(event.block)
+
+  masterChef.stakerAddr = event.params.newRubyStaker
+
+  masterChef.save()
+}
+
 
 
 
