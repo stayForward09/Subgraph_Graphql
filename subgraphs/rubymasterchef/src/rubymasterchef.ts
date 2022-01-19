@@ -128,7 +128,7 @@ export function getOrInsertPool(id: BigInt, block: ethereum.Block): Pool {
     // Set relation
     pool.owner = masterChef.id
 
-    const poolInfo = masterChefContract.poolInfo(masterChef.poolCount)
+    const poolInfo = masterChefContract.poolInfo(id)
 
     pool.pair = poolInfo.value0
     pool.allocPoint = poolInfo.value1
