@@ -44,11 +44,11 @@ export const RUBY_TOKEN_ADDRESS = Address.fromString(
 
 // MASTER CHEF
 export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
-  '1435134'
+  '1436296'
 )
 
 export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0x944AAD3D181D09830c987Df3fc4Df2Ae459E450F'
+  '0x1Ae930277413D6D72B514C86590bB44bC14211B1'
 )
 
 
