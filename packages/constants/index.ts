@@ -35,7 +35,7 @@ export const FACTORY_ADDRESS = Address.fromString(
 )
 
 export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
-  '1190318'
+  '1435134'
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
@@ -44,11 +44,11 @@ export const RUBY_TOKEN_ADDRESS = Address.fromString(
 
 // MASTER CHEF
 export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
-  '1414379'
+  '1435134'
 )
 
 export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0x1cc834e2E31A8173f45c5A9F44f3b83C608842d0'
+  '0x944AAD3D181D09830c987Df3fc4Df2Ae459E450F'
 )
 
 
