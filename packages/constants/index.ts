@@ -35,7 +35,7 @@ export const FACTORY_ADDRESS = Address.fromString(
 )
 
 export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
-  '1435134'
+  '1190318'
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
