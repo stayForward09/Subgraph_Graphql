@@ -44,11 +44,11 @@ export const RUBY_TOKEN_ADDRESS = Address.fromString(
 
 // MASTER CHEF
 export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
-  '1466930'
+  '1467863'
 )
 
 export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0xC43fb8AFEb14E4eaB4Ddc4EF16d5Ff14a343e5F3'
+  '0x89b120E52e52C9Ea4dA4598D0473ba1135e59c81'
 )
 
 
@@ -58,7 +58,6 @@ export const RUBY_MAKER_ADDRESS = Address.fromString(
 )
 
 // PRICING
-
 export const RUBY_WETH_USDP_PAIR_ADDRESS = Address.fromString(
   '0xa72e33579b87850e62f04e5d10b9c3a10b25f4df'
 )
