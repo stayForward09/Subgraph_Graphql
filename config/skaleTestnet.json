@@ -1,26 +1,25 @@
 {
     "network": "skaleTestnet",
-    "factory_address": "0xf4AE81169A0b39f3BaF7cb087CDeb5318E24f960",
-    "ruby_master_chef_address": "0x1Ae930277413D6D72B514C86590bB44bC14211B1",
-    "ruby_master_chef_start_block": "1436296",
-    "ruby_exchange_start_block": "1190318",
-    "ruby_maker_address": "0x04849a382e300ca2fC213E471887f2BC48a72e58",
+    "factory_address": "0x16094F5E00e8bcA67e6a015A426c618ecCa5109d",
+    "ruby_master_chef_address": "0xC43fb8AFEb14E4eaB4Ddc4EF16d5Ff14a343e5F3",
+    "ruby_master_chef_start_block": "1466930",
+    "ruby_exchange_start_block": "1466893",
+    "ruby_maker_address": "0x0fb5fB07A05C69a88926E25f285c41eDf8d694D5",
     "ruby_token_address": "0x58F2b35dde559F49B9870Ec101c3b1B8433C644d",
     "weth_address": "0xD2Aaa00700000000000000000000000000000000",
     "timelock": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
-    "ruby_weth_usdt_pair_address":"0x64b6c881f2085c5951eca8d31e80595108d38873",
-    "ruby_usdt_pair_address":"0x3764a3f98695a5e05d4e9249414f9d40fb3c6945",
-    "ruby_usdc_pair_address":"0xdcdaf7b4bd901622d575f4636c76cd308acfe2ad",
+    "ruby_weth_usdp_pair_address":"0xa72e33579b87850e62f04e5d10b9c3a10b25f4df",
+    "ruby_usdp_pair_address":"0xd126dd75740e3b191541d27348f75fd9407ef956",
     "usdt_address":"0x9dbfccd94c26cd219b60754215abcc32c26f41c2",
     "usdc_address":"0x788c12145e5e15717020095172d3471fd6c0569f",
     "usdp_address":"0x0eb4a542fccbe6c985eaa08e7a5de0f27cb50938",
     "dai_address":"0x059fc87c315c659bc11b0f7f524d20413a4a0fac",
-    "weth_stable_pairs": ["0x64b6c881f2085c5951eca8d31e80595108d38873"],
+    "weth_stable_pairs": ["0xa72e33579b87850e62f04e5d10b9c3a10b25f4df"],
     "whitelist": ["0xD2Aaa00700000000000000000000000000000000", "0x9dbfccd94c26cd219b60754215abcc32c26f41c2", "0x788c12145e5e15717020095172d3471fd6c0569f", "0x0eb4a542fccbe6c985eaa08e7a5de0f27cb50938", "0x059fc87c315c659bc11b0f7f524d20413a4a0fac"],
     "minimum_usd_threshold_new_pairs": "3000",
     "minimum_liquidity_threshold_eth": "1000",
     "factory": {
-        "address": "0xf4AE81169A0b39f3BaF7cb087CDeb5318E24f960",
-        "startBlock": "1190318"
+        "address": "0x16094F5E00e8bcA67e6a015A426c618ecCa5109d",
+        "startBlock": "1466893"
     }
 }

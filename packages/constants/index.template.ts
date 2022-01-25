@@ -59,17 +59,13 @@ export const RUBY_MAKER_ADDRESS = Address.fromString(
 
 // PRICING
 
-export const RUBY_WETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ ruby_weth_usdt_pair_address }}{{^ruby_weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_weth_usdt_pair_address}}'
+export const RUBY_WETH_USDP_PAIR_ADDRESS = Address.fromString(
+  '{{ ruby_weth_usdp_pair_address }}{{^ruby_weth_usdp_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_weth_usdp_pair_address}}'
 )
 
 
-export const RUBY_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ ruby_usdt_pair_address }}{{^ruby_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_usdt_pair_address}}'
-)
-
-export const RUBY_USDC_PAIR_ADDRESS = Address.fromString(
-  '{{ ruby_usdc_pair_address }}{{^ruby_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_usdc_pair_address}}'
+export const RUBY_USDP_PAIR_ADDRESS = Address.fromString(
+  '{{ ruby_usdp_pair_address }}{{^ruby_usdp_pair_address}}0x0000000000000000000000000000000000000000{{/ruby_usdp_pair_address}}'
 )
 
 

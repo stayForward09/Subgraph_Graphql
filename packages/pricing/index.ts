@@ -6,9 +6,9 @@ import {
   BIG_DECIMAL_ZERO,
   BIG_INT_ZERO,
   FACTORY_ADDRESS,
-  RUBY_USDT_PAIR_ADDRESS,
-  RUBY_WETH_USDT_PAIR_ADDRESS,
-  USDT_ADDRESS,
+  RUBY_USDP_PAIR_ADDRESS,
+  RUBY_WETH_USDP_PAIR_ADDRESS,
+  USDP_ADDRESS,
   WETH_ADDRESS,
   RUBY_EXCHANGE_START_BLOCK
   
@@ -24,9 +24,8 @@ import { Factory as FactoryContract } from "exchange/generated/Factory/Factory";
 import { Pair as PairContract } from "exchange/generated/Factory/Pair";
 
 export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
-  const usdt = BIG_DECIMAL_ONE;
 
-  if(token == USDT_ADDRESS) {
+  if(token == USDP_ADDRESS) {
       return BIG_DECIMAL_ONE
   }
 
@@ -36,7 +35,7 @@ export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
     return BIG_DECIMAL_ZERO
   }
 
-  let address = RUBY_WETH_USDT_PAIR_ADDRESS
+  let address = RUBY_WETH_USDP_PAIR_ADDRESS
 
   const tokenPriceETH = getEthRate(token, block)
   log.info("Token price eth, token: {}, tokenPriceETH: {}", [token.toHex(), tokenPriceETH.toString()])
@@ -107,7 +106,7 @@ export function getRubyPrice(block: ethereum.Block): BigDecimal {
     return BIG_DECIMAL_ZERO
   }
 
-  const pair = PairContract.bind(RUBY_USDT_PAIR_ADDRESS)
+  const pair = PairContract.bind(RUBY_USDP_PAIR_ADDRESS)
 
   const reservesResult = pair.try_getReserves()
   if (reservesResult.reverted) {
@@ -116,7 +115,7 @@ export function getRubyPrice(block: ethereum.Block): BigDecimal {
   }
   const reserves = reservesResult.value
   if (reserves.value0.toBigDecimal().equals(BigDecimal.fromString('0'))) {
-    log.error('[getRubyPrice] USDT reserve 0', [])
+    log.error('[getRubyPrice] usdp reserve 0', [])
     return BIG_DECIMAL_ZERO
   }
   const result = reserves.value1.toBigDecimal().times(BIG_DECIMAL_1E18).div(reserves.value0.toBigDecimal()).div(BIG_DECIMAL_1E6)

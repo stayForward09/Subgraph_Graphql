@@ -4,7 +4,7 @@ import {
   BIG_DECIMAL_ZERO,
   FACTORY_ADDRESS,
   WHITELIST,
-  RUBY_USDC_PAIR_ADDRESS,
+  RUBY_USDP_PAIR_ADDRESS,
   WETH_STABLE_PAIRS,
   WETH_ADDRESS,
   USDT_ADDRESS,
@@ -34,16 +34,16 @@ export function getRubyPrice(block: ethereum.Block = null): BigDecimal {
  */
 export function getWavgRubyPrice(block: ethereum.Block = null): BigDecimal {
   // get RUBY/USDT
-  const usdc_pair = Pair.load(RUBY_USDC_PAIR_ADDRESS.toString())
-  const usdt_price = usdc_pair
-    ? usdc_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
-      ? usdc_pair.token1Price
-      : usdc_pair.token0Price
+  const usdp_pair = Pair.load(RUBY_USDP_PAIR_ADDRESS.toString())
+  const usdp_price = usdp_pair
+    ? usdp_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
+      ? usdp_pair.token1Price
+      : usdp_pair.token0Price
     : BIG_DECIMAL_ZERO
-  const usdt_weight = usdc_pair
-    ? usdc_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
-      ? usdc_pair.reserve0
-      : usdc_pair.reserve1
+  const usdp_weight = usdp_pair
+    ? usdp_pair.token0 == RUBY_TOKEN_ADDRESS.toHexString()
+      ? usdp_pair.reserve0
+      : usdp_pair.reserve1
     : BIG_DECIMAL_ZERO
 
   // get RUBY/ETH
@@ -62,8 +62,8 @@ export function getWavgRubyPrice(block: ethereum.Block = null): BigDecimal {
   const eth_price = eth_rate.times(getEthPrice())
 
   // weighted avg
-  const sumprod = usdt_price.times(usdt_weight).plus(eth_price.times(eth_weight))
-  const sumweights = usdt_weight.plus(eth_weight)
+  const sumprod = usdp_price.times(usdp_weight).plus(eth_price.times(eth_weight))
+  const sumweights = usdp_weight.plus(eth_weight)
   const wavg = sumprod.div(sumweights)
   return wavg
 }
@@ -82,7 +82,7 @@ export function getEthPrice(block: ethereum.Block = null): BigDecimal {
 
   log.info("getEthPrice, block: {}", [block.number.toString()])
   log.info("num weth stable pairs: {}", [`${WETH_STABLE_PAIRS.length}`])
-  
+
   let total_weight = BIG_DECIMAL_ZERO
   let sum_price = BIG_DECIMAL_ZERO
 

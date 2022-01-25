@@ -31,11 +31,11 @@ export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
 // EXCHANGE
 export const FACTORY_ADDRESS = Address.fromString(
-  '0xf4AE81169A0b39f3BaF7cb087CDeb5318E24f960'
+  '0x16094F5E00e8bcA67e6a015A426c618ecCa5109d'
 )
 
 export const RUBY_EXCHANGE_START_BLOCK = BigInt.fromString(
-  '1190318'
+  '1466893'
 )
 
 export const RUBY_TOKEN_ADDRESS = Address.fromString(
@@ -44,31 +44,28 @@ export const RUBY_TOKEN_ADDRESS = Address.fromString(
 
 // MASTER CHEF
 export const RUBY_MASTER_CHEF_START_BLOCK = BigInt.fromString(
-  '1436296'
+  '1466930'
 )
 
 export const RUBY_MASTER_CHEF_ADDRESS = Address.fromString(
-  '0x1Ae930277413D6D72B514C86590bB44bC14211B1'
+  '0xC43fb8AFEb14E4eaB4Ddc4EF16d5Ff14a343e5F3'
 )
 
 
 // MAKER
 export const RUBY_MAKER_ADDRESS = Address.fromString(
-  '0x04849a382e300ca2fC213E471887f2BC48a72e58'
+  '0x0fb5fB07A05C69a88926E25f285c41eDf8d694D5'
 )
 
 // PRICING
-export const RUBY_WETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '0x64b6c881f2085c5951eca8d31e80595108d38873'
+
+export const RUBY_WETH_USDP_PAIR_ADDRESS = Address.fromString(
+  '0xa72e33579b87850e62f04e5d10b9c3a10b25f4df'
 )
 
 
-export const RUBY_USDT_PAIR_ADDRESS = Address.fromString(
-  '0x3764a3f98695a5e05d4e9249414f9d40fb3c6945'
-)
-
-export const RUBY_USDC_PAIR_ADDRESS = Address.fromString(
-  '0xdcdaf7b4bd901622d575f4636c76cd308acfe2ad'
+export const RUBY_USDP_PAIR_ADDRESS = Address.fromString(
+  '0xd126dd75740e3b191541d27348f75fd9407ef956'
 )
 
 
@@ -97,8 +94,8 @@ export const WBTC_ADDRESS = Address.fromString(
 )
 
 // IMPORTANT NOTE: Always make sure this addresses are set to lowercase in the config files. They are compared as strings and not as entities of type Address in the indexing files
-export const WETH_STABLE_PAIRS: string[] = ['0x64b6c881f2085c5951eca8d31e80595108d38873']
-export const WHITELIST: string[] = ['0xD2Aaa00700000000000000000000000000000000','0x9dbfccd94c26cd219b60754215abcc32c26f41c2','0x788c12145e5e15717020095172d3471fd6c0569f','0x0eb4a542fccbe6c985eaa08e7a5de0f27cb50938','0x059fc87c315c659bc11b0f7f524d20413a4a0fac']
+export const WETH_STABLE_PAIRS: string[] = ['0xa72e33579b87850e62f04e5d10b9c3a10b25f4df']
+export const WHITELIST: string[] = ['0xD2Aaa00700000000000000000000000000000000', '0x9dbfccd94c26cd219b60754215abcc32c26f41c2', '0x788c12145e5e15717020095172d3471fd6c0569f', '0x0eb4a542fccbe6c985eaa08e7a5de0f27cb50938', '0x059fc87c315c659bc11b0f7f524d20413a4a0fac']
 
 
 //MISC
