@@ -533,6 +533,11 @@
         "type": "address"
       },
       {
+        "internalType": "uint256",
+        "name": "feeMultiplier",
+        "type": "uint256"
+      },
+      {
         "internalType": "bytes",
         "name": "data",
         "type": "bytes"

@@ -18,6 +18,7 @@
 
 
         "prepare:localhost": "mustache config/localhost.json template.yaml > subgraph.yaml",
-        "prepare:skaleTestnet": "mustache config/skaleTestnet.json template.yaml > subgraph.yaml"    
+        "prepare:skaleTestnet": "mustache config/skaleTestnet.json template.yaml > subgraph.yaml",  
+        "prepare:rubyNewSchain": "mustache config/rubyNewSchain.json template.yaml > subgraph.yaml"    
     }
 }

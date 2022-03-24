@@ -1,34 +1,16 @@
 [
   {
+    "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
         "internalType": "address",
-        "name": "_factory",
+        "name": "factory",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_rubyStaker",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_ruby",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_ethc",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_burnPercent",
-        "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    "name": "AmmFactorySet",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -40,26 +22,7 @@
         "type": "uint256"
       }
     ],
-    "name": "BurnPercentChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "bridge",
-        "type": "address"
-      }
-    ],
-    "name": "LogBridgeSet",
+    "name": "BurnPercentSet",
     "type": "event"
   },
   {
@@ -108,7 +71,7 @@
         "type": "uint256"
       }
     ],
-    "name": "LogConvert",
+    "name": "Convert",
     "type": "event"
   },
   {
@@ -131,23 +94,62 @@
     "type": "event"
   },
   {
+    "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
         "internalType": "address",
-        "name": "token",
+        "name": "pair",
         "type": "address"
-      }
-    ],
-    "name": "bridgeFor",
-    "outputs": [
+      },
       {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountWithdrawn",
+        "type": "uint256"
+      }
+    ],
+    "name": "PairWithdrawn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "address",
-        "name": "bridge",
+        "name": "rubyStaker",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
+    "name": "RubyStakerSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "rubyToken",
+        "type": "address"
+      }
+    ],
+    "name": "RubyTokenSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "usdToken",
+        "type": "address"
+      }
+    ],
+    "name": "UsdTokenSet",
+    "type": "event"
   },
   {
     "inputs": [],
@@ -160,13 +162,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "claimOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -219,6 +214,44 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_factory",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_rubyStaker",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_rubyToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_usdToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_burnPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -233,15 +266,9 @@
   },
   {
     "inputs": [],
-    "name": "pendingOwner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -258,19 +285,27 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "rubyToken",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "bridge",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "setBridge",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newFactory",
+        "type": "address"
+      }
+    ],
+    "name": "setAmmFactory",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -292,21 +327,76 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "newRubyStaker",
+        "type": "address"
+      }
+    ],
+    "name": "setRubyStaker",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newRubyToken",
+        "type": "address"
+      }
+    ],
+    "name": "setRubyToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newUsdToken",
+        "type": "address"
+      }
+    ],
+    "name": "setUsdToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "newOwner",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "direct",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "renounce",
-        "type": "bool"
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usdToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      }
+    ],
+    "name": "withdrawLP",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

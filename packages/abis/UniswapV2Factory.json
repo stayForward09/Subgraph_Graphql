@@ -16,6 +16,45 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newFeeTo",
+        "type": "address"
+      }
+    ],
+    "name": "FeeToRecipientSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newMigrator",
+        "type": "address"
+      }
+    ],
+    "name": "MigratorSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "token0",
         "type": "address"
       },
@@ -39,6 +78,25 @@
       }
     ],
     "name": "PairCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "pairCreator",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "allowance",
+        "type": "bool"
+      }
+    ],
+    "name": "PairCreatorSet",
     "type": "event"
   },
   {
@@ -196,7 +254,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_admin",
+        "name": "newAdmin",
         "type": "address"
       }
     ],
@@ -209,7 +267,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_feeTo",
+        "name": "newFeeTo",
         "type": "address"
       }
     ],
@@ -222,7 +280,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_migrator",
+        "name": "newMigrator",
         "type": "address"
       }
     ],
@@ -235,8 +293,13 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_pairCreator",
+        "name": "pairCreator",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowance",
+        "type": "bool"
       }
     ],
     "name": "setPairCreator",
