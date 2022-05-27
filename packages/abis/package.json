@@ -11,7 +11,7 @@
         "codegen": ".",
         "build": ".",
         "prepare:localhost": ".",
-        "prepare:skaleTestnet": ".",
+        "prepare:rubyNewSchain": ".",
         "prepare:mainnet": "."
     }
 }

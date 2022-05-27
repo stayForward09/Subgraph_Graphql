@@ -9,7 +9,6 @@
     "codegen": "true",
     "build": "true",
     "prepare:localhost": "mustache ../../config/localhost.json index.template.ts > index.ts",
-    "prepare:skaleTestnet": "mustache ../../config/skaleTestnet.json index.template.ts > index.ts",
     "prepare:rubyNewSchain": "mustache ../../config/rubyNewSchain.json index.template.ts > index.ts",
     "prepare:mainnet": "mustache ../../config/mainnet.json index.template.ts > index.ts"
   }

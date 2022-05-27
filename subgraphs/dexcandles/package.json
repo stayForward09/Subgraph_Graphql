@@ -16,9 +16,7 @@
         "remove-skaleTestnet": "graph remove --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ ruby/dexcandles",
         "deploy-skaleTestnet": "graph deploy --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ --ipfs  http://ec2-3-92-237-62.compute-1.amazonaws.com:5001 ruby/dexcandles",
 
-
         "prepare:localhost": "mustache config/localhost.json template.yaml > subgraph.yaml",
-        "prepare:skaleTestnet": "mustache config/skaleTestnet.json template.yaml > subgraph.yaml",  
         "prepare:rubyNewSchain": "mustache config/rubyNewSchain.json template.yaml > subgraph.yaml"    
     }
 }
