@@ -7,9 +7,9 @@ dataSources:
     name: RubyMaker
     network: {{ network }}
     source:
-      address: '{{ address }}'
+      address: '{{ ruby_maker_address }}'
       abi: RubyMaker
-      startBlock: {{ startBlock }}
+      startBlock: {{ ruby_maker_start_block }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

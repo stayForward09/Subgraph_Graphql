@@ -8,9 +8,9 @@ dataSources:
     name: RubyMasterChef
     network: {{ network }}
     source:
-      address: '{{ address }}'
+      address: '{{ factory.address }}'
       abi: RubyMasterChef
-      startBlock: {{ startBlock }}
+      startBlock: {{ factory.startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
