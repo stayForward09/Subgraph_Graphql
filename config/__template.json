@@ -1,0 +1,25 @@
+{
+    "network": "rubyNewSchain",
+    "factory_address": "__UniswapV2Factory|address",
+    "ruby_master_chef_address": "__RubyMasterChef|address",
+    "ruby_master_chef_start_block": "__RubyMasterChef|blockNumber",
+    "ruby_exchange_start_block": "__UniswapV2Factory|blockNumber",
+    "ruby_maker_address": "__RubyMaker|address",
+    "ruby_maker_start_block": "__RubyMaker|blockNumber",
+    "ruby_token_address": "__RubyToken|address",
+    "weth_address": "0xD2Aaa00700000000000000000000000000000000",
+    "ruby_weth_usdp_pair_address":"__pool+usdpETHC|addressLower",
+    "ruby_usdp_pair_address":"__pool+usdpRUBY|addressLower",
+    "usdt_address":"__RubyUSDT|addressLower",
+    "usdc_address":"__RubyUSDC|addressLower",
+    "usdp_address":"__RubyUSDP|addressLower",
+    "dai_address":"__RubyDAI|addressLower",
+    "weth_stable_pairs": ["__pool+usdpETHC|addressLower"],
+    "whitelist": ["0xd2aaa00700000000000000000000000000000000", "__RubyUSDT|addressLower", "__RubyUSDC|addressLower", "__RubyUSDP|addressLower", "__RubyDAI|addressLower"],
+    "minimum_usd_threshold_new_pairs": "300",
+    "minimum_liquidity_threshold_eth": "1",
+    "factory": {
+        "address": "__UniswapV2Factory|address",
+        "startBlock": "__UniswapV2Factory|blockNumber"
+    }
+}
