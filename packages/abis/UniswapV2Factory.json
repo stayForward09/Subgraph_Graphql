@@ -29,11 +29,17 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "newFeeTo",
+        "name": "swapper",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "allowance",
+        "type": "bool"
       }
     ],
-    "name": "FeeToRecipientSet",
+    "name": "FeeDecutionSwapperSet",
     "type": "event"
   },
   {
@@ -42,11 +48,11 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "newMigrator",
+        "name": "newFeeTo",
         "type": "address"
       }
     ],
-    "name": "MigratorSet",
+    "name": "FeeToRecipientSet",
     "type": "event"
   },
   {
@@ -169,6 +175,25 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "feeDeductionSwappers",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "feeTo",
     "outputs": [
@@ -195,19 +220,6 @@
       }
     ],
     "name": "getPair",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "migrator",
     "outputs": [
       {
         "internalType": "address",
@@ -267,11 +279,16 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "newFeeTo",
+        "name": "feeDeductionSwapper",
         "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "allowance",
+        "type": "bool"
       }
     ],
-    "name": "setFeeTo",
+    "name": "setFeeDeductionSwapper",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -280,11 +297,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "newMigrator",
+        "name": "newFeeTo",
         "type": "address"
       }
     ],
-    "name": "setMigrator",
+    "name": "setFeeTo",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

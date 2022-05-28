@@ -24,8 +24,8 @@
         "0x76a3ef01506eb19d6b34c4bdcf3cdcde14f6b11e",
         "0x4c45a6f9bb79977ef655b4147c14f9f40424ef00"
     ],
-    "minimum_usd_threshold_new_pairs": "300",
-    "minimum_liquidity_threshold_eth": "1",
+    "minimum_usd_threshold_new_pairs": "3000",
+    "minimum_liquidity_threshold_eth": "1000",
     "factory": {
         "address": "0xc2f4C9B69448D94da2623787bD552F12B6a91278",
         "startBlock": 564979

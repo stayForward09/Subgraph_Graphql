@@ -1,41 +1,5 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_ruby",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_rubyStaker",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_treasuryAddr",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_rubyPerSec",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_startTimestamp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_treasuryPercent",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -443,6 +407,49 @@
       }
     ],
     "name": "emergencyWithdrawRubyTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_ruby",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_rubyStaker",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_treasuryAddr",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rubyPerSec",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTimestamp",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_treasuryPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
