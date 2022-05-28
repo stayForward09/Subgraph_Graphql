@@ -29,7 +29,7 @@ dataSources:
         - name: Factory
           file: ../../packages/abis/UniswapV2Factory.json
       eventHandlers:
-        - event: LogConvert(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256)
+        - event: Convert(indexed address,indexed address,indexed address,uint256,uint256,uint256,uint256)
           handler: handleLogConvert
-        - event: BurnPercentChanged(uint256)
+        - event: BurnPercentSet(uint256)
           handler: handleBurnPercentChange

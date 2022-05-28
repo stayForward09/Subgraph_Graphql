@@ -8,16 +8,7 @@
   "scripts": {
     "build": "yarn workspaces run build",
     "codegen": "yarn workspaces run codegen",
-    "prepare:bsc": "yarn workspaces run prepare:bsc",
-    "prepare:fantom": "yarn workspaces run prepare:fantom",
-    "prepare:goerli": "yarn workspaces run prepare:goerli",
-    "prepare:kovan": "yarn workspaces run prepare:kovan",
-    "prepare:mainnet": "yarn workspaces run prepare:mainnet",
-    "prepare:matic": "yarn workspaces run prepare:matic",
-    "prepare:rinkeby": "yarn workspaces run prepare:rinkeby",
-    "prepare:ropsten": "yarn workspaces run prepare:ropsten",
-    "prepare:localhost": "yarn workspaces run prepare:localhost",
-    "prepare:xdai": "yarn workspaces run prepare:xdai",
+    "prepare:rubyNewSchain": "yarn workspaces run prepare:rubyNewSchain",
     "run-graph-node": "cd graph-node && docker-compose up",
     "remove-graph-node": "cd graph-node && docker-compose down",
     "clean-graph-node": "rm -rf graph-node/data/"

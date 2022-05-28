@@ -3,10 +3,10 @@ import { FACTORY_ADDRESS, BIG_DECIMAL_ONE } from 'const'
 import { getMaker, getServer } from '../entities'
 import { Serving } from '../../generated/schema'
 import { Factory as FactoryContract } from '../../generated/RubyMaker/Factory'
-import { LogConvert, BurnPercentChanged } from '../../generated/RubyMaker/RubyMaker'
+import { Convert, BurnPercentSet } from '../../generated/RubyMaker/RubyMaker'
 
 
-export function handleLogConvert(event: LogConvert): void {
+export function handleLogConvert(event: Convert): void {
   log.info('[RubyMaker] Log Convert {} {} {} {} {} {} {}', [
     event.params.server.toHex(),
     event.params.token0.toHex(),
@@ -50,7 +50,7 @@ export function handleLogConvert(event: LogConvert): void {
   server.save()
 }
 
-export function handleBurnPercentChange(event: BurnPercentChanged): void {
+export function handleBurnPercentChange(event: BurnPercentSet): void {
   log.info('[RubyMaker] Burn percent change {}', [
     event.params.newBurnPercent.toString()
   ])

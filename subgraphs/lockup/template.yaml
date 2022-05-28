@@ -30,6 +30,6 @@ dataSources:
         - event: Withdraw(indexed address,indexed uint256,uint256)
           handler: withdraw
       callHandlers:
-        - function: set(uint256,uint256,bool)
+        - function: set(uint256,uint256,address,bool)
           handler: set
       file: ./src/lockup.ts
