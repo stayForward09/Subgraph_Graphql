@@ -1,25 +1,33 @@
 {
     "network": "rubyNewSchain",
-    "factory_address": "0x13f323840a96A7541B868E6F7093E7643b1aa29A",
-    "ruby_master_chef_address": "0xf5E880E1066DDc90471B9BAE6f183D5344fd289F",
-    "ruby_master_chef_start_block": "33794",
-    "ruby_exchange_start_block": "33670",
-    "ruby_maker_address": "0xa388F9783d8E5B0502548061c3b06bf4300Fc0E1",
-    "ruby_maker_start_block": "33777",
+    "factory_address": "0xc2f4C9B69448D94da2623787bD552F12B6a91278",
+    "ruby_master_chef_address": "0x249172fC092aDEF6799d24a14B4801B67e48d537",
+    "ruby_master_chef_start_block": 565231,
+    "ruby_exchange_start_block": 564979,
+    "ruby_maker_address": "0x857aF1A37c0EcE51a0b4b77453B0A0622412ca4d",
+    "ruby_maker_start_block": 565004,
     "ruby_token_address": "0x83B38f79cFFB47CF74f7eC8a5F8D7DD69349fBf7",
     "weth_address": "0xD2Aaa00700000000000000000000000000000000",
-    "ruby_weth_usdp_pair_address":"0x29a4f9d3503b7ba5fb8b073e7adf1e9e62a7555c",
-    "ruby_usdp_pair_address":"0xc1d7e1043ddca3d46c67d84238560dd98bae89ca",
-    "usdt_address":"0x6fafe9419e37d20a402a6bb942808a20a5a19972",
-    "usdc_address":"0x2fc800cf8c219dd07866f883f8f25a346f92d07b",
-    "usdp_address":"0x76a3ef01506eb19d6b34c4bdcf3cdcde14f6b11e",
-    "dai_address":"0x4c45a6f9bb79977ef655b4147c14f9f40424ef00",
-    "weth_stable_pairs": ["0x29a4f9d3503b7ba5fb8b073e7adf1e9e62a7555c"],
-    "whitelist": ["0xD2Aaa00700000000000000000000000000000000", "0x6fafe9419e37d20a402a6bb942808a20a5a19972", "0x2fc800cf8c219dd07866f883f8f25a346f92d07b", "0x76a3ef01506eb19d6b34c4bdcf3cdcde14f6b11e", "0x4c45a6f9bb79977ef655b4147c14f9f40424ef00"],
-    "minimum_usd_threshold_new_pairs": "3000",
-    "minimum_liquidity_threshold_eth": "1000",
+    "ruby_weth_usdp_pair_address": "0xf53dee562f859abec42af342756fe47bb9f83a85",
+    "ruby_usdp_pair_address": "0x4d0d60825842258064aa28856d28535596a2c062",
+    "usdt_address": "0x6fafe9419e37d20a402a6bb942808a20a5a19972",
+    "usdc_address": "0x2fc800cf8c219dd07866f883f8f25a346f92d07b",
+    "usdp_address": "0x76a3ef01506eb19d6b34c4bdcf3cdcde14f6b11e",
+    "dai_address": "0x4c45a6f9bb79977ef655b4147c14f9f40424ef00",
+    "weth_stable_pairs": [
+        "0xf53dee562f859abec42af342756fe47bb9f83a85"
+    ],
+    "whitelist": [
+        "0xd2aaa00700000000000000000000000000000000",
+        "0x6fafe9419e37d20a402a6bb942808a20a5a19972",
+        "0x2fc800cf8c219dd07866f883f8f25a346f92d07b",
+        "0x76a3ef01506eb19d6b34c4bdcf3cdcde14f6b11e",
+        "0x4c45a6f9bb79977ef655b4147c14f9f40424ef00"
+    ],
+    "minimum_usd_threshold_new_pairs": "300",
+    "minimum_liquidity_threshold_eth": "1",
     "factory": {
-        "address": "0x13f323840a96A7541B868E6F7093E7643b1aa29A",
-        "startBlock": "33670"
+        "address": "0xc2f4C9B69448D94da2623787bD552F12B6a91278",
+        "startBlock": 564979
     }
 }
