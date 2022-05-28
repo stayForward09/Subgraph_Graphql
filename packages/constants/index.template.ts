@@ -93,9 +93,9 @@ export const WBTC_ADDRESS = Address.fromString(
   '{{ wbtc_address }}{{^wbtc_address}}0x0000000000000000000000000000000000000000{{/wbtc_address}}'
 )
 
-// IMPORTANT NOTE: Always make sure this addresses are set to lowercase in the config files. They are compared as strings and not as entities of type Address in the indexing files
-export const WETH_STABLE_PAIRS: string[] = '{{ weth_stable_pairs }}'.split(',')
-export const WHITELIST: string[] = '{{ whitelist }}'.split(',')
+// IMPORTANT NOTE: Addresses are set to lowercase and stripped because they are compared as strings and not as entities of type Address in the indexing files
+export const WETH_STABLE_PAIRS: string[] = [{{#weth_stable_pairs}}'{{.}}',{{/weth_stable_pairs}}]
+export const WHITELIST: string[] = [{{#whitelist}}'{{.}}',{{/whitelist}}]
 
 
 //MISC
