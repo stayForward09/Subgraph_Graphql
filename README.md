@@ -37,6 +37,19 @@ on the graph server)
 - `yarn create-local` # this is the right command as the urls are local to the server (when run from the server)
 - `yarn deploy-local` # this is the right command as the urls are local to the server (when run from the server)
 
+### Cleaning Everything
+
+* in a local test environment (e.g. using docker) you can clean everything and start from
+  the beginning again by
+  * stopping docker `$ cd graph-node; docker-compose down; cd -`
+  * deleting docker data `$ cd graph-node; rm -rf ./data; cd -`
+  * cleaning the repo of all built files `$ git clean -dfx`
+  * rebuilding everything `$ yarn; yarn prepare:rubyNewSchain; yarn codegen; yarn build`
+  * start docker locally `$ cd graph-node; docker-compose up -d; cd -`
+  * redeploy everything
+    * as above
+    * for each dir, `yarn create-local` and `yarn deploy-local`)
+
 ## Notes
 
 - The following subgraphs are not deployed in production yet, and need to be completed
