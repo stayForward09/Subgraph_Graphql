@@ -1,0 +1,26 @@
+{
+    "name": "lottery",
+    "license": "MIT",
+    "version": "1.2.0",
+    "author": "RubyExchange",
+    "files": [
+        "generated"
+    ],
+    "scripts": {
+        "codegen": "graph codegen subgraph.yaml",
+        "build": "graph build subgraph.yaml",
+        "create-local": "graph create --node http://localhost:8020/ ruby/lottery",
+        "remove-local": "graph remove --node http://localhost:8020/ ruby/lottery",
+        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ruby/lottery",
+        "create-skaleTestnet": "graph create --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ ruby/lottery",
+        "remove-skaleTestnet": "graph remove --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ ruby/lottery",
+        "deploy-skaleTestnet": "graph deploy --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ --ipfs  http://ec2-3-92-237-62.compute-1.amazonaws.com:5001/ ruby/lottery",
+
+        "deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ruby/lottery subgraph.yaml",
+        "deploy:skaleTestnet": "graph deploy --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ --ipfs  http://ec2-3-92-237-62.compute-1.amazonaws.com:5001  ruby/lottery subgraph.yaml",
+
+        "prepare:localhost": "mustache ../../config/localhost.json template.yaml > subgraph.yaml",
+        "prepare:mainnet": "mustache ../../config/mainnet.json template.yaml > subgraph.yaml",
+        "prepare:rubyNewSchain": "mustache ../../config/rubyNewSchain.json template.yaml > subgraph.yaml"    
+    }
+}

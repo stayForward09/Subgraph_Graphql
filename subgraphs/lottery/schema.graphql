@@ -1,0 +1,7 @@
+# TicketEvent
+type Ticket @entity {
+  id: ID! # transaction
+  who: Bytes! #address
+  ticketSize: BigInt!
+  timestamp: BigInt!
+}
