@@ -45,5 +45,5 @@ templates:
       eventHandlers:
         - event: NewTickets(address,uint256)
           handler: onNewTickets
-        - event: RewardClaimed(address,uint256,address)
+        - event: RewardClaimed(address,uint256,address,address,uint256)
           handler: onRewardClaimed

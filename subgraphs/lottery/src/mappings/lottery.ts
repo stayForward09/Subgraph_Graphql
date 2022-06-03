@@ -14,6 +14,9 @@ export function onRewardClaimed(event: RewardClaimed): void {
     let reward = new Reward(event.transaction.hash.toHex());
     reward.to = event.params.to;
     reward.amount = event.params.amount;
+    reward.collateral = event.params.collateral;
+    reward.nft = event.params.nft;
+    reward.nftid = event.params.nftid;
     reward.timestamp = event.block.timestamp;
     reward.save();
 }

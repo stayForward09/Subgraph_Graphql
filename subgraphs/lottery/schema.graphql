@@ -10,5 +10,8 @@ type Reward @entity {
   id: ID! # transation
   to: Bytes! # address
   amount: BigInt!
+  collateral: Bytes!
+  nft: Bytes!
+  nftid: BigInt!
   timestamp: BigInt!
 }
