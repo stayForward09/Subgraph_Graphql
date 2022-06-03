@@ -1,6 +1,6 @@
 import { BigInt, Bytes } from '@graphprotocol/graph-ts'
-import { Ticket } from '../../generated/schema'
-import { NewTickets } from '../../generated/templates/Lottery/Lottery'
+import { Ticket, Reward } from '../../generated/schema'
+import { NewTickets, RewardClaimed } from '../../generated/templates/Lottery/Lottery'
 
 export function onNewTickets(event: NewTickets): void {
     let ticket = new Ticket(event.transaction.hash.toHex());
@@ -8,4 +8,12 @@ export function onNewTickets(event: NewTickets): void {
     ticket.ticketSize = event.params.ticketSize;
     ticket.timestamp = event.block.timestamp;
     ticket.save();
+}
+
+export function onRewardClaimed(event: RewardClaimed): void {
+    let reward = new Reward(event.transaction.hash.toHex());
+    reward.to = event.params.to;
+    reward.amount = event.params.amount;
+    reward.timestamp = event.block.timestamp;
+    reward.save();
 }

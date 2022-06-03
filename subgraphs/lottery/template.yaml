@@ -18,6 +18,7 @@ dataSources:
       file: ./src/mappings/factory.ts
       entities:
         - Ticket
+        - Reward
       abis:
         - name: LotteryFactory
           file: ../../packages/abis/LotteryFactory.json
@@ -37,9 +38,12 @@ templates:
       file: ./src/mappings/lottery.ts
       entities:
         - Ticket
+        - Reward
       abis:
         - name: Lottery
           file: ../../packages/abis/Lottery.json
       eventHandlers:
         - event: NewTickets(address,uint256)
           handler: onNewTickets
+        - event: RewardClaimed(address,uint256,address)
+          handler: onRewardClaimed

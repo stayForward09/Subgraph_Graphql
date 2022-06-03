@@ -5,3 +5,10 @@ type Ticket @entity {
   ticketSize: BigInt!
   timestamp: BigInt!
 }
+
+type Reward @entity {
+  id: ID! # transation
+  to: Bytes! # address
+  amount: BigInt!
+  timestamp: BigInt!
+}
