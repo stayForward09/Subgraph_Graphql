@@ -14,18 +14,15 @@ Or read the docker instructions in `graph-node` directory
 
 ## Build
 
-You can check the build of everything at once using
+From the top level directory
 
 - `yarn prepare:rubyNewSchain`
 - `yarn codegen`
 - `yarn build`
 
-either from the top level directory, or in every subgraph
-directory
-
 ## Deployment
 
-For each of the following you 
+Then, for each of the following
 
 - `cd subgraphs/dexcandles`
 - `cd subgraphs/exchange`
