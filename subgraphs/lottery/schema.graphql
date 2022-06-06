@@ -1,4 +1,4 @@
-# TicketEvent
+# BuyTicket
 type Ticket @entity {
   id: ID! # transaction
   who: Bytes! #address
@@ -6,12 +6,42 @@ type Ticket @entity {
   timestamp: BigInt!
 }
 
+# ClaimReward
 type Reward @entity {
   id: ID! # transation
   to: Bytes! # address
   amount: BigInt!
   collateral: Bytes!
+  name: String!
+  symbol: String!
+  decimals: BigInt!
   nft: Bytes!
   nftid: BigInt!
+  description: String!
+  visualAppearance: String!
   timestamp: BigInt!
+}
+
+# Token
+type Token @entity {
+  # token address
+  id: ID!
+
+  # mirrored from the smart contract
+  symbol: String!
+  name: String!
+  decimals: BigInt!
+
+  # used for other stats like marketcap
+  totalSupply: BigInt!
+}
+
+# NFT
+type NFT @entity {
+  # token address
+  id: ID!
+
+  # mirrored from the smart contract
+  description: String!
+  visualAppearance: String!
 }
