@@ -20,14 +20,12 @@ export function onRewardClaimed(event: RewardClaimed): void {
     reward.amount = event.params.amount;
     reward.collateral = event.params.collateral;
     const token = getToken(event.params.collateral);
-    reward.name = token.name;
     reward.symbol = token.symbol;
     reward.decimals = token.decimals;
     reward.nft = event.params.nft;
     reward.nftid = event.params.nftid;
     const nft = getNFT(event.params.nft)
     reward.description = nft.description;
-    reward.visualAppearance = nft.visualAppearance;
     reward.timestamp = event.block.timestamp;
     reward.save();
 }

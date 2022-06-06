@@ -26,14 +26,10 @@ dataSources:
           file: ../../packages/abis/ERC20.json
         - name: ERC20SymbolBytes
           file: ../../packages/abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ../../packages/abis/ERC20NameBytes.json
         - name: RubyNFT
           file: ../../packages/abis/RubyNFT.json
         - name: RubyNFTDescriptionBytes
           file: ../../packages/abis/RubyNFTDescriptionBytes.json
-        - name: RubyNFTVisualAppearanceBytes
-          file: ../../packages/abis/RubyNFTVisualAppearanceBytes.json
       eventHandlers:
         - event: LotteryCreated(uint256,address,address,address)
           handler: onLotteryCreated
@@ -60,14 +56,10 @@ templates:
           file: ../../packages/abis/ERC20.json
         - name: ERC20SymbolBytes
           file: ../../packages/abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ../../packages/abis/ERC20NameBytes.json
         - name: RubyNFT
           file: ../../packages/abis/RubyNFT.json
         - name: RubyNFTDescriptionBytes
           file: ../../packages/abis/RubyNFTDescriptionBytes.json
-        - name: RubyNFTVisualAppearanceBytes
-          file: ../../packages/abis/RubyNFTVisualAppearanceBytes.json
       eventHandlers:
         - event: NewTickets(address,uint256)
           handler: onNewTickets

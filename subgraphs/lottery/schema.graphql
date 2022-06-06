@@ -12,13 +12,11 @@ type Reward @entity {
   to: Bytes! # address
   amount: BigInt!
   collateral: Bytes!
-  name: String!
   symbol: String!
   decimals: BigInt!
   nft: Bytes!
   nftid: BigInt!
   description: String!
-  visualAppearance: String!
   timestamp: BigInt!
 }
 
@@ -29,11 +27,7 @@ type Token @entity {
 
   # mirrored from the smart contract
   symbol: String!
-  name: String!
   decimals: BigInt!
-
-  # used for other stats like marketcap
-  totalSupply: BigInt!
 }
 
 # NFT
@@ -43,5 +37,4 @@ type NFT @entity {
 
   # mirrored from the smart contract
   description: String!
-  visualAppearance: String!
 }
