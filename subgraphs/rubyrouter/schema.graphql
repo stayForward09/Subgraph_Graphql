@@ -7,9 +7,6 @@ type Token @entity {
   symbol: String!
   name: String!
   decimals: BigInt!
-
-  # used for other stats like marketcap
-  totalSupply: BigInt!
 }
 
 # transaction
