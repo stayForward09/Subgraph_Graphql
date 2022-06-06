@@ -1,0 +1,37 @@
+# Token
+type Token @entity {
+  # token address
+  id: ID!
+
+  # mirrored from the smart contract
+  symbol: String!
+  name: String!
+  decimals: BigInt!
+
+  # used for other stats like marketcap
+  totalSupply: BigInt!
+}
+
+# transaction
+type Transaction @entity {
+  # transaction hash
+  id: ID!
+  blockNumber: BigInt!
+  timestamp: BigInt!
+  swaps: [Swap]!
+}
+
+# ruby swap
+type Swap @entity {
+  # transaction hash - index of swap in transaction swaps array
+  id: ID!
+
+  # populated from the Swap event
+  sender: Bytes!
+  amount0In: BigDecimal!
+  amount1Out: BigDecimal!
+  token0: Token!
+  token1: Token!
+  to: Bytes!
+  logIndex: BigInt
+}

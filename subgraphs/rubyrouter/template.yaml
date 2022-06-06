@@ -1,0 +1,33 @@
+specVersion: 0.0.3
+description: RubyRouter
+repository: https://github.com/RubyExchange/subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Router
+    network: {{ network }}
+    source:
+      address: '{{ ruby_router.address }}'
+      abi: Router
+      startBlock: {{ ruby_router.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/router.ts
+      entities:
+        - Router
+        - Token
+      abis:
+        - name: Router
+          file: ../../packages/abis/RubyRouter.json
+        - name: ERC20
+          file: ../../packages/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../packages/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Swap(indexed address,uint256,uint256,address,address,indexed address)
+          handler: onSwap
