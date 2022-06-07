@@ -28,6 +28,7 @@ Then, for each of the following
 - `cd subgraphs/exchange`
 - `cd subgraphs/rubymasterchef`
 - `cd subgraphs/rubyrouter`
+- `cd subgraphs/lottery`
 
 You can execute the following to deploy to localhost (or when run
 on the graph server)
