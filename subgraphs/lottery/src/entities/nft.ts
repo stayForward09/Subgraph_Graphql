@@ -24,7 +24,7 @@ export function getDescription(address: Address): string {
   const contractDescriptionBytes = RubyNFTDescriptionBytes.bind(address)
 
   // try types string and bytes32 for description
-  let descriptionValue = '{title: \"unknown\", description: \"unknown\"}'
+  let descriptionValue = '{\"title\": \"unknown\", \"description\": \"unknown\"}'
   const descriptionResult = contract.try_description()
   if (descriptionResult.reverted) {
     const descriptionResultBytes = contractDescriptionBytes.try_description()
