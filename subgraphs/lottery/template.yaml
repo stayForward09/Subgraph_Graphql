@@ -1,0 +1,67 @@
+specVersion: 0.0.3
+description: Exchange
+repository: https://github.com/ruby/ruby-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: LotteryFactory
+    network: {{ network }}
+    source:
+      address: '{{ lotteryFactory.address }}'
+      abi: LotteryFactory
+      startBlock: {{ lotteryFactory.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/factory.ts
+      entities:
+        - Ticket
+        - Reward
+      abis:
+        - name: LotteryFactory
+          file: ../../packages/abis/LotteryFactory.json
+        - name: ERC20
+          file: ../../packages/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: RubyNFT
+          file: ../../packages/abis/RubyNFT.json
+        - name: RubyNFTDescriptionBytes
+          file: ../../packages/abis/RubyNFTDescriptionBytes.json
+      eventHandlers:
+        - event: LotteryCreated(uint256,address,address,address)
+          handler: onLotteryCreated
+templates:
+  - name: Lottery
+    kind: ethereum/contract
+    network: {{ network }}
+    source:
+      abi: Lottery
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/lottery.ts
+      entities:
+        - Ticket
+        - Reward
+        - Token
+        - NFT
+      abis:
+        - name: Lottery
+          file: ../../packages/abis/Lottery.json
+        - name: ERC20
+          file: ../../packages/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: RubyNFT
+          file: ../../packages/abis/RubyNFT.json
+        - name: RubyNFTDescriptionBytes
+          file: ../../packages/abis/RubyNFTDescriptionBytes.json
+      eventHandlers:
+        - event: NewTickets(address,uint256)
+          handler: onNewTickets
+        - event: RewardClaimed(address,uint256,address,address,uint256)
+          handler: onRewardClaimed

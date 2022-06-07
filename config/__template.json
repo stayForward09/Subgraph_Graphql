@@ -21,5 +21,9 @@
     "factory": {
         "address": "UniswapV2Factory|address",
         "startBlock": "UniswapV2Factory|blockNumber"
+    },
+    "lotteryFactory": {
+        "address": "LotteryFactory|address",
+        "startBlock": "LotteryFactory|blockNumber"
     }
 }

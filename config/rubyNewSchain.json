@@ -25,5 +25,9 @@
     "ruby_router": {
         "address": "0x9d0d579e274EdfDF232A7Aa4dfa2E728466e9cac",
         "startBlock": 573215
+    },
+    "lotteryFactory": {
+        "address": "0x58CF9669375fE4f4920C231Cad5245be9661e2AC",
+        "startBlock": 635472
     }
 }
