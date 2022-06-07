@@ -22,6 +22,10 @@
         "address": "UniswapV2Factory|address",
         "startBlock": "UniswapV2Factory|blockNumber"
     },
+    "ruby_router": {
+        "address": "RubyRouter|address",
+        "startBlock": "RubyRouter|blockNumber"
+    },
     "lotteryFactory": {
         "address": "LotteryFactory|address",
         "startBlock": "LotteryFactory|blockNumber"
