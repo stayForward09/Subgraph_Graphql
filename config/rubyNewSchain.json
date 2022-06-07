@@ -21,5 +21,9 @@
     "factory": {
         "address": "0xc2f4C9B69448D94da2623787bD552F12B6a91278",
         "startBlock": 564979
+    },
+    "ruby_router": {
+        "address": "0x9d0d579e274EdfDF232A7Aa4dfa2E728466e9cac",
+        "startBlock": 573215
     }
 }
