@@ -34,6 +34,7 @@ export function onSwap(event: SwapEvent): void {
   swap.token1 = token1.id
   swap.to = event.params.to
   swap.logIndex = event.logIndex
+  swap.timestamp = event.block.timestamp
 
   swap.save()
   

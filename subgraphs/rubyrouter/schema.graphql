@@ -31,4 +31,5 @@ type Swap @entity {
   token1: Token!
   to: Bytes!
   logIndex: BigInt
+  timestamp: BigInt!
 }
