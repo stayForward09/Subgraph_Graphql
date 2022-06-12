@@ -6,19 +6,10 @@
     "scripts": {
         "codegen": "graph codegen subgraph.yaml",
         "build": "graph build subgraph.yaml",
-        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ruby/masterchef subgraph.yaml",
-        
-        "deploy-studio": "graph deploy --studio sushi---sushibar",
-        
         "create-local": "graph create --node http://localhost:8020/ ruby/masterchef",
         "remove-local": "graph remove --node http://localhost:8020/ ruby/masterchef",
         "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 ruby/masterchef",
-        
-        "create-skaleTestnet": "graph create --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ ruby/masterchef",
-        "remove-skaleTestnet": "graph remove --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ ruby/masterchef",
-        "deploy-skaleTestnet": "graph deploy --node http://ec2-3-92-237-62.compute-1.amazonaws.com:8020/ --ipfs  http://ec2-3-92-237-62.compute-1.amazonaws.com:5001 ruby/masterchef",
-
-        "prepare:localhost": "mustache config/localhost.json template.yaml > subgraph.yaml",
-        "prepare:rubyNewSchain": "mustache ../../config/rubyNewSchain.json template.yaml > subgraph.yaml"   
+        "prepare:rubyNewSchain": "mustache ../../config/rubyNewSchain.json template.yaml > subgraph.yaml",
+        "prepare:europa": "mustache ../../config/europa.json template.yaml > subgraph.yaml"
     }
 }

@@ -18,6 +18,7 @@ From the top level directory
 
 * `yarn prepare:NETWORK`
   * (testnet): `yarn prepare:rubyNewSchain`
+  * (mainnet): `yarn prepare:europa`
 * `yarn codegen`
 * `yarn build`
 

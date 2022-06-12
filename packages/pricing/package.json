@@ -12,8 +12,7 @@
   "scripts": {
     "codegen": ".",
     "build": ".",
-    "prepare:localhost": ".",
-    "prepare:mainnet": ".",
-    "prepare:rubyNewSchain": "."
+    "prepare:rubyNewSchain": ".",
+    "prepare:europa": "."
   }
 }
