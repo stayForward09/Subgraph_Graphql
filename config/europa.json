@@ -1,0 +1,44 @@
+{
+    "network": "europa",
+    "factory_address": "0x71f7BbbB33550fa5d70CA3F7eeAD87529f2DC3C8",
+    "ruby_master_chef_address": "0x2BB702e94e094b8Caf7b758960621AE2d296676D",
+    "ruby_master_chef_start_block": 186727,
+    "ruby_exchange_start_block": 50404,
+    "ruby_maker_address": "0x4EDfc464bF7FF9A90e2D9a1beE2AE9f8edF98CAe",
+    "ruby_maker_start_block": 186650,
+    "ruby_token_address": "0x2B4e4899b53E8b7958c4591a6d02f9C0b5c50F8f",
+    "weth_address": "0xD2Aaa00700000000000000000000000000000000",
+    "ruby_weth_usdp_pair_address": "0x15369d5e452614b26271a4796c3d63e7f549c12d",
+    "ruby_usdp_pair_address": "0xc13f81c54273a50f42b1280426d77f6494cbcf58",
+    "usdt_address": "0x1c0491e3396ad6a35f061c62387a95d7218fc515",
+    "usdc_address": "0x5f795bb52dac3085f578f4877d450e2929d2f13d",
+    "usdp_address": "0x73d22d8a2d1f59bf5bcf62ca382481a2073faf58",
+    "dai_address": "0xd05c4be5f3be302d376518c9492ec0147fa5a718",
+    "weth_stable_pairs": [
+        "0x15369d5e452614b26271a4796c3d63e7f549c12d"
+    ],
+    "whitelist": [
+        "0xD2Aaa00700000000000000000000000000000000",
+        "0x1c0491e3396ad6a35f061c62387a95d7218fc515",
+        "0x5f795bb52dac3085f578f4877d450e2929d2f13d",
+        "0x73d22d8a2d1f59bf5bcf62ca382481a2073faf58",
+        "0xd05c4be5f3be302d376518c9492ec0147fa5a718",
+        "0x2B4e4899b53E8b7958c4591a6d02f9C0b5c50F8f",
+        "0x2b4e4899b53e8b7958c4591a6d02f9c0b5c50f8f",
+        "0xd2aaa00700000000000000000000000000000000"
+    ],
+    "minimum_usd_threshold_new_pairs": "3000",
+    "minimum_liquidity_threshold_eth": "1000",
+    "factory": {
+        "address": "0x71f7BbbB33550fa5d70CA3F7eeAD87529f2DC3C8",
+        "startBlock": 50404
+    },
+    "ruby_router": {
+        "address": "0x2FA290DCb232B04D2f97F4d4ad45396b62193D51",
+        "startBlock": 186835
+    },
+    "lotteryFactory": {
+        "address": "0x10eE555c6D7E6C2755473BbF22618920f4820cE7",
+        "startBlock": 187084
+    }
+}
