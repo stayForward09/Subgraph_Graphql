@@ -3,6 +3,10 @@ import json
 import glob
 import os.path
 
+# generate a new config
+# $ python3 generate_new_config.py rubyNewChain ../../backend/ > regen.json
+# compare config
+# $ jd regen.json rubyNewSchain.json
 
 CHAIN = sys.argv[1]
 BACKEND_DIR = sys.argv[2]
