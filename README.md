@@ -16,9 +16,10 @@ Or read the docker instructions in `graph-node` directory
 
 From the top level directory
 
-- `yarn prepare:rubyNewSchain`
-- `yarn codegen`
-- `yarn build`
+* `yarn prepare:NETWORK`
+  * (testnet): `yarn prepare:rubyNewSchain`
+* `yarn codegen`
+* `yarn build`
 
 ## Deployment
 
@@ -40,11 +41,12 @@ on the graph server)
 
 * in a local test environment (e.g. using docker) you can clean everything and start from
   the beginning again by
-  * stopping docker `$ cd graph-node; docker-compose down; cd -`
+  * stopping docker `$ cd graph-node; docker-compose -f docker-compose.NETWORK.yml down; cd -`
   * deleting docker data `$ cd graph-node; rm -rf ./data; cd -`
   * cleaning the repo of all built files `$ git clean -dfx`
-  * rebuilding everything `$ yarn; yarn prepare:rubyNewSchain; yarn codegen; yarn build`
-  * start docker locally `$ cd graph-node; docker-compose up -d; cd -`
+  * rebuilding everything `$ yarn; yarn prepare:NETWORK; yarn codegen; yarn build`
+    * (testnet): `$ yarn; yarn prepare:rubyNewSchain; yarn codegen; yarn build`
+  * start docker locally `$ cd graph-node; docker-compose up -f docker-compose.NETWORK.yml -d; cd -`
   * redeploy everything
     * as above
     * for each dir, `yarn create-local` and `yarn deploy-local`)
