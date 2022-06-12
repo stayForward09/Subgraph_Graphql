@@ -9,7 +9,7 @@
     "build": "yarn workspaces run build",
     "codegen": "yarn workspaces run codegen",
     "prepare:rubyNewSchain": "yarn workspaces run prepare:rubyNewSchain",
-    "prepare:europa": "yarn workspaces run prepare:europa",
+    "prepare:europa": "yarn workspaces run prepare:europa"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.21.1",
