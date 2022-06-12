@@ -61,3 +61,23 @@ on the graph server)
 - All of the necessary contracts are deployed correctly to the Skale testchain and all of the addresses are set under `config/rubyNewSchain.json`
 - All of the constants are prepared for the Skale testnet deployment, so you don't need to run anything additionally
 - If you stumble across an error that some of the subgraphs is already created, then skip the `yarn create-local` command, or run `yarn remove-local` and then `yarn create-local`.
+
+## Instance Notes
+
+deployed on AWS
+
+```
+ubuntu@ip-10-1-13-250:~$ yarn --version
+1.22.15
+ubuntu@ip-10-1-13-250:~$ nodejs --version
+v10.19.0
+ubuntu@ip-10-1-13-250:~$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 20.04.2 LTS
+Release:	20.04
+Codename:	focal
+ubuntu@ip-10-1-13-250:~$ uname -a
+Linux ip-10-1-13-250 5.4.0-1045-aws #47-Ubuntu SMP Tue Apr 13 07:02:25 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+ubuntu@ip-10-1-13-250:~$ 
+```
