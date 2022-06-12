@@ -47,7 +47,7 @@ on the graph server)
   * cleaning the repo of all built files `$ git clean -dfx`
   * rebuilding everything `$ yarn; yarn prepare:NETWORK; yarn codegen; yarn build`
     * (testnet): `$ yarn; yarn prepare:rubyNewSchain; yarn codegen; yarn build`
-  * start docker locally `$ cd graph-node; docker-compose up -f docker-compose.NETWORK.yml -d; cd -`
+  * start docker locally `$ cd graph-node; docker-compose -f docker-compose.NETWORK.yml up -d; cd -`
   * redeploy everything
     * as above
     * for each dir, `yarn create-local` and `yarn deploy-local`)
