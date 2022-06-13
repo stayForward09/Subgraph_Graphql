@@ -97,9 +97,12 @@ export function getOrInsertRewarder(rewarderAddress: Address, block: ethereum.Bl
   const rewarderBalance = rewardTokenContract.balanceOf(rewarderAddress);
   const currentTimestamp = block.timestamp;
 
-  const numSeconds = rewarderBalance.div(rewarder.tokenPerSec);
-
-  rewarder.endTimestamp = currentTimestamp.plus(numSeconds);
+  if (rewarder.tokenPerSec.gt(BIG_INT_ZERO)) {
+    const numSeconds = rewarderBalance.div(rewarder.tokenPerSec);
+    rewarder.endTimestamp = currentTimestamp.plus(numSeconds);
+  } else {
+    rewarder.endTimestamp = currentTimestamp;
+  }
 
   rewarder.save()
 
