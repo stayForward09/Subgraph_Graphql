@@ -255,3 +255,19 @@ type User @entity {
   # Block
   block: BigInt!
 }
+
+type HavestHistory @entity {
+  # Transaction Hash
+  id: ID!
+
+  pool: String!
+
+  # User address
+  address: Bytes!
+
+  # Amount
+  amount: BigDecimal!
+
+  # Timestamp
+  timestamp: BigInt!
+}

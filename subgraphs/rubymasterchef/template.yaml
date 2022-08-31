@@ -23,6 +23,7 @@ dataSources:
         - PoolHistory
         - User
         - Rewarder
+        - HarvestHistory
       abis:
         - name: RubyMasterChef
           file: ../../packages/abis/RubyMasterChef.json
