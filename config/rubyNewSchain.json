@@ -29,5 +29,9 @@
     "lotteryFactory": {
         "address": "0x58CF9669375fE4f4920C231Cad5245be9661e2AC",
         "startBlock": 635472
+    },
+    "rubyStaker": {
+        "address": "0xAd3E6ec5E2d7133A7193115a896a3B985fdDd22b",
+        "startBlock": 564995
     }
 }

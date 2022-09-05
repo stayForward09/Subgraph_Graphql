@@ -110,4 +110,3 @@ export const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('{{ minimum
 
 
 export const ACC_RUBY_PRECISION = BigInt.fromString('1000000000000')
-

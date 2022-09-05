@@ -9,8 +9,7 @@ import {
   OwnershipTransferred,
   Withdraw,
   UpdateEmissionRate,
-  SetRubyStaker,
-  Harvest
+  SetRubyStaker
 } from '../generated/RubyMasterChef/RubyMasterChef'
 
 import { ERC20 as ERC20Contract } from '../generated/RubyMasterChef/ERC20'

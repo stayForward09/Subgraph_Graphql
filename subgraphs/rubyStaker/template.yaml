@@ -1,0 +1,28 @@
+specVersion: 0.0.3
+description: RubyStaker
+repository: https://github.com/RubyExchange/subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Staker
+    network: {{ network }}
+    source:
+      address: '{{ rubyStaker.address }}'
+      abi: Staker
+      startBlock: {{ rubyStaker.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/rubystaker.ts
+      entities:
+        - Stake
+      abis:
+        - name: Staker
+          file: ../../packages/abis/RubyStaker.json
+      eventHandlers:
+        - event: Staked(indexed address,uint256)
+          handler: onStake
+        - event: Withdrawal(indexed address,uint256)
+          handler: onWithdraw

@@ -29,5 +29,9 @@
     "lotteryFactory": {
         "address": "LotteryFactory|address",
         "startBlock": "LotteryFactory|blockNumber"
+    },
+    "rubyRouter": {
+        "address": "RubyStaker|address",
+        "startBlock": "RubyStaker|blockNumber"
     }
 }

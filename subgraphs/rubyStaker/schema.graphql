@@ -1,0 +1,10 @@
+type Stake @entity {
+  # transaction hash
+  id: ID!
+
+  stake: Boolean!
+
+  address: Bytes!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
