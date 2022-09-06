@@ -256,7 +256,7 @@ type User @entity {
   block: BigInt!
 }
 
-type HavestHistory @entity {
+type Harvest @entity {
   # Transaction Hash
   id: ID!
 

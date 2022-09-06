@@ -31,7 +31,7 @@ import {
   ADDRESS_ZERO
 } from 'const'
 
-import { History, RubyMasterChef, Pool, PoolHistory, User, Rewarder, HavestHistory } from '../generated/schema'
+import { History, RubyMasterChef, Pool, PoolHistory, User, Rewarder, Harvest } from '../generated/schema'
 import { getRubyPrice, getUSDRate } from 'pricing'
 
 function getOrInsertMasterChef(block: ethereum.Block): RubyMasterChef {
@@ -384,11 +384,11 @@ export function deposit(event: Deposit): void {
     pool.userCount = pool.userCount.plus(BIG_INT_ONE)
   }
 
-  let harvestHistory = new HavestHistory(event.transaction.hash.toHex());
-  harvestHistory.address = event.params.user;
-  harvestHistory.timestamp = event.block.timestamp;
-  harvestHistory.pool = poolInfo.value0.toHex();
-  harvestHistory.amount = BIG_DECIMAL_ZERO;
+  let harvest = new Harvest(event.transaction.hash.toHex());
+  harvest.address = event.params.user;
+  harvest.timestamp = event.block.timestamp;
+  harvest.pool = poolInfo.value0.toHex();
+  harvest.amount = BIG_DECIMAL_ZERO;
 
   // Calculate RUBY being paid out
   if (event.block.number.gt(RUBY_MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
@@ -399,7 +399,7 @@ export function deposit(event: Deposit): void {
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
     log.info('Deposit: User amount is more than zero, we should harvest {} ruby', [pending.toString()])
-    harvestHistory.amount = pending;
+    harvest.amount = pending;
     if (pending.gt(BIG_DECIMAL_ZERO)) {
       log.info('Harvesting {} RUBY', [pending.toString()])
       const rubyHarvestedUSD = pending.times(getRubyPrice(event.block))
@@ -471,7 +471,7 @@ export function deposit(event: Deposit): void {
 
   user.save()
   pool.save()
-  harvestHistory.save()
+  harvest.save()
 
   const masterChef = getOrInsertMasterChef(event.block)
 
@@ -543,11 +543,11 @@ export function withdraw(event: Withdraw): void {
 
   const user = getOrInsertUser(event.params.pid, event.params.user, event.block)
 
-  let harvestHistory = new HavestHistory(event.transaction.hash.toHex());
-  harvestHistory.address = event.params.user;
-  harvestHistory.timestamp = event.block.timestamp;
-  harvestHistory.pool = poolInfo.value0.toHex();
-  harvestHistory.amount = BIG_DECIMAL_ZERO;
+  let harvest = new Harvest(event.transaction.hash.toHex());
+  harvest.address = event.params.user;
+  harvest.timestamp = event.block.timestamp;
+  harvest.pool = poolInfo.value0.toHex();
+  harvest.amount = BIG_DECIMAL_ZERO;
 
   if (event.block.number.gt(RUBY_MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
@@ -561,7 +561,7 @@ export function withdraw(event: Withdraw): void {
       event.block.number.toString(),
     ])
     log.info('RUBY PRICE {}', [getRubyPrice(event.block).toString()])
-    harvestHistory.amount = pending;
+    harvest.amount = pending;
     if (pending.gt(BIG_DECIMAL_ZERO)) {
       log.info('Harvesting {} RUBY (CURRENT RUBY PRICE {})', [
         pending.toString(),
@@ -634,7 +634,7 @@ export function withdraw(event: Withdraw): void {
 
   user.save()
   pool.save()
-  harvestHistory.save()
+  harvest.save()
 
   const masterChef = getOrInsertMasterChef(event.block)
 

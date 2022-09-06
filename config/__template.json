@@ -30,7 +30,7 @@
         "address": "LotteryFactory|address",
         "startBlock": "LotteryFactory|blockNumber"
     },
-    "rubyRouter": {
+    "RubyStaker": {
         "address": "RubyStaker|address",
         "startBlock": "RubyStaker|blockNumber"
     }
