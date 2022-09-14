@@ -2,7 +2,8 @@ type Stake @entity {
   # transaction hash
   id: ID!
 
-  stake: Boolean!
+  type: String!
+  rewardToken: Bytes!
 
   address: Bytes!
   amount: BigDecimal!

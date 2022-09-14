@@ -26,3 +26,7 @@ dataSources:
           handler: onStake
         - event: Withdrawal(indexed address,uint256)
           handler: onWithdraw
+        - event: RewardPaid(indexed address,indexed address,uint256)
+          handler: onRewardPaid
+        - event: ExpiredLocksWithdrawal(indexed address,uint256)
+          handler: onExpiredLocksWithdrawal
