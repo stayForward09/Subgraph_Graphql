@@ -17,7 +17,7 @@ services:
       postgres_pass: let-me-in
       postgres_db: graph-node
       ipfs: "ipfs:5001"
-      ethereum: "rubyNewSchain:https://testnet-proxy.skalenodes.com/v1/fancy-rasalhague"
+      ethereum: "rubyNewSchain:https://staging-v2.skalenodes.com/v1/fancy-rasalhague"
       GRAPH_LOG: info
   ipfs:
     image: ipfs/go-ipfs:v0.4.23
