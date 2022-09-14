@@ -43,12 +43,23 @@ on the graph server)
 
 * in a local test environment (e.g. using docker) you can clean everything and start from
   the beginning again by
-  * stopping docker `$ cd graph-node; docker-compose -f docker-compose.NETWORK.yml down; cd -`
+  * stopping docker
+    * (testnet):  
+    `$ cd graph-node; docker-compose -f docker-compose.rubyNewSchain.yml down; cd -`
+    * (mainnet):  
+    `$ cd graph-node; docker-compose -f docker-compose.europa.yml down; cd -`
   * deleting docker data `$ cd graph-node; rm -rf ./data; cd -`
   * cleaning the repo of all built files `$ git clean -dfx`
   * rebuilding everything `$ yarn; yarn prepare:NETWORK; yarn codegen; yarn build`
-    * (testnet): `$ yarn; yarn prepare:rubyNewSchain; yarn codegen; yarn build`
-  * start docker locally `$ cd graph-node; docker-compose -f docker-compose.NETWORK.yml up -d; cd -`
+    * (testnet):  
+    `$ yarn; yarn prepare:rubyNewSchain; yarn codegen; yarn build`
+    * (mainnet):  
+    `$ yarn; yarn prepare:europa; yarn codegen; yarn build`
+  * start docker locally
+    * (testnet):  
+    `$ cd graph-node; docker-compose -d -f docker-compose.rubyNewSchain.yml up -d; cd -`
+    * (mainnet):  
+    `$ cd graph-node; docker-compose -d -f docker-compose.europa.yml up -d; cd -`
   * redeploy everything
     * as above
     * for each dir, `yarn create-local` and `yarn deploy-local`)
