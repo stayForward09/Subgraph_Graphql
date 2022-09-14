@@ -57,9 +57,9 @@ on the graph server)
     `$ yarn; yarn prepare:europa; yarn codegen; yarn build`
   * start docker locally
     * (testnet):  
-    `$ cd graph-node; docker-compose -d -f docker-compose.rubyNewSchain.yml up -d; cd -`
+    `$ cd graph-node; docker-compose -f docker-compose.rubyNewSchain.yml up -d; cd -`
     * (mainnet):  
-    `$ cd graph-node; docker-compose -d -f docker-compose.europa.yml up -d; cd -`
+    `$ cd graph-node; docker-compose -f docker-compose.europa.yml up -d; cd -`
   * redeploy everything
     * as above
     * for each dir, `yarn create-local` and `yarn deploy-local`)
