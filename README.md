@@ -31,6 +31,7 @@ Then, for each of the following
 - `cd subgraphs/rubymasterchef`
 - `cd subgraphs/rubyrouter`
 - `cd subgraphs/lottery`
+- `cd subgraphs/rubystaker`
 
 You can execute the following to deploy to localhost (or when run
 on the graph server)
