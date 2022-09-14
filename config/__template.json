@@ -30,7 +30,7 @@
         "address": "LotteryFactory|address",
         "startBlock": "LotteryFactory|blockNumber"
     },
-    "RubyStaker": {
+    "rubyStaker": {
         "address": "RubyStaker|address",
         "startBlock": "RubyStaker|blockNumber"
     }
