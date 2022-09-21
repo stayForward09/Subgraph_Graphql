@@ -66,10 +66,6 @@ on the graph server)
 
 ## Notes
 
-- The following subgraphs are not deployed in production yet, and need to be completed
-  - user
-  - maker
-  - lockup
 - All of the necessary contracts are deployed correctly to the Skale testchain and all of the addresses are set under `config/rubyNewSchain.json`
 - All of the constants are prepared for the Skale testnet deployment, so you don't need to run anything additionally
 - If you stumble across an error that some of the subgraphs is already created, then skip the `yarn create-local` command, or run `yarn remove-local` and then `yarn create-local`.
