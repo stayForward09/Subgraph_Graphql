@@ -44,5 +44,9 @@
     "rubyStaker": {
         "address": "0x2998f0b516b1eaCbb06442B1c13cB2FFc865B449",
         "startBlock": 186646
+    },
+    "dcaFactory": {
+        "address": "0x5Ee55a8AB1B2c10ea3Af02c25E9F1298E09c0205",
+        "startBlock": 2957556
     }
 }
