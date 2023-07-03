@@ -1,9 +1,11 @@
 import { BigInt, Bytes, store } from '@graphprotocol/graph-ts'
 import { DCAOrder } from '../../generated/schema'
-import { NewDCAStrategy, AlterDCAStrategy, DeleteDCAStrategy } from '../../generated/templates/DCAStorage/DCAStorage'
+import { DCAStorage, NewDCAStrategy, AlterDCAStrategy, DeleteDCAStrategy } from '../../generated/templates/DCAStorage/DCAStorage'
 
 export function onNewDCAStrategy(event: NewDCAStrategy): void {
-    let order = new DCAOrder(event.params.index.toString());
+    let order = new DCAOrder(event.params.index.toString());  
+    let contract = DCAStorage.bind(event.address);
+    let TokenXYZ = contract.TokenXYZ();
     order.index = event.params.index;
     order.storageID = event.params.storageID;
     order.trader = event.params.trader;
@@ -16,6 +18,7 @@ export function onNewDCAStrategy(event: NewDCAStrategy): void {
     order.lastSwapTime = BigInt.fromI32(1);
     order.totalSwapSum = event.params.duration.times(BigInt.fromI32(3600)).div(event.params.interval);
     order.finished = false;
+    order.tokenXYZ = TokenXYZ;
     order.save();
 }
 

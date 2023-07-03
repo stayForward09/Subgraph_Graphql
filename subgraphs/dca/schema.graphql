@@ -13,4 +13,5 @@ type DCAOrder @entity {
   lastSwapTime: BigInt!
   totalSwapSum: BigInt!
   finished: Boolean!
+  tokenXYZ: Bytes!
 }
