@@ -6,6 +6,7 @@ export function onNewDCAStrategy(event: NewDCAStrategy): void {
     let order = new DCAOrder(event.params.index.toString());  
     let contract = DCAStorage.bind(event.address);
     let TokenXYZ = contract.TokenXYZ();
+    order.tx = event.transaction.hash.toHex();
     order.index = event.params.index;
     order.storageID = event.params.storageID;
     order.trader = event.params.trader;
@@ -14,8 +15,8 @@ export function onNewDCAStrategy(event: NewDCAStrategy): void {
     order.tokenPriceMax = event.params.tokenPriceMax;
     order.tokenAmount = event.params.tokenAmount;
     order.buyOrder = event.params.buyOrder;
-    order.lastSwapCount = BigInt.fromI32(0);
-    order.lastSwapTime = BigInt.fromI32(1);
+    order.lastSwapCount = BigInt.fromI32(1);
+    order.lastSwapTime = BigInt.fromI32(0);
     order.totalSwapSum = event.params.duration.times(BigInt.fromI32(3600)).div(event.params.interval);
     order.finished = false;
     order.tokenXYZ = TokenXYZ;

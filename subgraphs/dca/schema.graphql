@@ -1,6 +1,7 @@
 #DCA
 type DCAOrder @entity {
   id: ID! #index
+  tx: String! #transaction address
   index: BigInt!
   storageID: BigInt!
   trader: Bytes! #trader
