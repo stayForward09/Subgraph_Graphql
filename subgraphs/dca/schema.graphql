@@ -1,0 +1,18 @@
+#DCA
+type DCAOrder @entity {
+  id: ID! #index
+  tx: String! #transaction address
+  index: BigInt!
+  storageID: BigInt!
+  trader: Bytes! #trader
+  interval: BigInt!
+  tokenPriceMin: BigInt!
+  tokenPriceMax: BigInt!
+  tokenAmount: BigInt!
+  buyOrder: Boolean!
+  lastSwapCount: BigInt!
+  lastSwapTime: BigInt!
+  totalSwapSum: BigInt!
+  finished: Boolean!
+  tokenXYZ: Bytes!
+}

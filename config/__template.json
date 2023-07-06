@@ -33,5 +33,9 @@
     "rubyStaker": {
         "address": "RubyStaker|address",
         "startBlock": "RubyStaker|blockNumber"
+    },
+    "dcaFactory": {
+        "address": "DCAFactory|address",
+        "startBlock": "DCAFactory|blockNumber"
     }
 }

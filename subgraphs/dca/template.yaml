@@ -1,0 +1,65 @@
+specVersion: 0.0.3
+description: Exchange
+repository: https://github.com/ruby/ruby-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DCAFactory
+    network: {{ network }}
+    source:
+      address: '{{ dcaFactory.address }}'
+      abi: DCAFactory
+      startBlock: {{ dcaFactory.startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/factory.ts
+      entities:
+        - DCAOrder
+      abis:
+        - name: DCAFactory
+          file: ../../packages/abis/DCAFactory.json
+        - name: ERC20
+          file: ../../packages/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: RubyNFT
+          file: ../../packages/abis/RubyNFT.json
+        - name: RubyNFTDescriptionBytes
+          file: ../../packages/abis/RubyNFTDescriptionBytes.json
+      eventHandlers:
+        - event: DCAStorageCreated(uint256,address,address)
+          handler: onDCAStorageCreated
+templates:
+  - name: DCAStorage
+    kind: ethereum/contract
+    network: {{ network }}
+    source:
+      abi: DCAStorage
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/dca.ts
+      entities:
+        - DCAOrder
+      abis:
+        - name: DCAStorage
+          file: ../../packages/abis/DCAStorage.json
+        - name: ERC20
+          file: ../../packages/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../packages/abis/ERC20SymbolBytes.json
+        - name: RubyNFT
+          file: ../../packages/abis/RubyNFT.json
+        - name: RubyNFTDescriptionBytes
+          file: ../../packages/abis/RubyNFTDescriptionBytes.json
+      eventHandlers:
+        - event: NewDCAStrategy(uint256,uint256,address,uint256,uint256,uint256,uint256,uint256,bool)
+          handler: onNewDCAStrategy
+        - event: AlterDCAStrategy(uint256,uint256,address,uint256,uint256,uint256,uint256,bool,uint256,uint256,uint256)
+          handler: onAlterDCAStrategy
+        - event: DeleteDCAStrategy(uint256,uint256)
+          handler: onDeleteDCAStrategy
