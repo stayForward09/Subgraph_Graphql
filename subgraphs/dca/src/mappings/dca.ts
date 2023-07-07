@@ -36,8 +36,7 @@ export function onAlterDCAStrategy(event: AlterDCAStrategy): void {
     order.lastSwapCount = event.params.lastSwapCount;
     order.lastSwapTime = event.params.lastSwapTime;
     order.totalSwapSum = event.params.totalSwapSum;
-    if(event.params.lastSwapCount == event.params.totalSwapSum.plus(BigInt.fromI32(1))) order.finished = true;
-    else order.finished = false;
+    if(event.params.lastSwapCount >= event.params.totalSwapSum.plus(BigInt.fromI32(1))) order.finished = true;
     order.save();
 }
 
